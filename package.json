@@ -1,0 +1,28 @@
+{
+  "name": "mui-downshift",
+  "version": "0.0.1",
+  "dependencies": {
+    "downshift": "^1.4.0",
+    "material-ui": "^0.19.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-virtualized": "^9.9.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.2.6",
+    "@storybook/react": "^3.2.8",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.6.0"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production babel src -d dist",
+    "storybook": "start-storybook -p 9009 -c stories",
+    "build-storybook": "cd stories && yarn install && cd .. && build-storybook -c stories -o docs",
+    "deploy": "gh-pages -d docs",
+    "preversion": "yarn build",
+    "postpublish": "yarn build-storybook && yarn deploy"
+  }
+}

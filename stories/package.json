@@ -1,0 +1,17 @@
+{
+  "name": "stories",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sean Lynch <techniq35@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "core-js": "^2.5.1",
+    "fetch-mock": "^5.12.2",
+    "react-fetch-component": "^4.0.0",
+    "starwars-names": "^1.6.0"
+  }
+}
