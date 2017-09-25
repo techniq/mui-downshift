@@ -64,13 +64,14 @@ class Menu extends Component {
           <Paper style={{ width }} transitionEnabled={false}>
             <VirtualList
               width={width}
-              scrollToIndex={highlightedIndex || 0}
+              //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
               height={menuHeight || getHeight(this.props)}
               rowCount={items ? items.length : 0}
               rowHeight={({ index }) => {
                 const item = items[index];
                 const listItemProps = getListItemProps({ item, index });
-                return getItemHeight(listItemProps);
+                const height = getItemHeight(listItemProps);
+                return height;
               }}
               rowRenderer={({ index, style, key }) => {
                 const item = items[index];
