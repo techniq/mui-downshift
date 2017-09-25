@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
-import { List as VirtualList, AutoSizer } from 'react-virtualized';
+import { List as VirtualList, InfiniteLoader, AutoSizer } from 'react-virtualized';
 
 const LIST_ITEM_HEIGHTS = {
   default: 48,
@@ -49,6 +49,8 @@ class Menu extends Component {
   render() {
     const {
       items,
+      itemCount,
+      loadMoreItems,
       highlightedIndex,
       selectedItem,
       isOpen,
@@ -58,39 +60,63 @@ class Menu extends Component {
       menuHeight
     } = this.props;
 
+    const rowCount = itemCount || (items ? items.length : 0);
+
+    // console.log('rowCount', rowCount);
+
+    function isRowLoaded ({ index }) {
+      // console.log('isRowLoaded', index);
+      return !!items[index];
+    }
+    
+    function loadMoreRows ({ startIndex, stopIndex }) {
+      // console.log('loadMoreRows', startIndex, stopIndex);
+      return loadMoreItems(startIndex, stopIndex);
+    }
+
     return isOpen ? (
       <AutoSizer>
         {({ width }) => (
           <Paper style={{ width }} transitionEnabled={false}>
-            <VirtualList
-              width={width}
-              //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
-              height={menuHeight || getHeight(this.props)}
-              rowCount={items ? items.length : 0}
-              rowHeight={({ index }) => {
-                const item = items[index];
-                const listItemProps = getListItemProps({ item, index });
-                const height = getItemHeight(listItemProps);
-                return height;
-              }}
-              rowRenderer={({ index, style, key }) => {
-                const item = items[index];
-                const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
-                const props = getItemProps({
-                  index,
-                  item,
-                  isKeyboardFocused: highlightedIndex === index,
-                  style:
-                    selectedItem === item
-                      ? { fontWeight: 'bold', ...style }
-                      : style,
-                  ...listItemProps
-                });
+            <InfiniteLoader
+              isRowLoaded={isRowLoaded}
+              loadMoreRows={loadMoreRows}
+              rowCount={rowCount}
+            >
+              {({ onRowsRendered, registerChild }) => (
+                <VirtualList
+                  width={width}
+                  //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
+                  height={menuHeight || getHeight(this.props)}
+                  rowCount={items ? items.length : 0}
+                  rowHeight={({ index }) => {
+                    const item = items[index];
+                    const listItemProps = getListItemProps({ item, index });
+                    const height = getItemHeight(listItemProps);
+                    return height;
+                  }}
+                  rowRenderer={({ index, style, key }) => {
+                    const item = items[index];
+                    const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
+                    const props = getItemProps({
+                      index,
+                      item,
+                      isKeyboardFocused: highlightedIndex === index,
+                      style:
+                        selectedItem === item
+                          ? { fontWeight: 'bold', ...style }
+                          : style,
+                      ...listItemProps
+                    });
 
-                return <ListItem key={key} {...props} />;
-              }}
-              noRowsRenderer={() => <ListItem {...getEmptyListItemProps()} /> }
-            />
+                    return <ListItem key={key} {...props} />;
+                  }}
+                  noRowsRenderer={() => <ListItem {...getEmptyListItemProps()} /> }
+                  onRowsRendered={onRowsRendered}
+                  ref={registerChild}
+                />
+              )}
+            </InfiniteLoader>
           </Paper>
         )}
       </AutoSizer>

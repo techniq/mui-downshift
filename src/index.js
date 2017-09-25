@@ -14,7 +14,7 @@ class MuiDownshift extends Component {
   }
 
   render() {
-  const {items, getInputProps, getListItemProps, getEmptyListItemProps, itemToString, loading, menuHeight, menuItemCount, ...props } = this.props;
+  const {items, itemCount, getInputProps, getListItemProps, getEmptyListItemProps, itemToString, loadMoreItems, loading, menuHeight, menuItemCount, ...props } = this.props;
 
   return (
     <Downshift
@@ -46,6 +46,7 @@ class MuiDownshift extends Component {
 
         const menuProps = {
           items,
+          itemCount,
           highlightedIndex: downshiftProps.highlightedIndex,
           selectedItem: downshiftProps.selectedItem,
           isOpen: downshiftProps.isOpen,
@@ -54,6 +55,7 @@ class MuiDownshift extends Component {
           getEmptyListItemProps,
           menuItemCount,
           menuHeight,
+          loadMoreItems
         };
 
         return (

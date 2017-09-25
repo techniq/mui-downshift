@@ -645,9 +645,9 @@ react-dom@^15.4.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-fetch-component@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-4.0.0.tgz#2ba1c2a8abc3824779bcbc6eff7218ff23ede355"
+react-fetch-component@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-4.1.2.tgz#2838f2fec2c3e5f6eeffee893107cc1028cde321"
   dependencies:
     babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.23.0"

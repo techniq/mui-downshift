@@ -3,6 +3,7 @@
     - https://github.com/callemall/material-ui/issues/5055
   - DONE: Handle empty list returned (filtered, etc)
   - DONE: Handle passing ListItem props and setting `height` on `VirutalList` correctly
+  - `scrollToIndex` issue
 
 ## Features
   - DONE: Handle filtering outside of MuiComplete
@@ -11,13 +12,15 @@
   - *Supporting fetching/loading more items
       - Infinite scrolling
         - See https://github.com/bvaughn/react-virtualized/blob/master/source/InfiniteLoader/InfiniteLoader.example.js
+        - Fix race condition when filtering (type "darth" quickly in the example)
       - Paginated ("load more" button at the bottom)
+        - `getLoadMoreListItemProps`? maybe just use `getLoadingListItemProps` with `onClick`?
       - How does this work when you've selected an item not loaded yet
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
   - Multiselect (chips)
   - Highlight inputValue on items ([react-highlight-words](https://github.com/bvaughn/react-highlight-words))
   - Customize loading (spinner or bar)
-  - Customize 
+  - `getLoadingListItemProps` - show while loading at the bottom of the list (if data is cleared during filtering will also show directly under input)
   - DONE: Rich list them (multiline, bolding, etc)
 
 ## Input customization
