@@ -34,7 +34,7 @@ export default class StarWarsSelect extends Component {
 }
 
 storiesOf('Basic', module)
-  .add('defaults', () => <MuiDownshift />)
+  .add('defaults (empty)', () => <MuiDownshift />)
   .add('items only', () => <StarWarsSelect />)
   .add('loading', () => <StarWarsSelect loading />);
 
