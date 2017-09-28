@@ -25,6 +25,7 @@ storiesOf('Fetch', module)
       )}
     </MockFetch>
   ))
+
   .add('no initial fetch', () => (
     <MockFetch url="https://example.com/" manual>
       {({ loading, data, error, fetch }) => (
