@@ -9,10 +9,9 @@
   - DONE: Handle filtering outside of MuiComplete
   - DONE: Handle using <Fetch />
     - DONE: Does not fetch until open
-  - *Supporting fetching/loading more items
-      - Infinite scrolling
+  - Supporting fetching/loading more items
+      - DONE: Infinite scrolling
         - See https://github.com/bvaughn/react-virtualized/blob/master/source/InfiniteLoader/InfiniteLoader.example.js
-        - Fix race condition when filtering (type "darth" quickly in the example)
       - Paginated ("load more" button at the bottom)
         - `getLoadMoreListItemProps`? maybe just use `getLoadingListItemProps` with `onClick`?
       - How does this work when you've selected an item not loaded yet
@@ -31,7 +30,7 @@
 
 ##  Menu customization
   - Expose "getMenuProps"?
-    - Do all of these get applied to <VirtualList>, what about <Paper>/wrapper
+    - Do all of these get applied to <VirtualList>, what about <Paper /> wrapper
   - DONE: Max height (based on number of items to show)
 
 ## Verify

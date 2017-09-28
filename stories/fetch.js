@@ -50,7 +50,7 @@ storiesOf('Fetch', module)
       }}
       manual
     >
-      {({ loading, data, error, fetch, request, clearData }) => (
+      {({ loading, data, error, fetch, request }) => (
         <MuiDownshift
           items={data && data.items}
           itemCount={data && data.total}
@@ -64,10 +64,8 @@ storiesOf('Fetch', module)
           }}
           loading={loading}
           onStateChange={changes => {
-            //console.log('changes', changes);
             if (changes.hasOwnProperty('inputValue')) {
-              clearData();
-              fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&endIndex=20`)
+              fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&endIndex=20`, null, { ignorePreviousData: true })
             } else if (changes.hasOwnProperty('isOpen') && data == null) {
               fetch(`https://example.com/?startIndex=0&endIndex=20`)
             }
