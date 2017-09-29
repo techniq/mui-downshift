@@ -17,16 +17,16 @@ function hasProp(obj, props) {
   }
 }
 
-function getHeight(items, menuItemCount, getListItemProps, getEmptyListItemProps) {
-  if (items && items.length) {
-    const length = Math.min(items.length, menuItemCount); // Maximum items before scrolling
-    const height = items.slice(0, length).reduce((result, item, index) => {
-      const listItemProps = getListItemProps({ item, index });
-      return (result += getItemHeight(listItemProps));
-    }, 0);
+function getMenuHeight(items, menuItemCount, getListItemProps, emptyListItemProps, footerListItemProps) {
+  const rowCount = getRowCount(items, footerListItemProps);
+  if (rowCount) {
+    const visibleCount = Math.min(rowCount, menuItemCount); // Maximum items before scrolling
+    let height = 0;
+    for (let i = 0; i < visibleCount; i++) {
+      height += getRowHeight(items, i, getListItemProps, footerListItemProps) 
+    }
     return height;
-  } else if (getEmptyListItemProps) {
-    const emptyListItemProps = getEmptyListItemProps();
+  } else if (emptyListItemProps) {
     return getItemHeight(emptyListItemProps);
   } else {
     // No `items` and no `getEmptyListItemProps` defined
@@ -45,10 +45,28 @@ function getItemHeight(listItemProps) {
   }
 }
 
+function getRowHeight(items, index, getListItemProps, footerListItemProps) {
+  if (footerListItemProps && index === (items ? items.length : 1)) {
+    return getItemHeight(footerListItemProps);
+  } else if (items && index < items.length) {
+    const item = items[index];
+    const listItemProps = getListItemProps({ item, index });
+    return getItemHeight(listItemProps);
+  } else {
+    // No `items` and no `getFooterListItemProps` defined
+    return 0;
+  }
+}
+
+function getRowCount(items, footerListItemProps) {
+  return (items ? items.length : 0) + (footerListItemProps ? 1 : 0)
+}
+
 function MuiVirtualList({
   items,
-  menuItemCount,
   width,
+  menuItemCount,
+  menuHeight,
   highlightedIndex,
   selectedItem,
   getItemProps,
@@ -56,10 +74,10 @@ function MuiVirtualList({
   getEmptyListItemProps,
   getVirtualListProps,
   getFooterListItemProps,
-  menuHeight,
   onRowsRendered,
   registerChild
 }) {
+  const emptyListItemProps = getEmptyListItemProps && getEmptyListItemProps();
   const footerListItemProps = getFooterListItemProps && getFooterListItemProps();
 
   // console.log('items.length', items && items.length);
@@ -68,19 +86,9 @@ function MuiVirtualList({
     <VirtualList
       width={width}
       //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
-      height={menuHeight || getHeight(items, menuItemCount, getListItemProps, getEmptyListItemProps)}
-      rowCount={(items ? items.length : 0) + (footerListItemProps ? 1 : 0)}
-      rowHeight={({ index }) => {
-        if (footerListItemProps && index === (items ? items.length : 1)) {
-          const height = getItemHeight(footerListItemProps);
-          return height;
-        } else {
-          const item = items[index];
-          const listItemProps = getListItemProps({ item, index });
-          const height = getItemHeight(listItemProps);
-          return height;
-        }
-      }}
+      height={menuHeight || getMenuHeight(items, menuItemCount, getListItemProps, emptyListItemProps, footerListItemProps)}
+      rowCount={getRowCount(items, footerListItemProps)}
+      rowHeight={({ index }) => getRowHeight(items, index, getListItemProps, footerListItemProps)}
       rowRenderer={({ index, style, key }) => {
         if (footerListItemProps && index === (items ? items.length : 1)) {
           return <ListItem key={key} {...footerListItemProps} style={{ ...footerListItemProps.style, ...style }} />;

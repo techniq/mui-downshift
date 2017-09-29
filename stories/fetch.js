@@ -74,6 +74,14 @@ storiesOf('Fetch', module)
             },
             disabled: true
           }) : null }
+          getEmptyListItemProps={() => ({
+            primaryText: 'No items found',
+            style: {
+              fontStyle: 'italic',
+              color: 'rgba(0,0,0,.5)'
+            },
+            disabled: true
+          })}
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
@@ -128,6 +136,14 @@ storiesOf('Fetch', module)
               }
             }
           }}
+          getEmptyListItemProps={() => ({
+            primaryText: 'No items found',
+            style: {
+              fontStyle: 'italic',
+              color: 'rgba(0,0,0,.5)'
+            },
+            disabled: true
+          })}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
               fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })

@@ -9,8 +9,8 @@
   - Highlight inputValue on items ([react-highlight-words](https://github.com/bvaughn/react-highlight-words))
     - Can/should this be handled by passing inputValue to `getListItemProps` and let the user implement use `react-highlight-words`/etc?
   - Customize loading (spinner or bar)
-  - `getLoadingListItemProps` - show while loading at the bottom of the list (if data is cleared during filtering will also show directly under input)
-    - Mostly available now using `getFooterListItemProps`.  Not showing while request is in flight while filtering
+  - Clear items while searching (show "Loading..." or "Searching...")
+    - Should be possibly by clearing `items` while `loading === true` but not working.  Also need to distringuish between loading additional items vs. searching
   - Overriding Input icons
   - DONE: Rich list them (multiline, bolding, etc)
 

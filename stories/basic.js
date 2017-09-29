@@ -125,7 +125,7 @@ storiesOf('List item', module)
       onChange={action('onChange')}
     />
   ))
-  .add('empty list', () => (
+  .add('empty list (filtered)', () => (
     <StarWarsSelect
       getInputProps={() => ({
         floatingLabelText: 'Star Wars character',
@@ -142,6 +142,28 @@ storiesOf('List item', module)
       onChange={action('onChange')}
     />
   ))
+  .add('loading footer', () => {
+    const loading = true;
+    return (
+      <MuiDownshift
+        items={[
+          { text: 'one' },
+          { text: 'two' },
+          { text: 'three' },
+        ]}
+        getFooterListItemProps={() => ({
+          primaryText: 'Loading...',
+          style: {
+            fontStyle: 'italic',
+            color: 'rgba(0,0,0,.5)'
+          },
+          disabled: true
+        })}
+        loading={loading}
+        isOpen={true}
+      />
+    )
+  })
 
 storiesOf('Menu', module)
   .add('height by item count (3)', () => (
