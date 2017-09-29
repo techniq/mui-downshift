@@ -9,20 +9,22 @@ For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io
   - Infinite scrolling
   - Paginated loading
   - Delayed loading of items until menu is opened
-- Control openining menu on input focus (or only on explict toggle) 
-- Control height of menu based on number of items or pixels
 - Customizable rendering (see `getInputProps`, `getListItemProps`, etc)
+- Control opening menu on input focus (or only on explict toggle) 
+- Control height of menu based on number of items or pixels
+- All other capabilities inherited from `downshift`
 
 ### Props
 Property | Type | Required | Description
 -------- | ---- | -------- | -----------
 `items` | Array | ✓ | Items to show in menu
-`getInputProps` | Function | | Customize look of Material-UI's TextField.  Do not confuse with Downshift's `getInputProps` passed down to child function
-`getListItemProps` | Function | |  Customize look Material-UI's ListItem for each item
+`getInputProps` | Function | | Customize look of Material-UI's `<TextField />`.  Do not confuse with Downshift's `getInputProps` passed down to child function
+`getListItemProps` | Function | |  Customize look Material-UI's `<ListItem />` for each item
 `getEmptyListItemProps` | Function | | Shows an empty list item with the following props if `items` is empty
 `getInfiniteLoaderProps` | Function |  | If provided, will wrap menu in react-virtualized [InfiniteLoader](https://github.com/bvaughn/react-virtualized/blob/master/docs/InfiniteLoader.md) and pass the props returned from the function.  Be sure to provide all required props (`isRowLoaded`, `rowCount`, and `loadMoreRows`).  Used for infinite scrolling (see demo).
 `getFooterListItemProps` | Function | | If defined and returns an object, a list item will be added to the bottom of the list with the returned object as props.  Useful for paginated scrolling (see demo) and showing loading status beyond the `loading` prop.
 `getVirtualListrops` | Function |  | Pass or override props provided to underlying react-virtualized [List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md) component
-`menuItemCount` | Number | | Number of items to show on menu before scrolling
+`menuItemCount` | Number | | Number of items to show on menu before scrolling.  Default `5`
+`menuHeight` | Number | | Number of pixels to set menu before scrolling.  Overrides `menuItemCount` if set.  Default `null`
 `loading` | Boolean | |  Show loading indicator
-all props available on `downshift` | |  | `onChange`, `onStateChange`, ...
+all props available on `downshift` | |  | `itemToString`, `onChange`, `onStateChange`, ...
