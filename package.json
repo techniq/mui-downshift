@@ -1,6 +1,6 @@
 {
   "name": "mui-downshift",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "downshift": "^1.4.0",
     "material-ui": "^0.19.1",
