@@ -132,11 +132,11 @@ storiesOf('List item', module)
         hintText: 'Choose wisely'
       })}
       getEmptyListItemProps={() => ({
-        primaryText: (
-          <span style={{ fontStyle: 'italic', color: 'rgba(0,0,0,.5)'}}>
-            No items found
-          </span>
-        ),
+        primaryText: 'No items found',
+        style: {
+          fontStyle: 'italic',
+          color: 'rgba(0,0,0,.5)'
+        },
         disabled: true
       })}
       onChange={action('onChange')}

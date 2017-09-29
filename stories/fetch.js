@@ -66,6 +66,14 @@ storiesOf('Fetch', module)
               return fetch(url.toString())
             }})
           }
+          getFooterListItemProps={loading ? () => ({
+            primaryText: 'Loading...',
+            style: {
+              fontStyle: 'italic',
+              color: 'rgba(0,0,0,.5)'
+            },
+            disabled: true
+          }) : null }
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
@@ -90,23 +98,36 @@ storiesOf('Fetch', module)
         <MuiDownshift
           items={data && data.items}
           loading={loading}
-          getLoadMoreListItemProps={() => (data && data.items.length < data.total) ? {
-            primaryText: 'Load more items',
-            style: {
-              background: '#ccc',
-              color: '#fff'
-            },
-            onClick: () => {
-              const url = new URL(request.url);
-              const params = new URLSearchParams(url.search);
-              const currentStartIndex = Number(params.get('startIndex'));
-              const currentStopIndex = Number(params.get('stopIndex'))
-              params.set('startIndex', currentStartIndex + 20);
-              params.set('stopIndex', currentStopIndex + 20);
-              url.search = params.toString();
-              fetch(url.toString())
+          getFooterListItemProps={() => {
+            if (loading) {
+              return {
+                primaryText: 'Loading...',
+                style: {
+                  fontStyle: 'italic',
+                  color: 'rgba(0,0,0,.5)'
+                },
+                disabled: true
+              }
+            } else if (data && data.items.length < data.total) {
+              return {
+                primaryText: 'Load more items',
+                style: {
+                  background: '#ccc',
+                  color: '#fff'
+                },
+                onClick: () => {
+                  const url = new URL(request.url);
+                  const params = new URLSearchParams(url.search);
+                  const currentStartIndex = Number(params.get('startIndex'));
+                  const currentStopIndex = Number(params.get('stopIndex'))
+                  params.set('startIndex', currentStartIndex + 20);
+                  params.set('stopIndex', currentStopIndex + 20);
+                  url.search = params.toString();
+                  fetch(url.toString())
+                }
+              }
             }
-          } : null }
+          }}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
               fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
@@ -123,7 +144,6 @@ storiesOf('Fetch', module)
 class MockFetch extends Component {
   componentWillMount() {
     fetchMock.get('*', url => {
-      // console.log('fetch', url);
       let filteredItems = items;
 
       var urlObj = new URL(url);
@@ -137,13 +157,16 @@ class MockFetch extends Component {
         }
       }
 
+      let response = null
       if (searchParams.has('startIndex') || searchParams.has('stopIndex')) {
         const startIndex = Number(searchParams.get('startIndex'));
         const stopIndex = (Number(searchParams.get('stopIndex')) || 10);
-        return mockResponse({ total: filteredItems.length, items: filteredItems.slice(startIndex, stopIndex) }, 500)
+        response = { total: filteredItems.length, items: filteredItems.slice(startIndex, stopIndex) };
       } else {
-        return mockResponse({ total: filteredItems.length, items: filteredItems }, 500)
+        response = { total: filteredItems.length, items: filteredItems };
       }
+      console.log('fetch', url, response);
+      return mockResponse(response, 500)
     });
   }
 

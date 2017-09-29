@@ -55,12 +55,12 @@ function MuiVirtualList({
   getListItemProps,
   getEmptyListItemProps,
   getVirtualListProps,
-  getLoadMoreListItemProps,
+  getFooterListItemProps,
   menuHeight,
   onRowsRendered,
   registerChild
 }) {
-  const loadMoreListItemProps = getLoadMoreListItemProps && getLoadMoreListItemProps();
+  const footerListItemProps = getFooterListItemProps && getFooterListItemProps();
 
   // console.log('items.length', items && items.length);
 
@@ -69,12 +69,11 @@ function MuiVirtualList({
       width={width}
       //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
       height={menuHeight || getHeight(items, menuItemCount, getListItemProps, getEmptyListItemProps)}
-      rowCount={(items ? items.length : 0) + (loadMoreListItemProps ? 1 : 0)}
+      rowCount={(items ? items.length : 0) + (footerListItemProps ? 1 : 0)}
       rowHeight={({ index }) => {
-        if (loadMoreListItemProps && index >= items.length) {
-          const height = getItemHeight(loadMoreListItemProps);
+        if (footerListItemProps && index === (items ? items.length : 1)) {
+          const height = getItemHeight(footerListItemProps);
           return height;
-
         } else {
           const item = items[index];
           const listItemProps = getListItemProps({ item, index });
@@ -83,8 +82,8 @@ function MuiVirtualList({
         }
       }}
       rowRenderer={({ index, style, key }) => {
-        if (loadMoreListItemProps && index >= items.length) {
-          return <ListItem key={key} {...loadMoreListItemProps} style={{ ...loadMoreListItemProps.style, ...style }} />;
+        if (footerListItemProps && index === (items ? items.length : 1)) {
+          return <ListItem key={key} {...footerListItemProps} style={{ ...footerListItemProps.style, ...style }} />;
         } else {
           const item = items[index];
           const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })

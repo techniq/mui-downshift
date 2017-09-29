@@ -10,6 +10,7 @@
     - Can/should this be handled by passing inputValue to `getListItemProps` and let the user implement use `react-highlight-words`/etc?
   - Customize loading (spinner or bar)
   - `getLoadingListItemProps` - show while loading at the bottom of the list (if data is cleared during filtering will also show directly under input)
+    - Mostly available now using `getFooterListItemProps`.  Not showing while request is in flight while filtering
   - Overriding Input icons
   - DONE: Rich list them (multiline, bolding, etc)
 
