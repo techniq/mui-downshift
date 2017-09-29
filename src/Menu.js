@@ -62,15 +62,11 @@ class Menu extends Component {
 
     const rowCount = itemCount || (items ? items.length : 0);
 
-    // console.log('rowCount', rowCount);
-
     function isRowLoaded ({ index }) {
-      // console.log('isRowLoaded', index);
       return !!items[index];
     }
     
     function loadMoreRows ({ startIndex, stopIndex }) {
-      // console.log('loadMoreRows', startIndex, stopIndex);
       return loadMoreItems(startIndex, stopIndex);
     }
 
