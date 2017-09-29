@@ -1,41 +1,22 @@
 ##  Bugs
-  - *Large 'X' on IE
+  - Large 'X' on IE
     - https://github.com/callemall/material-ui/issues/5055
-  - DONE: Handle empty list returned (filtered, etc)
-  - DONE: Handle passing ListItem props and setting `height` on `VirutalList` correctly
   - `scrollToIndex` issue
 
 ## Features
-  - DONE: Handle filtering outside of MuiComplete
-  - DONE: Handle using <Fetch />
-    - DONE: Does not fetch until open
-  - Supporting fetching/loading more items
-      - DONE: Infinite scrolling
-        - See https://github.com/bvaughn/react-virtualized/blob/master/source/InfiniteLoader/InfiniteLoader.example.js
-      - Paginated ("load more" button at the bottom)
-        - `getLoadMoreListItemProps`? maybe just use `getLoadingListItemProps` with `onClick`?
-      - How does this work when you've selected an item not loaded yet
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
   - Multiselect (chips)
   - Highlight inputValue on items ([react-highlight-words](https://github.com/bvaughn/react-highlight-words))
+    - Can/should this be handled by passing inputValue to `getListItemProps` and let the user implement use `react-highlight-words`/etc?
   - Customize loading (spinner or bar)
   - `getLoadingListItemProps` - show while loading at the bottom of the list (if data is cleared during filtering will also show directly under input)
+  - Overriding Input icons
   - DONE: Rich list them (multiline, bolding, etc)
 
-## Input customization
-  - Overriding Input icons
-  - DONE: Consider passing in entire object from downshift child function (at least the actions and state, maybe not the other prop getters) and replace "inputProps" with "getInputProps"
-    - "getInputProps" might be confusing since downshift has this as a prop getter but doesn't receive the aforementioned actions/states
-  - DONE: Support enabling/disabling showing menu on input focus
-
-##  Menu customization
-  - Expose "getMenuProps"?
-    - Do all of these get applied to <VirtualList>, what about <Paper /> wrapper
-  - DONE: Max height (based on number of items to show)
-
 ## Verify
-  - *Make sure clicking on scroll in IE 11 doesn't close menu
-  - *Scolling window updates menu position
+  - Make sure clicking on scroll in IE 11 doesn't close menu
+  - Scolling window updates menu position
+  - Handling of selected item that was not loaded yet (<Fetch />)
 
 ## Deploying
   - Documentation
