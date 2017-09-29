@@ -10,7 +10,7 @@ import MuiDownshift from '../src';
 const items = starwarsNames.map((text, value) => ({ text, value }));
 
 storiesOf('Fetch', module)
-.add('basic', () => (
+  .add('basic', () => (
     <MockFetch url="https://example.com/">
       {({ loading, data, error, fetch }) => (
         <MuiDownshift
@@ -45,7 +45,7 @@ storiesOf('Fetch', module)
   ))
 
   .add('infinte loading', () => (
-    <MockFetch url="https://example.com/?startIndex=0&endIndex=20" 
+    <MockFetch url="https://example.com/?startIndex=0&stopIndex=20" 
       onDataChange={(newData, currentData = { total: 0, items: [] }) => {
         return { total: newData.total, items: [...currentData.items, ...newData.items] }
       }}
@@ -54,21 +54,24 @@ storiesOf('Fetch', module)
       {({ loading, data, error, fetch, request }) => (
         <MuiDownshift
           items={data && data.items}
-          itemCount={data && data.total}
-          loadMoreItems={loading ? () => {} : (startIndex, endIndex) => {
-            const url = new URL(request.url);
-            const params = new URLSearchParams(url.search);
-            params.set('startIndex', startIndex);
-            params.set('endIndex', endIndex);
-            url.search = params.toString();
-            return fetch(url.toString())
-          }}
+          getInfiniteLoaderProps={() => ({
+            rowCount: data ? data.total : 0,
+            isRowLoaded: ({ index }) => data ? !!data.items[index] : false,
+            loadMoreRows: loading ? () => {} : ({ startIndex, stopIndex }) => {
+              const url = new URL(request.url);
+              const params = new URLSearchParams(url.search);
+              params.set('startIndex', startIndex);
+              params.set('stopIndex', stopIndex);
+              url.search = params.toString();
+              return fetch(url.toString())
+            }})
+          }
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
-              fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&endIndex=20`, null, { ignorePreviousData: true })
+              fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
             } else if (changes.hasOwnProperty('isOpen') && data == null) {
-              fetch(`https://example.com/?startIndex=0&endIndex=20`)
+              fetch(`https://example.com/?startIndex=0&stopIndex=20`)
             }
           }}
         />
@@ -76,10 +79,8 @@ storiesOf('Fetch', module)
     </MockFetch>
   ))
 
-const queryRegex = /q=(.*)/;
-  
+/* Mock consistent fetch responses */
 class MockFetch extends Component {
-  /* Mock consistent fetch responses */
   componentWillMount() {
     fetchMock.get('*', url => {
       // console.log('fetch', url);
@@ -96,10 +97,10 @@ class MockFetch extends Component {
         }
       }
 
-      if (searchParams.has('startIndex') || searchParams.has('endIndex')) {
+      if (searchParams.has('startIndex') || searchParams.has('stopIndex')) {
         const startIndex = Number(searchParams.get('startIndex'));
-        const endIndex = (Number(searchParams.get('endIndex')) || 9) + 1; // inclusive
-        return mockResponse({ total: filteredItems.length, items: filteredItems.slice(startIndex, endIndex) }, 500)
+        const stopIndex = (Number(searchParams.get('stopIndex')) || 9) + 1; // inclusive
+        return mockResponse({ total: filteredItems.length, items: filteredItems.slice(startIndex, stopIndex) }, 500)
       } else {
         return mockResponse({ total: filteredItems.length, items: filteredItems }, 500)
       }

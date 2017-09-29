@@ -17,7 +17,7 @@ function hasProp(obj, props) {
   }
 }
 
-function getHeight({ items, getListItemProps, getEmptyListItemProps, menuItemCount }) {
+function getHeight(items, menuItemCount, getListItemProps, getEmptyListItemProps) {
   if (items && items.length) {
     const length = Math.min(items.length, menuItemCount); // Maximum items before scrolling
     const height = items.slice(0, length).reduce((result, item, index) => {
@@ -45,79 +45,78 @@ function getItemHeight(listItemProps) {
   }
 }
 
-class Menu extends Component {
-  render() {
-    const {
-      items,
-      itemCount,
-      loadMoreItems,
-      highlightedIndex,
-      selectedItem,
-      isOpen,
-      getItemProps,
-      getListItemProps,
-      getEmptyListItemProps,
-      menuHeight
-    } = this.props;
+function MuiVirtualList({
+  items,
+  menuItemCount,
+  width,
+  highlightedIndex,
+  selectedItem,
+  getItemProps,
+  getListItemProps,
+  getEmptyListItemProps,
+  getVirtualListProps,
+  menuHeight,
+  onRowsRendered,
+  registerChild
+}) {
+  return (
+    <VirtualList
+      width={width}
+      //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
+      height={menuHeight || getHeight(items, menuItemCount, getListItemProps, getEmptyListItemProps)}
+      rowCount={items ? items.length : 0}
+      rowHeight={({ index }) => {
+        const item = items[index];
+        const listItemProps = getListItemProps({ item, index });
+        const height = getItemHeight(listItemProps);
+        return height;
+      }}
+      rowRenderer={({ index, style, key }) => {
+        const item = items[index];
+        const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
+        const props = getItemProps({
+          index,
+          item,
+          isKeyboardFocused: highlightedIndex === index,
+          style:
+            selectedItem === item
+              ? { fontWeight: 'bold', ...style }
+              : style,
+          ...listItemProps
+        });
 
-    const rowCount = itemCount || (items ? items.length : 0);
+        return <ListItem key={key} {...props} />;
+      }}
+      noRowsRenderer={() => <ListItem {...getEmptyListItemProps()} /> }
+      onRowsRendered={onRowsRendered}
+      ref={registerChild}
+      {...getVirtualListProps && getVirtualListProps()}
+    />
+  )
+}
 
-    function isRowLoaded ({ index }) {
-      return !!items[index];
-    }
-    
-    function loadMoreRows ({ startIndex, stopIndex }) {
-      return loadMoreItems(startIndex, stopIndex);
-    }
-
-    return isOpen ? (
-      <AutoSizer>
-        {({ width }) => (
-          <Paper style={{ width }} transitionEnabled={false}>
-            <InfiniteLoader
-              isRowLoaded={isRowLoaded}
-              loadMoreRows={loadMoreRows}
-              rowCount={rowCount}
-            >
+function Menu({
+  isOpen,
+  getInfiniteLoaderProps,
+  ...props
+}) {
+  return isOpen ? (
+    <AutoSizer>
+      {({ width }) => (
+        <Paper style={{ width }} transitionEnabled={false}>
+          { getInfiniteLoaderProps ? (
+            <InfiniteLoader {...getInfiniteLoaderProps()} >
               {({ onRowsRendered, registerChild }) => (
-                <VirtualList
-                  width={width}
-                  //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
-                  height={menuHeight || getHeight(this.props)}
-                  rowCount={items ? items.length : 0}
-                  rowHeight={({ index }) => {
-                    const item = items[index];
-                    const listItemProps = getListItemProps({ item, index });
-                    const height = getItemHeight(listItemProps);
-                    return height;
-                  }}
-                  rowRenderer={({ index, style, key }) => {
-                    const item = items[index];
-                    const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
-                    const props = getItemProps({
-                      index,
-                      item,
-                      isKeyboardFocused: highlightedIndex === index,
-                      style:
-                        selectedItem === item
-                          ? { fontWeight: 'bold', ...style }
-                          : style,
-                      ...listItemProps
-                    });
-
-                    return <ListItem key={key} {...props} />;
-                  }}
-                  noRowsRenderer={() => <ListItem {...getEmptyListItemProps()} /> }
-                  onRowsRendered={onRowsRendered}
-                  ref={registerChild}
-                />
+                <MuiVirtualList {...props} width={width} onRowsRendered={onRowsRendered} registerChild={registerChild} />
               )}
             </InfiniteLoader>
-          </Paper>
-        )}
-      </AutoSizer>
-    ) : null;
-  }
+          ) : (
+            <MuiVirtualList {...props} width={width} />
+          )}
+        </Paper>
+      )}
+    </AutoSizer>
+  ) : null;
 }
 
 export default Menu;
