@@ -61,7 +61,7 @@ storiesOf('Fetch', module)
               const url = new URL(request.url);
               const params = new URLSearchParams(url.search);
               params.set('startIndex', startIndex);
-              params.set('stopIndex', stopIndex);
+              params.set('stopIndex', stopIndex + 1);
               url.search = params.toString();
               return fetch(url.toString())
             }})
@@ -79,7 +79,47 @@ storiesOf('Fetch', module)
     </MockFetch>
   ))
 
-/* Mock consistent fetch responses */
+  .add('paginated loading', () => (
+    <MockFetch url="https://example.com/?startIndex=0&stopIndex=20" 
+      onDataChange={(newData, currentData = { total: 0, items: [] }) => {
+        return { total: newData.total, items: [...currentData.items, ...newData.items] }
+      }}
+      manual
+    >
+      {({ loading, data, error, fetch, request }) => (
+        <MuiDownshift
+          items={data && data.items}
+          loading={loading}
+          getLoadMoreListItemProps={() => (data && data.items.length < data.total) ? {
+            primaryText: 'Load more items',
+            style: {
+              background: '#ccc',
+              color: '#fff'
+            },
+            onClick: () => {
+              const url = new URL(request.url);
+              const params = new URLSearchParams(url.search);
+              const currentStartIndex = Number(params.get('startIndex'));
+              const currentStopIndex = Number(params.get('stopIndex'))
+              params.set('startIndex', currentStartIndex + 20);
+              params.set('stopIndex', currentStopIndex + 20);
+              url.search = params.toString();
+              fetch(url.toString())
+            }
+          } : null }
+          onStateChange={changes => {
+            if (changes.hasOwnProperty('inputValue')) {
+              fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
+            } else if (changes.hasOwnProperty('isOpen') && data == null) {
+              fetch(`https://example.com/?startIndex=0&stopIndex=20`)
+            }
+          }}
+        />
+      )}
+    </MockFetch>
+  ))
+
+/* Mock for consistent fetch responses */
 class MockFetch extends Component {
   componentWillMount() {
     fetchMock.get('*', url => {
@@ -99,7 +139,7 @@ class MockFetch extends Component {
 
       if (searchParams.has('startIndex') || searchParams.has('stopIndex')) {
         const startIndex = Number(searchParams.get('startIndex'));
-        const stopIndex = (Number(searchParams.get('stopIndex')) || 9) + 1; // inclusive
+        const stopIndex = (Number(searchParams.get('stopIndex')) || 10);
         return mockResponse({ total: filteredItems.length, items: filteredItems.slice(startIndex, stopIndex) }, 500)
       } else {
         return mockResponse({ total: filteredItems.length, items: filteredItems }, 500)

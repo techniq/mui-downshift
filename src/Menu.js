@@ -55,37 +55,51 @@ function MuiVirtualList({
   getListItemProps,
   getEmptyListItemProps,
   getVirtualListProps,
+  getLoadMoreListItemProps,
   menuHeight,
   onRowsRendered,
   registerChild
 }) {
+  const loadMoreListItemProps = getLoadMoreListItemProps && getLoadMoreListItemProps();
+
+  // console.log('items.length', items && items.length);
+
   return (
     <VirtualList
       width={width}
       //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
       height={menuHeight || getHeight(items, menuItemCount, getListItemProps, getEmptyListItemProps)}
-      rowCount={items ? items.length : 0}
+      rowCount={(items ? items.length : 0) + (loadMoreListItemProps ? 1 : 0)}
       rowHeight={({ index }) => {
-        const item = items[index];
-        const listItemProps = getListItemProps({ item, index });
-        const height = getItemHeight(listItemProps);
-        return height;
+        if (loadMoreListItemProps && index >= items.length) {
+          const height = getItemHeight(loadMoreListItemProps);
+          return height;
+
+        } else {
+          const item = items[index];
+          const listItemProps = getListItemProps({ item, index });
+          const height = getItemHeight(listItemProps);
+          return height;
+        }
       }}
       rowRenderer={({ index, style, key }) => {
-        const item = items[index];
-        const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
-        const props = getItemProps({
-          index,
-          item,
-          isKeyboardFocused: highlightedIndex === index,
-          style:
-            selectedItem === item
-              ? { fontWeight: 'bold', ...style }
-              : style,
-          ...listItemProps
-        });
-
-        return <ListItem key={key} {...props} />;
+        if (loadMoreListItemProps && index >= items.length) {
+          return <ListItem key={key} {...loadMoreListItemProps} style={{ ...loadMoreListItemProps.style, ...style }} />;
+        } else {
+          const item = items[index];
+          const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
+          const props = getItemProps({
+            index,
+            item,
+            isKeyboardFocused: highlightedIndex === index,
+            style:
+              selectedItem === item
+                ? { fontWeight: 'bold', ...style }
+                : style,
+            ...listItemProps
+          });
+          return <ListItem key={key} {...props} />;
+        }
       }}
       noRowsRenderer={() => <ListItem {...getEmptyListItemProps()} /> }
       onRowsRendered={onRowsRendered}

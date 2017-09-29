@@ -15,7 +15,8 @@ Property | Type | Required | Description
 `getInputProps` | Function | | Customize look of Material-UI's TextField.  Do not confuse with Downshift's `getInputProps` passed down to child function
 `getListItemProps` | Function | |  Customize look Material-UI's ListItem for each item
 `getEmptyListItemProps` | Function | | Shows an empty list item with the following props if `items` is empty
-`getInfiniteLoaderProps` | Function |  | If provided, will wrap menu in react-virtualized [InfiniteLoader](https://github.com/bvaughn/react-virtualized/blob/master/docs/InfiniteLoader.md) and pass the props returned from the function.  Be sure to provide all required props (`isRowLoaded`, `rowCount`, and `loadMoreRows`)
+`getInfiniteLoaderProps` | Function |  | If provided, will wrap menu in react-virtualized [InfiniteLoader](https://github.com/bvaughn/react-virtualized/blob/master/docs/InfiniteLoader.md) and pass the props returned from the function.  Be sure to provide all required props (`isRowLoaded`, `rowCount`, and `loadMoreRows`).  Used for infinite scrolling.
+`getLoadMoreListItemProps` | Function | | If defined and returns an object, a list item will be added to the bottom of the list with the returned object as props.  Used for paginated scrolling.
 `getVirtualListrops` | Function |  | Pass or override props provided to underlying react-virtualized [List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md) component
 `menuItemCount` | Number | | Number of items to show on menu before scrolling
 `loading` | Boolean | |  Show loading indicator
