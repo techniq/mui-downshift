@@ -184,3 +184,15 @@ storiesOf('Menu', module)
       onChange={action('onChange')}
     />
   ))
+
+storiesOf('Root', module)
+  .add('change z-index of root', () => (
+    <div>
+      <StarWarsSelect
+        menuItemCount={3}
+        onChange={action('onChange')}
+        getRootProps={() => ({ style: { zIndex: 1 }})}
+      />
+      <div style={{ willChange: 'transform', background: '#ddd' }}>`will-change: "transform"` set</div>
+    </div>
+  ))

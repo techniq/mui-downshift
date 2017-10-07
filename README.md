@@ -24,6 +24,7 @@ Property | Type | Required | Description
 `getInfiniteLoaderProps` | Function |  | If provided, will wrap menu in react-virtualized [InfiniteLoader](https://github.com/bvaughn/react-virtualized/blob/master/docs/InfiniteLoader.md) and pass the props returned from the function.  Be sure to provide all required props (`isRowLoaded`, `rowCount`, and `loadMoreRows`).  Used for infinite scrolling (see demo).
 `getFooterListItemProps` | Function | | If defined and returns an object, a list item will be added to the bottom of the list with the returned object as props.  Useful for paginated scrolling (see demo) and showing loading status beyond the `loading` prop.
 `getVirtualListrops` | Function |  | Pass or override props provided to underlying react-virtualized [List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md) component
+`getRootProps` | Function | | Provide props to the root element that wraps the input and menu components
 `menuItemCount` | Number | | Number of items to show on menu before scrolling.  Default `5`
 `menuHeight` | Number | | Number of pixels to set menu before scrolling.  Overrides `menuItemCount` if set.  Default `null`
 `loading` | Boolean | |  Show loading indicator
