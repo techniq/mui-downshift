@@ -197,3 +197,21 @@ storiesOf('Root', module)
       <div style={{ willChange: 'transform', background: '#ddd' }}>`will-change: "transform"` set</div>
     </div>
   ))
+  .add('overlapping menus', () => (
+    <div>
+      <StarWarsSelect
+        getInputProps={() => ({
+          floatingLabelText: 'Star Wars character',
+          hintText: 'Choose wisely'
+        })}
+        onChange={action('onChange')}
+      />
+      <StarWarsSelect
+        getInputProps={() => ({
+          floatingLabelText: 'Star Wars character',
+          hintText: 'Choose wisely'
+        })}
+        onChange={action('onChange')}
+      />
+    </div>
+  ))

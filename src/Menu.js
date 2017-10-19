@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
 import { List as VirtualList, InfiniteLoader, AutoSizer } from 'react-virtualized';
+import { Popper } from 'react-popper';
+import Portal from 'react-travel';
 
 const LIST_ITEM_HEIGHTS = {
   default: 48,
@@ -124,17 +126,21 @@ function Menu({
   return isOpen ? (
     <AutoSizer>
       {({ width }) => (
-        <Paper style={{ width }} transitionEnabled={false}>
-          { getInfiniteLoaderProps ? (
-            <InfiniteLoader {...getInfiniteLoaderProps()} >
-              {({ onRowsRendered, registerChild }) => (
-                <MuiVirtualList {...props} width={width} onRowsRendered={onRowsRendered} registerChild={registerChild} />
+        <Portal>
+          <Popper placement="bottom-start" style={{ zIndex: 1 }}>
+            <Paper style={{ width }} transitionEnabled={false}>
+              { getInfiniteLoaderProps ? (
+                <InfiniteLoader {...getInfiniteLoaderProps()} >
+                  {({ onRowsRendered, registerChild }) => (
+                    <MuiVirtualList {...props} width={width} onRowsRendered={onRowsRendered} registerChild={registerChild} />
+                  )}
+                </InfiniteLoader>
+              ) : (
+                <MuiVirtualList {...props} width={width} />
               )}
-            </InfiniteLoader>
-          ) : (
-            <MuiVirtualList {...props} width={width} />
-          )}
-        </Paper>
+            </Paper>
+          </Popper>
+        </Portal>
       )}
     </AutoSizer>
   ) : null;

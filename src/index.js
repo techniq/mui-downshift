@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { Manager, Target, Popper } from 'react-popper';
 
 import Input from './Input';
 import Menu from './Menu';
@@ -17,56 +18,61 @@ class MuiDownshift extends Component {
   const { items, getInputProps, getListItemProps, getEmptyListItemProps, getInfiniteLoaderProps, getVirtualListProps, getFooterListItemProps, getRootProps, itemToString, loading, menuHeight, menuItemCount, ...props } = this.props;
 
   return (
-    <Downshift
-      itemCount={items ? items.length : 0} // Needed for windowing
-      itemToString={itemToString}
-      onStateChange={this.handleStateChange}
-      {...props}
-    >
-      { downshiftProps => {
-        const inputProps = {
-          loading: loading,
-          textFieldProps: downshiftProps.getInputProps({
-            ...getInputProps && getInputProps(downshiftProps),
-            //ref: node => (this.inputRef = node),
-          }),
-          actionButtonProps: {
-            open: downshiftProps.isOpen,
-            reset: !!downshiftProps.selectedItem,
-            onToggleClick: () => {
-              downshiftProps.toggleMenu();
-              //this.inputRef.focus();
-            },
-            onCancelClick: () => {
-              downshiftProps.clearSelection();
+    <Manager>
+      <Downshift
+        itemCount={items ? items.length : 0} // Needed for windowing
+        itemToString={itemToString}
+        onStateChange={this.handleStateChange}
+        {...props}
+      >
+        { downshiftProps => {
+          const inputProps = {
+            loading: loading,
+            textFieldProps: downshiftProps.getInputProps({
+              ...getInputProps && getInputProps(downshiftProps),
+              //ref: node => (this.inputRef = node),
+            }),
+            actionButtonProps: {
+              open: downshiftProps.isOpen,
+              reset: !!downshiftProps.selectedItem,
+              onToggleClick: () => {
+                downshiftProps.toggleMenu();
+                //this.inputRef.focus();
+              },
+              onCancelClick: () => {
+                downshiftProps.clearSelection();
+              }
+              // TODO: getActionButtonProps && getActionButtonProps(downshiftProps) ?
             }
-            // TODO: getActionButtonProps && getActionButtonProps(downshiftProps) ?
-          }
-        };
+          };
 
-        const menuProps = {
-          items,
-          highlightedIndex: downshiftProps.highlightedIndex,
-          selectedItem: downshiftProps.selectedItem,
-          isOpen: downshiftProps.isOpen,
-          getItemProps: downshiftProps.getItemProps,
-          getListItemProps,
-          getEmptyListItemProps,
-          getInfiniteLoaderProps,
-          getVirtualListProps,
-          getFooterListItemProps,
-          menuItemCount,
-          menuHeight,
-        };
+          const menuProps = {
+            items,
+            highlightedIndex: downshiftProps.highlightedIndex,
+            selectedItem: downshiftProps.selectedItem,
+            isOpen: downshiftProps.isOpen,
+            getItemProps: downshiftProps.getItemProps,
+            getListItemProps,
+            getEmptyListItemProps,
+            getInfiniteLoaderProps,
+            getVirtualListProps,
+            getFooterListItemProps,
+            menuItemCount,
+            menuHeight,
+          };
 
-        return (
-          <div {...getRootProps && getRootProps()}>
-            <Input {...inputProps} />
-            <Menu {...menuProps} />
-          </div>
-        );
-      }}
-    </Downshift>
+          return (
+            <div {...getRootProps && getRootProps()}>
+              <Target>
+                <Input {...inputProps} />
+              </Target>
+
+              <Menu {...menuProps} />
+            </div>
+          );
+        }}
+      </Downshift>
+    </Manager>
   );
   }
 }
