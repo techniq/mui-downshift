@@ -127,6 +127,7 @@ storiesOf('List item', module)
   ))
   .add('empty list (filtered)', () => (
     <StarWarsSelect
+      items={[]}
       getInputProps={() => ({
         floatingLabelText: 'Star Wars character',
         hintText: 'Choose wisely'
