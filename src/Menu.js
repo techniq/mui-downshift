@@ -4,6 +4,7 @@ import { ListItem } from 'material-ui/List';
 import { List as VirtualList, InfiniteLoader, AutoSizer } from 'react-virtualized';
 import { Popper } from 'react-popper';
 import Portal from 'react-travel';
+import zIndex from 'material-ui/styles/zIndex';
 
 const LIST_ITEM_HEIGHTS = {
   default: 48,
@@ -127,7 +128,7 @@ function Menu({
     <AutoSizer>
       {({ width }) => (
         <Portal>
-          <Popper placement="bottom-start" style={{ zIndex: 1 }}>
+          <Popper placement="bottom-start" style={{ zIndex: zIndex.popover }}>
             <Paper style={{ width }} transitionEnabled={false}>
               { getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps()} >
