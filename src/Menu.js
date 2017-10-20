@@ -87,7 +87,7 @@ function MuiVirtualList({
   return (
     <VirtualList
       width={width}
-      //scrollToIndex={highlightedIndex} // TODO: Mouse scrolling causes weird issue currently.  Seems to be related to `rowHeight` being a function `rowHeight={48}` works fine
+      scrollToIndex={highlightedIndex || 0}
       height={menuHeight || getMenuHeight(items, menuItemCount, getListItemProps, emptyListItemProps, footerListItemProps)}
       rowCount={getRowCount(items, footerListItemProps)}
       rowHeight={({ index }) => getRowHeight(items, index, getListItemProps, footerListItemProps)}
