@@ -10,16 +10,18 @@ import MuiDownshift from '../src';
 const items = starwarsNames.map((text, value) => ({ text, value }));
 
 export default class StarWarsSelect extends Component {
-  state = { filteredItems: items }
+  state = {
+    filteredItems: items,
+  }
 
-  handleStateChange = (changes => {
+  handleStateChange = changes => {
     if (changes.hasOwnProperty('inputValue')) {
       const filteredItems = items.filter(
         item => item.text.toLowerCase().includes(changes.inputValue.toLowerCase())
       );
       this.setState({ filteredItems })
     }
-  })
+  }
 
   render() {
     const { filteredItems } = this.state;
@@ -167,6 +169,12 @@ storiesOf('List item', module)
   })
 
 storiesOf('Menu', module)
+  .add('isOpen = true', () => (
+    <StarWarsSelect
+      isOpen={true}
+      onChange={action('onChange')}
+    />
+  ))
   .add('height by item count (3)', () => (
     <StarWarsSelect
       menuItemCount={3}
