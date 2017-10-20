@@ -88,7 +88,7 @@ function MuiVirtualList({
   return (
     <VirtualList
       width={width}
-      scrollToIndex={highlightedIndex || 0}
+      { ...highlightedIndex != null && { scrollToIndex: highlightedIndex}}
       height={menuHeight || getMenuHeight(items, menuItemCount, getListItemProps, emptyListItemProps, footerListItemProps)}
       rowCount={getRowCount(items, footerListItemProps)}
       rowHeight={({ index }) => getRowHeight(items, index, getListItemProps, footerListItemProps)}
