@@ -12,6 +12,7 @@ For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io
 - Customizable rendering (see `getInputProps`, `getListItemProps`, etc)
 - Control opening menu on input focus (or only on explict toggle) 
 - Control height of menu based on number of items or pixels
+- Uses a portal to solve the z-index / [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) problem and Material UI's popover z-index [value](https://github.com/callemall/material-ui/blob/master/src/styles/zIndex.js)
 - All other capabilities inherited from `downshift`
 
 ### Props
