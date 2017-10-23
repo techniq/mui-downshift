@@ -28,7 +28,6 @@ class MuiDownshift extends Component {
       loading,
       menuHeight,
       menuItemCount,
-      onStateChange, // called in `handleStateChange` above
       ...props
     } = this.props;
 
