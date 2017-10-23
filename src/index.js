@@ -71,7 +71,8 @@ class MuiDownshift extends Component {
               getVirtualListProps,
               getFooterListItemProps,
               menuItemCount,
-              menuHeight
+              menuHeight,
+              downshiftProps // pass down all props to be relayed (ex. `getInfiniteLoaderProps(downshiftProps)`)
             };
 
             return (

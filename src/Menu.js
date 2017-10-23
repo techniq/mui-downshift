@@ -131,7 +131,7 @@ function Menu({
           <Popper placement="bottom-start" style={{ zIndex: zIndex.popover }} onMouseUp={e => e.stopPropagation()}>
             <Paper style={{ width }} transitionEnabled={false}>
               { getInfiniteLoaderProps ? (
-                <InfiniteLoader {...getInfiniteLoaderProps()} >
+                <InfiniteLoader {...getInfiniteLoaderProps(props.downshiftProps)} >
                   {({ onRowsRendered, registerChild }) => (
                     <MuiVirtualList {...props} width={width} onRowsRendered={onRowsRendered} registerChild={registerChild} />
                   )}
