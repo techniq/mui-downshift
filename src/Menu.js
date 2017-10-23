@@ -78,10 +78,11 @@ function MuiVirtualList({
   getVirtualListProps,
   getFooterListItemProps,
   onRowsRendered,
-  registerChild
+  registerChild,
+  downshiftProps
 }) {
-  const emptyListItemProps = getEmptyListItemProps && getEmptyListItemProps();
-  const footerListItemProps = getFooterListItemProps && getFooterListItemProps();
+  const emptyListItemProps = getEmptyListItemProps && getEmptyListItemProps(downshiftProps);
+  const footerListItemProps = getFooterListItemProps && getFooterListItemProps(downshiftProps);
 
   // console.log('items.length', items && items.length);
 
@@ -111,10 +112,10 @@ function MuiVirtualList({
           return <ListItem key={key} {...props} />;
         }
       }}
-      noRowsRenderer={() => <ListItem {...getEmptyListItemProps()} /> }
+      noRowsRenderer={() => <ListItem {...getEmptyListItemProps(downshiftProps)} /> }
       onRowsRendered={onRowsRendered}
       ref={registerChild}
-      {...getVirtualListProps && getVirtualListProps()}
+      {...getVirtualListProps && getVirtualListProps(downshiftProps)}
     />
   )
 }

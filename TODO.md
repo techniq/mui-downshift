@@ -1,8 +1,7 @@
 ##  Bugs
   - Large 'X' on IE
     - https://github.com/callemall/material-ui/issues/5055
-  - `scrollToIndex` issue
-  - Pass downshift props to all get* props (ex. `getInfiniteLoaderProps` / etc)
+  - IE: Loading more items (infinite/pagiations) resets scroll
 
 ## Features
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
@@ -13,7 +12,6 @@
   - Clear items while searching (show "Loading..." or "Searching...")
     - Should be possibly by clearing `items` while `loading === true` but not working.  Also need to distringuish between loading additional items vs. searching
   - Overriding Input icons
-  - DONE: Rich list them (multiline, bolding, etc)
 
 ## Verify
   - Make sure clicking on scroll in IE 11 doesn't close menu
