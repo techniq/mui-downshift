@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import { ListItem } from 'material-ui/List';
 import { List as VirtualList, InfiniteLoader, AutoSizer } from 'react-virtualized';
 import { Popper } from 'react-popper';
 import Portal from 'react-travel';
+import { ListItem } from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 import zIndex from 'material-ui/styles/zIndex';
 
 const LIST_ITEM_HEIGHTS = {

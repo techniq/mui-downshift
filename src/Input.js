@@ -3,10 +3,10 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import LinearProgress from 'material-ui/LinearProgress';
 
+import IconButton from 'material-ui/IconButton';
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
-import IconButton from 'material-ui/IconButton';
 
 function Input({ textFieldProps, actionButtonProps, loading }) {
   return (
