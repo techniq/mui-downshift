@@ -4,7 +4,6 @@
   - `scrollToIndex` issue
   - Pass downshift props to all get* props (ex. `getInfiniteLoaderProps` / etc)
   - Tab complete to down arrow causes ref error
-  - Need to change react (and maybe material-ui) as a peerDependency (might fix tab complete issue)
 
 ## Features
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
