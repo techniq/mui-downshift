@@ -3,7 +3,6 @@
     - https://github.com/callemall/material-ui/issues/5055
   - `scrollToIndex` issue
   - Pass downshift props to all get* props (ex. `getInfiniteLoaderProps` / etc)
-  - Tab complete to down arrow causes ref error
 
 ## Features
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
