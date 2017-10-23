@@ -128,7 +128,7 @@ function Menu({
     <AutoSizer>
       {({ width }) => (
         <Portal>
-          <Popper placement="bottom-start" style={{ zIndex: zIndex.popover }}>
+          <Popper placement="bottom-start" style={{ zIndex: zIndex.popover }} onMouseUp={e => e.stopPropagation()}>
             <Paper style={{ width }} transitionEnabled={false}>
               { getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps()} >

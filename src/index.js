@@ -14,21 +14,6 @@ class MuiDownshift extends Component {
     menuItemCount: 5
   };
 
-  state = {
-    isOpen: false
-  }
-
-  handleStateChange = changes => {
-    // Workaround: https://github.com/paypal/downshift/issues/164#issuecomment-326393357
-    if (changes.hasOwnProperty('isOpen')) {
-      setTimeout(() => {
-        this.setState({ isOpen: changes.isOpen });
-      });
-    }
-
-    this.props.onStateChange && this.props.onStateChange(changes);
-  };
-
   render() {
     const {
       items,
@@ -52,8 +37,6 @@ class MuiDownshift extends Component {
         <Downshift
           itemCount={items ? items.length : 0} // Needed for windowing
           itemToString={itemToString}
-          onStateChange={this.handleStateChange}
-          isOpen={this.state.isOpen}
           {...props}
         >
           {downshiftProps => {
