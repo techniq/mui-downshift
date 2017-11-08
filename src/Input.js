@@ -12,8 +12,8 @@ function Input({ textFieldProps, actionButtonProps, loading }) {
   return (
     <div style={{ position: 'relative' }}>
       <TextField {...textFieldProps} fullWidth={true} />
-      <ActionButton {...actionButtonProps} />
-      {loading &&
+      { !textFieldProps.disabled && <ActionButton {...actionButtonProps} /> }
+      { loading && (
         <LinearProgress
           style={{
             position: 'absolute',
@@ -22,7 +22,8 @@ function Input({ textFieldProps, actionButtonProps, loading }) {
             right: 0,
             height: 2
           }}
-        />}
+        />
+      )}
     </div>
   );
 }

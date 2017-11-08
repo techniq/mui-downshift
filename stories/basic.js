@@ -38,6 +38,7 @@ export default class StarWarsSelect extends Component {
 storiesOf('Basic', module)
   .add('defaults (empty)', () => <MuiDownshift />)
   .add('items only', () => <StarWarsSelect />)
+  .add('disabled', () => <StarWarsSelect getInputProps={() => ({ disabled: true })} />)
   .add('loading', () => <StarWarsSelect loading />);
 
 storiesOf('Input', module)
