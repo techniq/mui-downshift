@@ -12,6 +12,7 @@ For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io
 - Customizable rendering (see `getInputProps`, `getListItemProps`, etc)
 - Control opening menu on input focus (or only on explict toggle) 
 - Control height of menu based on number of items or pixels
+- Dynamic row heights using react-virtualized's [CellMeasurer](https://github.com/bvaughn/react-virtualized/blob/master/docs/CellMeasurer.md)
 - Uses a portal to solve the z-index / [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) problem and Material UI's popover z-index [value](https://github.com/callemall/material-ui/blob/master/src/styles/zIndex.js)
 - All other capabilities inherited from `downshift`
 
@@ -24,7 +25,7 @@ Property | Type | Required | Description
 `getEmptyListItemProps` | Function | | Shows an empty list item with the following props if `items` is empty
 `getInfiniteLoaderProps` | Function |  | If provided, will wrap menu in react-virtualized [InfiniteLoader](https://github.com/bvaughn/react-virtualized/blob/master/docs/InfiniteLoader.md) and pass the props returned from the function.  Be sure to provide all required props (`isRowLoaded`, `rowCount`, and `loadMoreRows`).  Used for infinite scrolling (see demo).
 `getFooterListItemProps` | Function | | If defined and returns an object, a list item will be added to the bottom of the list with the returned object as props.  Useful for paginated scrolling (see demo) and showing loading status beyond the `loading` prop.
-`getVirtualListProps` | Function |  | Pass or override props provided to underlying react-virtualized [List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md) component
+`getVirtualListProps` | Function |  | Pass or override props provided to underlying react-virtualized [List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md) component.  Note: Setting `rowHeight` will remove `CellMeasurer` usage, which is used to calculate heights dynamically.  This can provide better performance, especially if set as a static value (ex. `48`)
 `getRootProps` | Function | | Provide props to the root element that wraps the input and menu components
 `menuItemCount` | Number | | Number of items to show on menu before scrolling.  Default `5`
 `menuHeight` | Number | | Number of pixels to set menu before scrolling.  Overrides `menuItemCount` if set.  Default `null`

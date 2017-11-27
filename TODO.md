@@ -4,6 +4,7 @@
   - IE: Loading more items (infinite/pagiations) resets scroll
 
 ## Features
+  - Material UI 1.0 support
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
   - Multiselect (chips)
   - Highlight inputValue on items ([react-highlight-words](https://github.com/bvaughn/react-highlight-words))

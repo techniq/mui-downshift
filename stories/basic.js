@@ -114,6 +114,19 @@ storiesOf('List item', module)
       onChange={action('onChange')}
     />
   ))
+  .add('variable props', () => (
+    <StarWarsSelect
+      getListItemProps={({ item, index }) => {
+        return (index % 2) ? {
+          primaryText: item.text,
+          secondaryText: 'character'
+        } : {
+          primaryText: item.text,
+        }
+      }}
+      onChange={action('onChange')}
+    />
+  ))
   .add('all', () => (
     <StarWarsSelect
       getInputProps={() => ({
@@ -142,6 +155,14 @@ storiesOf('List item', module)
           color: 'rgba(0,0,0,.5)'
         },
         disabled: true
+      })}
+      onChange={action('onChange')}
+    />
+  ))
+  .add('long text', () => (
+    <StarWarsSelect
+      getListItemProps={({ item, index }) => ({
+        primaryText: `${item.text} ${item.text} ${item.text} ${item.text}`,
       })}
       onChange={action('onChange')}
     />
@@ -191,6 +212,32 @@ storiesOf('Menu', module)
   .add('height by pixels (315)', () => (
     <StarWarsSelect
       menuHeight={315}
+      onChange={action('onChange')}
+    />
+  ))
+
+storiesOf('VirtualList', module)
+  .add('static rowHeight (no CellMeasurer)', () => (
+    <StarWarsSelect
+      getVirtualListProps={() => ({ rowHeight: 48 })}
+      onChange={action('onChange')}
+    />
+  ))
+  .add('dynamic rowHeight (no CellMeasurer)', () => (
+    <StarWarsSelect
+      getListItemProps={({ item, index }) => {
+        return (index % 2) ? {
+          primaryText: item.text,
+          secondaryText: 'character'
+        } : {
+          primaryText: item.text,
+        }
+      }}
+      getVirtualListProps={() => {
+        return {
+          rowHeight: ({ index }) => index % 2 ? 72 : 48 
+        }
+      }}
       onChange={action('onChange')}
     />
   ))

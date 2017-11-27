@@ -1,62 +1,29 @@
 import React, { Component } from 'react';
-import { List as VirtualList, InfiniteLoader, AutoSizer } from 'react-virtualized';
+import {
+  List as VirtualList,
+  InfiniteLoader,
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache
+} from 'react-virtualized';
 import { Popper } from 'react-popper';
 import Portal from 'react-travel';
 import { ListItem } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import zIndex from 'material-ui/styles/zIndex';
 
-const LIST_ITEM_HEIGHTS = {
-  default: 48,
-  withAvatar: 56,
-  withSecondaryText: 72
-};
-
-function hasProp(obj, props) {
-  if (Array.isArray(props)) {
-    return props.some(prop => prop in obj && obj[prop]);
-  } else {
-    return props in obj && obj[props]
-  }
-}
-
-function getMenuHeight(items, menuItemCount, getListItemProps, emptyListItemProps, footerListItemProps) {
+function getMenuHeight(rowHeight, items, menuItemCount, emptyListItemProps, footerListItemProps) {
   const rowCount = getRowCount(items, footerListItemProps);
   if (rowCount) {
     const visibleCount = Math.min(rowCount, menuItemCount); // Maximum items before scrolling
     let height = 0;
     for (let i = 0; i < visibleCount; i++) {
-      height += getRowHeight(items, i, getListItemProps, footerListItemProps) 
+      height += (typeof rowHeight === 'function') ? rowHeight({ index: i }) : rowHeight
     }
     return height;
   } else if (emptyListItemProps) {
-    return getItemHeight(emptyListItemProps);
+    return (typeof rowHeight === 'function') ? rowHeight({ index: 0 }) : rowHeight
   } else {
-    // No `items` and no `getEmptyListItemProps` defined
-    return 0;
-  }
-}
-
-function getItemHeight(listItemProps) {
-  // Finds the largest height an item can be based on its props
-  if (hasProp(listItemProps, 'secondaryText')) {
-    return LIST_ITEM_HEIGHTS.withSecondaryText
-  } else if (hasProp(listItemProps, ['leftAvatar', 'rightAvatar'])) {
-    return LIST_ITEM_HEIGHTS.withAvatar
-  } else {
-    return LIST_ITEM_HEIGHTS.default
-  }
-}
-
-function getRowHeight(items, index, getListItemProps, footerListItemProps) {
-  if (footerListItemProps && index === (items ? items.length : 1)) {
-    return getItemHeight(footerListItemProps);
-  } else if (items && index < items.length) {
-    const item = items[index];
-    const listItemProps = getListItemProps({ item, index });
-    return getItemHeight(listItemProps);
-  } else {
-    // No `items` and no `getFooterListItemProps` defined
     return 0;
   }
 }
@@ -65,59 +32,95 @@ function getRowCount(items, footerListItemProps) {
   return (items ? items.length : 0) + (footerListItemProps ? 1 : 0)
 }
 
-function MuiVirtualList({
-  items,
-  width,
-  menuItemCount,
-  menuHeight,
-  highlightedIndex,
-  selectedItem,
-  getItemProps,
-  getListItemProps,
-  getEmptyListItemProps,
-  getVirtualListProps,
-  getFooterListItemProps,
-  onRowsRendered,
-  registerChild,
-  downshiftProps
-}) {
-  const emptyListItemProps = getEmptyListItemProps && getEmptyListItemProps(downshiftProps);
-  const footerListItemProps = getFooterListItemProps && getFooterListItemProps(downshiftProps);
+class MuiVirtualList extends Component {
+  cache = new CellMeasurerCache({
+    defaultHeight: 48,
+    fixedWidth: true
+  });
 
-  // console.log('items.length', items && items.length);
+  render () {
+    const {
+      items,
+      width,
+      menuItemCount,
+      menuHeight,
+      highlightedIndex,
+      selectedItem,
+      getItemProps,
+      getListItemProps,
+      getEmptyListItemProps,
+      getVirtualListProps,
+      getFooterListItemProps,
+      onRowsRendered,
+      registerChild,
+      downshiftProps
+    } = this.props;
 
-  return (
-    <VirtualList
-      width={width}
-      { ...highlightedIndex != null && { scrollToIndex: highlightedIndex}}
-      height={menuHeight || getMenuHeight(items, menuItemCount, getListItemProps, emptyListItemProps, footerListItemProps)}
-      rowCount={getRowCount(items, footerListItemProps)}
-      rowHeight={({ index }) => getRowHeight(items, index, getListItemProps, footerListItemProps)}
-      rowRenderer={({ index, style, key }) => {
-        if (footerListItemProps && index === (items ? items.length : 1)) {
-          return <ListItem key={key} {...footerListItemProps} style={{ ...footerListItemProps.style, ...style }} />;
-        } else {
-          const item = items[index];
-          const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
-          const props = getItemProps({
-            index,
-            item,
-            isKeyboardFocused: highlightedIndex === index,
-            style:
-              selectedItem === item
-                ? { fontWeight: 'bold', ...style }
-                : style,
-            ...listItemProps
-          });
-          return <ListItem key={key} {...props} />;
-        }
-      }}
-      noRowsRenderer={() => <ListItem {...getEmptyListItemProps(downshiftProps)} /> }
-      onRowsRendered={onRowsRendered}
-      ref={registerChild}
-      {...getVirtualListProps && getVirtualListProps(downshiftProps)}
-    />
-  )
+    const emptyListItemProps = getEmptyListItemProps && getEmptyListItemProps(downshiftProps);
+    const footerListItemProps = getFooterListItemProps && getFooterListItemProps(downshiftProps);
+    const virtualListProps = getVirtualListProps && getVirtualListProps(downshiftProps);
+    const rowHeight = (virtualListProps && virtualListProps.rowHeight) ? virtualListProps.rowHeight : this.cache.rowHeight;
+    const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight); 
+
+    // console.log('items.length', items && items.length);
+
+    return (
+      <VirtualList
+        width={width}
+        { ...highlightedIndex != null && { scrollToIndex: highlightedIndex}}
+        height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, emptyListItemProps, footerListItemProps)}
+        rowCount={getRowCount(items, footerListItemProps)}
+        rowHeight={rowHeight}
+        rowRenderer={({ index, style, parent, key }) => {
+          let props = null;
+          if (footerListItemProps && index === (items ? items.length : 1)) {
+            props = footerListItemProps;
+          } else {
+            const item = items[index];
+            const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
+
+            props = getItemProps({
+              index,
+              item,
+              isKeyboardFocused: highlightedIndex === index,
+              ...selectedItem === item && { style: { fontWeight: 'bold' } },
+              ...listItemProps
+            });
+          }
+
+          if (useCellMeasurer) {
+            return (
+              <CellMeasurer
+                cache={this.cache}
+                columnIndex={0}
+                key={key}
+                parent={parent}
+                rowIndex={index}
+              >
+                <div style={style}>
+                  <ListItem key={key} {...props} />
+                </div>
+              </CellMeasurer>
+            );
+          } else {
+            return (
+              <ListItem
+                key={key}
+                {...props}
+                style={{ ...props.style, ...style }}
+              />
+            )
+          }
+
+        }}
+        noRowsRenderer={() => <ListItem {...emptyListItemProps} /> } // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height
+        onRowsRendered={onRowsRendered}
+        {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
+        ref={registerChild}
+        {...virtualListProps}
+      />
+    )
+  }
 }
 
 function Menu({
