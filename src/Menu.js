@@ -77,7 +77,7 @@ class MuiVirtualList extends Component {
             props = footerListItemProps;
           } else {
             const item = items[index];
-            const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem, style })
+            const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem })
 
             props = getItemProps({
               index,
