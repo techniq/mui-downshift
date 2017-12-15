@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Fetch from 'react-fetch-component';
-import fetchMock from 'fetch-mock';
 import { all as starwarsNames } from 'starwars-names';
 
 import MuiDownshift from '../src';
+import MockFetch from './components/MockFetch';
 
 const items = starwarsNames.map((text, value) => ({ text, value }));
 
 storiesOf('Fetch', module)
   .add('basic', () => (
-    <MockFetch url="https://example.com/">
+    <MockFetch items={items} url="https://example.com/">
       {({ loading, data, error, fetch }) => (
         <MuiDownshift
           items={data && data.items}
@@ -27,7 +26,7 @@ storiesOf('Fetch', module)
   ))
 
   .add('no initial fetch', () => (
-    <MockFetch url="https://example.com/" manual>
+    <MockFetch items={items} url="https://example.com/" manual>
       {({ loading, data, error, fetch }) => (
         <MuiDownshift
           items={data && data.items}
@@ -45,7 +44,7 @@ storiesOf('Fetch', module)
   ))
 
   .add('infinte loading', () => (
-    <MockFetch url="https://example.com/?startIndex=0&stopIndex=20" 
+    <MockFetch items={items} url="https://example.com/?startIndex=0&stopIndex=20" 
       onDataChange={(newData, currentData = { total: 0, items: [] }) => {
         return { total: newData.total, items: [...currentData.items, ...newData.items] }
       }}
@@ -96,7 +95,7 @@ storiesOf('Fetch', module)
   ))
 
   .add('paginated loading', () => (
-    <MockFetch url="https://example.com/?startIndex=0&stopIndex=20" 
+    <MockFetch items={items} url="https://example.com/?startIndex=0&stopIndex=20" 
       onDataChange={(newData, currentData = { total: 0, items: [] }) => {
         return { total: newData.total, items: [...currentData.items, ...newData.items] }
       }}
@@ -155,48 +154,3 @@ storiesOf('Fetch', module)
       )}
     </MockFetch>
   ))
-
-/* Mock for consistent fetch responses */
-class MockFetch extends Component {
-  componentWillMount() {
-    fetchMock.get('*', url => {
-      let filteredItems = items;
-
-      var urlObj = new URL(url);
-      var searchParams = new URLSearchParams(urlObj.search);
-      if (searchParams.has('q')) {
-        const query = searchParams.get('q')
-        if (query) {
-          filteredItems = items.filter(
-            item => item.text.toLowerCase().includes(query.toLowerCase())
-          );
-        }
-      }
-
-      let response = null
-      if (searchParams.has('startIndex') || searchParams.has('stopIndex')) {
-        const startIndex = Number(searchParams.get('startIndex'));
-        const stopIndex = (Number(searchParams.get('stopIndex')) || 10);
-        response = { total: filteredItems.length, items: filteredItems.slice(startIndex, stopIndex) };
-      } else {
-        response = { total: filteredItems.length, items: filteredItems };
-      }
-      console.log('fetch', url, response);
-      return mockResponse(response, 500)
-    });
-  }
-
-  componentWillUnmount() {
-    fetchMock.restore();
-  }
-
-  render() {
-    return <Fetch {...this.props} />;
-  }
-}
-
-function mockResponse(response, delay) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(response), delay);
-  });
-}
