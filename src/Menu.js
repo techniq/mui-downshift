@@ -38,6 +38,16 @@ class MuiVirtualList extends Component {
     fixedWidth: true
   });
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.width !== nextProps.width ||
+      this.props.items !== nextProps.items
+    ) {
+      this.cache.clearAll();
+      this.list.recomputeRowHeights(0);
+    }
+  }
+
   render () {
     const {
       items,
@@ -116,7 +126,12 @@ class MuiVirtualList extends Component {
         noRowsRenderer={() => <ListItem {...emptyListItemProps} /> } // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height
         onRowsRendered={onRowsRendered}
         {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
-        ref={registerChild}
+        ref={el => {
+          this.list = el
+          if (registerChild) {
+            registerChild(el)
+          }
+        }}
         {...virtualListProps}
       />
     )
