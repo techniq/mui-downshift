@@ -2089,9 +2089,9 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
-downshift@^1.4.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-1.14.0.tgz#43b4c236c28c831db369e75affd6611ce6785a88"
+downshift@^1.22.5:
+  version "1.22.5"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-1.22.5.tgz#48103b2f80259157b01b96d6bdc344c51ce0743e"
 
 ecc-jsbn@~0.1.1:
   version "0.1.1"
@@ -3325,7 +3325,7 @@ mantra-core@^1.7.0:
     react-komposer "^1.9.0"
     react-simple-di "^1.2.0"
 
-material-ui@^0.19.1:
+material-ui@^0.19.4:
   version "0.19.4"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.19.4.tgz#ca9cdca8aa8bb594dfac5db38ec9ff045a323587"
   dependencies:
@@ -4251,7 +4251,7 @@ react-docgen@^2.15.0:
     node-dir "^0.1.10"
     recast "^0.12.6"
 
-react-dom@^15.6.1:
+react-dom@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
   dependencies:
@@ -4380,9 +4380,9 @@ react-treebeard@^2.0.3:
     shallowequal "^0.2.2"
     velocity-react "^1.3.1"
 
-react-virtualized@^9.9.0:
-  version "9.11.1"
-  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.11.1.tgz#984b59987d9f9f58937bf15f365c659b198a4968"
+react-virtualized@^9.11.1:
+  version "9.14.1"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.14.1.tgz#4d08385728e33e43205789b42c14e7a85b1cf2bd"
   dependencies:
     babel-runtime "^6.23.0"
     classnames "^2.2.3"
@@ -4390,7 +4390,7 @@ react-virtualized@^9.9.0:
     loose-envify "^1.3.0"
     prop-types "^15.5.4"
 
-react@^15.6.1:
+react@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
   dependencies:
