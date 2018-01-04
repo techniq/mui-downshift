@@ -8,11 +8,36 @@ import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 
-function Input({ textFieldProps, actionButtonProps, loading }) {
+function Input({ getInputProps, loading, downshiftProps }) {
+  const textFieldProps = downshiftProps.getInputProps({ ...(getInputProps && getInputProps(downshiftProps)) })
   return (
     <div style={{ position: 'relative' }}>
-      <TextField {...textFieldProps} fullWidth={true} />
-      { !textFieldProps.disabled && <ActionButton {...actionButtonProps} /> }
+      <TextField
+        fullWidth={true}
+        {...textFieldProps}
+      />
+
+      <div
+        style={{
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          display: 'flex'
+        }}
+      >
+        { !textFieldProps.disabled && !!downshiftProps.selectedItem && (
+          <IconButton onClick={downshiftProps.clearSelection}>
+            <Cancel />
+          </IconButton>
+        )}
+
+        { !textFieldProps.disabled && (
+          <IconButton onClick={downshiftProps.toggleMenu}>
+            {downshiftProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
+          </IconButton>
+        )}
+      </div>
+
       { loading && (
         <LinearProgress
           style={{
@@ -25,42 +50,6 @@ function Input({ textFieldProps, actionButtonProps, loading }) {
         />
       )}
     </div>
-  );
-}
-
-function ActionButton({ reset, open, onCancelClick, onToggleClick }) {
-  return reset
-    ? <CancelButton onClick={onCancelClick} />
-    : <ToggleButton onClick={onToggleClick} open={open} />;
-}
-
-function CancelButton(props) {
-  return (
-    <IconButton
-      style={{
-        position: 'absolute',
-        right: 0,
-        bottom: 0
-      }}
-      {...props}
-    >
-      <Cancel />
-    </IconButton>
-  );
-}
-
-function ToggleButton({ open, ...props }) {
-  return (
-    <IconButton
-      style={{
-        position: 'absolute',
-        right: 0,
-        bottom: 0
-      }}
-      {...props}
-    >
-      {open ? <ArrowDropUp /> : <ArrowDropDown />}
-    </IconButton>
   );
 }
 

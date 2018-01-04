@@ -54,9 +54,6 @@ class MuiVirtualList extends Component {
       width,
       menuItemCount,
       menuHeight,
-      highlightedIndex,
-      selectedItem,
-      getItemProps,
       getListItemProps,
       getEmptyListItemProps,
       getVirtualListProps,
@@ -77,7 +74,7 @@ class MuiVirtualList extends Component {
     return (
       <VirtualList
         width={width}
-        { ...highlightedIndex != null && { scrollToIndex: highlightedIndex}}
+        { ...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex}}
         height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, emptyListItemProps, footerListItemProps)}
         rowCount={getRowCount(items, footerListItemProps)}
         rowHeight={rowHeight}
@@ -87,13 +84,18 @@ class MuiVirtualList extends Component {
             props = footerListItemProps;
           } else {
             const item = items[index];
-            const listItemProps = getListItemProps({ item, index, highlightedIndex, selectedItem })
+            const listItemProps = getListItemProps({
+              item,
+              index,
+              highlightedIndex: downshiftProps.highlightedIndex,
+              selectedItem: downshiftProps.selectedItem
+            })
 
-            props = getItemProps({
+            props = downshiftProps.getItemProps({
               index,
               item,
-              isKeyboardFocused: highlightedIndex === index,
-              ...selectedItem === item && { style: { fontWeight: 'bold' } },
+              isKeyboardFocused: downshiftProps.highlightedIndex === index,
+              ...downshiftProps.selectedItem === item && { style: { fontWeight: 'bold' } },
               ...listItemProps
             });
           }
@@ -123,7 +125,7 @@ class MuiVirtualList extends Component {
           }
 
         }}
-        noRowsRenderer={() => <ListItem {...emptyListItemProps} /> } // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height
+        noRowsRenderer={() => <ListItem {...emptyListItemProps} /> } // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height.  This might be  fixed now that the cache is cleared when `items` are changed
         onRowsRendered={onRowsRendered}
         {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
         ref={el => {
@@ -138,12 +140,8 @@ class MuiVirtualList extends Component {
   }
 }
 
-function Menu({
-  isOpen,
-  getInfiniteLoaderProps,
-  ...props
-}) {
-  return isOpen ? (
+function Menu({ getInfiniteLoaderProps, ...props }) {
+  return props.downshiftProps.isOpen ? (
     <AutoSizer>
       {({ width }) => (
         <Portal>

@@ -28,6 +28,7 @@ class MuiDownshift extends Component {
       loading,
       menuHeight,
       menuItemCount,
+      selectedItem,
       ...props
     } = this.props;
 
@@ -39,49 +40,27 @@ class MuiDownshift extends Component {
           {...props}
         >
           {downshiftProps => {
-            const inputProps = {
-              loading: loading,
-              textFieldProps: downshiftProps.getInputProps({
-                ...(getInputProps && getInputProps(downshiftProps))
-                //ref: node => (this.inputRef = node),
-              }),
-              actionButtonProps: {
-                open: downshiftProps.isOpen,
-                reset: !!downshiftProps.selectedItem,
-                onToggleClick: () => {
-                  downshiftProps.toggleMenu();
-                  //this.inputRef.focus();
-                },
-                onCancelClick: () => {
-                  downshiftProps.clearSelection();
-                }
-                // TODO: getActionButtonProps && getActionButtonProps(downshiftProps) ?
-              }
-            };
-
-            const menuProps = {
-              items,
-              highlightedIndex: downshiftProps.highlightedIndex,
-              selectedItem: downshiftProps.selectedItem,
-              isOpen: downshiftProps.isOpen,
-              getItemProps: downshiftProps.getItemProps,
-              getListItemProps,
-              getEmptyListItemProps,
-              getInfiniteLoaderProps,
-              getVirtualListProps,
-              getFooterListItemProps,
-              menuItemCount,
-              menuHeight,
-              downshiftProps // pass down all props to be relayed (ex. `getInfiniteLoaderProps(downshiftProps)`)
-            };
-
             return (
               <div {...getRootProps && getRootProps()}>
                 <Target>
-                  <Input {...inputProps} />
+                  <Input
+                    getInputProps={getInputProps}
+                    loading={loading}
+                    downshiftProps={downshiftProps}
+                  />
                 </Target>
 
-                <Menu {...menuProps} />
+                <Menu 
+                  items={items}
+                  getListItemProps={getListItemProps}
+                  getEmptyListItemProps={getEmptyListItemProps}
+                  getInfiniteLoaderProps={getInfiniteLoaderProps}
+                  getVirtualListProps={getVirtualListProps}
+                  getFooterListItemProps={getFooterListItemProps}
+                  menuItemCount={menuItemCount}
+                  menuHeight={menuHeight}
+                  downshiftProps={downshiftProps} // pass down all props to be relayed (ex. `getInfiniteLoaderProps(downshiftProps)`)
+                />
               </div>
             );
           }}
