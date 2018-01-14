@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Avatar from 'material-ui/Avatar';
-import PersonIcon from 'material-ui/svg-icons/social/person';
+import PersonIcon from 'material-ui-icons/Person';
 
 import MuiDownshift from '../src';
 import StarWarsSelect from './components/StarWarsSelect';

@@ -4,9 +4,9 @@ import TextField from 'material-ui/TextField';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import IconButton from 'material-ui/IconButton';
-import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
-import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up';
-import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
+import ArrowDropUp from 'material-ui-icons/ArrowDropUp';
+import Cancel from 'material-ui-icons/Cancel';
 
 function Input({ getInputProps, loading, downshiftProps }) {
   const textFieldProps = downshiftProps.getInputProps({ ...(getInputProps && getInputProps(downshiftProps)) })
