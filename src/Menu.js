@@ -8,12 +8,20 @@ import {
 } from 'react-virtualized';
 import { Popper } from 'react-popper';
 import Portal from 'react-travel';
-import { ListItem } from 'material-ui/List';
+import classnames from 'classnames';
+
 import Paper from 'material-ui/Paper';
+import { withStyles } from 'material-ui/styles';
 import zIndex from 'material-ui/styles/zIndex';
 
-function getMenuHeight(rowHeight, items, menuItemCount, emptyListItemProps, footerListItemProps) {
-  const rowCount = getRowCount(items, footerListItemProps);
+const styles = theme => ({
+  keyboardFocused: {
+    backgroundColor: theme.palette.text.divider,
+  },
+})
+
+function getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter) {
+  const rowCount = getRowCount(items, includeFooter);
   if (rowCount) {
     const visibleCount = Math.min(rowCount, menuItemCount); // Maximum items before scrolling
     let height = 0;
@@ -21,15 +29,16 @@ function getMenuHeight(rowHeight, items, menuItemCount, emptyListItemProps, foot
       height += (typeof rowHeight === 'function') ? rowHeight({ index: i }) : rowHeight
     }
     return height;
-  } else if (emptyListItemProps) {
+  } else if (showEmpty) {
+    // Return the height of a single item
     return (typeof rowHeight === 'function') ? rowHeight({ index: 0 }) : rowHeight
   } else {
     return 0;
   }
 }
 
-function getRowCount(items, footerListItemProps) {
-  return (items ? items.length : 0) + (footerListItemProps ? 1 : 0)
+function getRowCount(items, includeFooter) {
+  return (items ? items.length : 0) + (includeFooter ? 1 : 0)
 }
 
 class MuiVirtualList extends Component {
@@ -54,17 +63,16 @@ class MuiVirtualList extends Component {
       width,
       menuItemCount,
       menuHeight,
-      getListItemProps,
-      getEmptyListItemProps,
+      getListItem,
+      showEmpty,
+      includeFooter,
       getVirtualListProps,
-      getFooterListItemProps,
       onRowsRendered,
       registerChild,
-      downshiftProps
+      downshiftProps,
+      classes
     } = this.props;
 
-    const emptyListItemProps = getEmptyListItemProps && getEmptyListItemProps(downshiftProps);
-    const footerListItemProps = getFooterListItemProps && getFooterListItemProps(downshiftProps);
     const virtualListProps = getVirtualListProps && getVirtualListProps(downshiftProps);
     const rowHeight = (virtualListProps && virtualListProps.rowHeight) ? virtualListProps.rowHeight : this.cache.rowHeight;
     const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight); 
@@ -75,30 +83,16 @@ class MuiVirtualList extends Component {
       <VirtualList
         width={width}
         { ...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex}}
-        height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, emptyListItemProps, footerListItemProps)}
-        rowCount={getRowCount(items, footerListItemProps)}
+        height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter)}
+        rowCount={getRowCount(items, includeFooter)}
         rowHeight={rowHeight}
         rowRenderer={({ index, style, parent, key }) => {
-          let props = null;
-          if (footerListItemProps && index === (items ? items.length : 1)) {
-            props = footerListItemProps;
-          } else {
-            const item = items[index];
-            const listItemProps = getListItemProps({
-              item,
-              index,
-              highlightedIndex: downshiftProps.highlightedIndex,
-              selectedItem: downshiftProps.selectedItem
-            })
-
-            props = downshiftProps.getItemProps({
-              index,
-              item,
-              isKeyboardFocused: downshiftProps.highlightedIndex === index,
-              ...downshiftProps.selectedItem === item && { style: { fontWeight: 'bold' } },
-              ...listItemProps
-            });
-          }
+          const item = items ? items[index] : null;
+          const isHighlighted = downshiftProps.highlightedIndex === index;
+          const className = classnames({ [classes.keyboardFocused]: isHighlighted });
+          // Convenience helper to simplify standard usage
+          const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props })
+          const listItem = getListItem({ getItemProps, item, index, downshiftProps, style });
 
           if (useCellMeasurer) {
             return (
@@ -110,22 +104,29 @@ class MuiVirtualList extends Component {
                 rowIndex={index}
               >
                 <div style={style}>
-                  <ListItem key={key} {...props} />
+                  {listItem}
                 </div>
               </CellMeasurer>
             );
           } else {
             return (
-              <ListItem
-                key={key}
-                {...props}
-                style={{ ...props.style, ...style }}
-              />
+              <div style={style} key={key}>
+                {listItem}
+              </div>
             )
           }
 
         }}
-        noRowsRenderer={() => <ListItem {...emptyListItemProps} /> } // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height.  This might be  fixed now that the cache is cleared when `items` are changed
+        noRowsRenderer={() => {
+          // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height.  This might be  fixed now that the cache is cleared when `items` are changed
+          const index = 0;
+          const item = null;
+          const isHighlighted = downshiftProps.highlightedIndex === index;
+          const className = classnames({ [classes.keyboardFocused]: isHighlighted });
+          // Convenience helper to simplify standard usage
+          const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props })
+          return getListItem({ getItemProps, item, index, downshiftProps });
+        }}  
         onRowsRendered={onRowsRendered}
         {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
         ref={el => {
@@ -146,7 +147,7 @@ function Menu({ getInfiniteLoaderProps, ...props }) {
       {({ width }) => (
         <Portal>
           <Popper placement="bottom-start" style={{ zIndex: zIndex.popover }} onMouseUp={e => e.stopPropagation()}>
-            <Paper style={{ width }} transitionEnabled={false}>
+            <Paper style={{ width }}>
               { getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps(props.downshiftProps)} >
                   {({ onRowsRendered, registerChild }) => (
@@ -164,4 +165,4 @@ function Menu({ getInfiniteLoaderProps, ...props }) {
   ) : null;
 }
 
-export default Menu;
+export default withStyles(styles)(Menu);

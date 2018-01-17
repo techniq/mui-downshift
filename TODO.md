@@ -1,10 +1,7 @@
 ##  Bugs
-  - Large 'X' on IE
-    - https://github.com/callemall/material-ui/issues/5055
   - IE: Loading more items (infinite/pagiations) resets scroll
 
 ## Features
-  - Material UI 1.0 support
   - Nested / optgroups (using `<Subheader />` and `<Divider />` or nesting of `<ListItem>`s)
   - Multiselect (chips or "4 selected" and show select in dropdown (maybe even top))
   - Highlight inputValue on items ([react-highlight-words](https://github.com/bvaughn/react-highlight-words))

@@ -1,7 +1,9 @@
 import React from 'react';
 
 import TextField from 'material-ui/TextField';
-import LinearProgress from 'material-ui/LinearProgress';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import MuiInput, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { LinearProgress } from 'material-ui/Progress';
 
 import IconButton from 'material-ui/IconButton';
 import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
@@ -9,47 +11,39 @@ import ArrowDropUp from 'material-ui-icons/ArrowDropUp';
 import Cancel from 'material-ui-icons/Cancel';
 
 function Input({ getInputProps, loading, downshiftProps }) {
-  const textFieldProps = downshiftProps.getInputProps({ ...(getInputProps && getInputProps(downshiftProps)) })
+  const { label, disabled, ...inputProps} = downshiftProps.getInputProps({ ...(getInputProps && getInputProps(downshiftProps)) })
+
   return (
-    <div style={{ position: 'relative' }}>
-      <TextField
-        fullWidth={true}
-        {...textFieldProps}
+    <FormControl disabled={disabled} fullWidth>
+      <InputLabel>{label}</InputLabel>
+      <MuiInput
+        endAdornment={
+          <InputAdornment position="end">
+            { !disabled && !!downshiftProps.selectedItem && (
+              <IconButton onClick={downshiftProps.clearSelection}>
+                <Cancel />
+              </IconButton>
+            )}
+    
+            { !disabled && (
+              <IconButton onClick={downshiftProps.toggleMenu}>
+                {downshiftProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
+              </IconButton>
+            )}
+          </InputAdornment>
+        }
+        {...inputProps}
       />
-
-      <div
-        style={{
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          display: 'flex'
-        }}
-      >
-        { !textFieldProps.disabled && !!downshiftProps.selectedItem && (
-          <IconButton onClick={downshiftProps.clearSelection}>
-            <Cancel />
-          </IconButton>
-        )}
-
-        { !textFieldProps.disabled && (
-          <IconButton onClick={downshiftProps.toggleMenu}>
-            {downshiftProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
-          </IconButton>
-        )}
-      </div>
-
       { loading && (
-        <LinearProgress
-          style={{
-            position: 'absolute',
-            bottom: 8,
-            left: 0,
-            right: 0,
-            height: 2
-          }}
-        />
+        <LinearProgress style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 2
+        }}/>
       )}
-    </div>
+    </FormControl>
   );
 }
 

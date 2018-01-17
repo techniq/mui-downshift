@@ -1,5 +1,5 @@
 ## mui-downshift
-Thin layer over paypal's [downshift](https://github.com/paypal/downshift) to use [Material UI](http://www.material-ui.com) visual components
+Thin layer over paypal's [downshift](https://github.com/paypal/downshift) to use [Material UI 1.0](http://www.material-ui-next.com) visual components
 
 For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io/mui-downshift/) or view the [source](https://github.com/techniq/mui-downshift/tree/master/stories)
 
@@ -9,7 +9,7 @@ For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io
   - Infinite scrolling
   - Paginated loading
   - Delayed loading of items until menu is opened
-- Customizable rendering (see `getInputProps`, `getListItemProps`, etc)
+- Customizable rendering (see `getListItem`, `getInputProps`, etc)
 - Control opening menu on input focus (or only on explict toggle) 
 - Control height of menu based on number of items or pixels
 - Dynamic row heights using react-virtualized's [CellMeasurer](https://github.com/bvaughn/react-virtualized/blob/master/docs/CellMeasurer.md)
@@ -20,11 +20,11 @@ For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io
 Property | Type | Required | Description
 -------- | ---- | -------- | -----------
 `items` | Array | ✓ | Items to show in menu
-`getInputProps` | Function | | Customize look of Material-UI's `<TextField />`.  Do not confuse with Downshift's `getInputProps` passed down to child function
-`getListItemProps` | Function | |  Customize look Material-UI's `<ListItem />` for each item
-`getEmptyListItemProps` | Function | | Shows an empty list item with the following props if `items` is empty
+`getListItem` | Function | |  Return an instance of Material-UI's `<ListItem />` for each item.  defaultProps implementation handles simple cases.
+`getInputProps` | Function | | Customize look of Material-UI's `<FormControl>` and `<Input />`.  Result of function is merged with Downshift's `getInputProps` 
+`showEmpty` | Boolean | | If true, will render a single item if items is empty.  Will call `getListItem` (if defined) with a null `item` to handle display
+`includeFooter` | Boolean | | If true, will render an additional item as the last item. Will call `getListItem` (if defined) with a null `item` to handle display.  Useful for paginated scrolling (see demo) and showing loading status beyond the `loading` prop.
 `getInfiniteLoaderProps` | Function |  | If provided, will wrap menu in react-virtualized [InfiniteLoader](https://github.com/bvaughn/react-virtualized/blob/master/docs/InfiniteLoader.md) and pass the props returned from the function.  Be sure to provide all required props (`isRowLoaded`, `rowCount`, and `loadMoreRows`).  Used for infinite scrolling (see demo).
-`getFooterListItemProps` | Function | | If defined and returns an object, a list item will be added to the bottom of the list with the returned object as props.  Useful for paginated scrolling (see demo) and showing loading status beyond the `loading` prop.
 `getVirtualListProps` | Function |  | Pass or override props provided to underlying react-virtualized [List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md) component.  Note: Setting `rowHeight` will remove `CellMeasurer` usage, which is used to calculate heights dynamically.  This can provide better performance, especially if set as a static value (ex. `48`)
 `getRootProps` | Function | | Provide props to the root element that wraps the input and menu components
 `menuItemCount` | Number | | Number of items to show on menu before scrolling.  Default `5`

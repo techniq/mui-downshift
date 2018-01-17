@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { all as starwarsNames } from 'starwars-names';
+import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
 
 import MuiDownshift from '../src';
 import MockFetch from './components/MockFetch';
@@ -30,6 +31,23 @@ storiesOf('Fetch', module)
       {({ loading, data, error, fetch }) => (
         <MuiDownshift
           items={data && data.items}
+          getListItem={({ getItemProps, item }) => (
+            item ? (
+              <ListItem button {...getItemProps()}>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            ) : loading ? (
+              <ListItem button disabled>
+                <ListItemText primary={<span style={{ fontStyle: 'italic' }}>Loading...</span>} />
+              </ListItem>
+            ) : (
+              <ListItem button disabled>
+                <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
+              </ListItem>
+            )
+          )}
+          showEmpty
+          includeFooter={loading}
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
@@ -65,22 +83,23 @@ storiesOf('Fetch', module)
               return fetch(url.toString())
             }})
           }
-          getFooterListItemProps={loading ? () => ({
-            primaryText: 'Loading...',
-            style: {
-              fontStyle: 'italic',
-              color: 'rgba(0,0,0,.5)'
-            },
-            disabled: true
-          }) : null }
-          getEmptyListItemProps={() => ({
-            primaryText: 'No items found',
-            style: {
-              fontStyle: 'italic',
-              color: 'rgba(0,0,0,.5)'
-            },
-            disabled: true
-          })}
+          getListItem={({ getItemProps, item }) => (
+            item ? (
+              <ListItem button {...getItemProps()}>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            ) : loading ? (
+              <ListItem button disabled>
+                <ListItemText primary={<span style={{ fontStyle: 'italic' }}>Loading...</span>} />
+              </ListItem>
+            ) : (
+              <ListItem button disabled>
+                <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
+              </ListItem>
+            )
+          )}
+          showEmpty
+          includeFooter={loading}
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
@@ -101,28 +120,26 @@ storiesOf('Fetch', module)
       }}
       manual
     >
-      {({ loading, data, error, fetch, request }) => (
-        <MuiDownshift
-          items={data && data.items}
-          loading={loading}
-          getFooterListItemProps={() => {
-            if (loading) {
-              return {
-                primaryText: 'Loading...',
-                style: {
-                  fontStyle: 'italic',
-                  color: 'rgba(0,0,0,.5)'
-                },
-                disabled: true
-              }
-            } else if (data && data.items.length < data.total) {
-              return {
-                primaryText: 'Load more items',
-                style: {
-                  background: '#ccc',
-                  color: '#fff'
-                },
-                onClick: () => {
+      {({ loading, data, error, fetch, request }) => {
+        const hasMoreData = data && data.items.length < data.total;
+
+        return (
+          <MuiDownshift
+            items={data && data.items}
+            loading={loading}
+            includeFooter={loading || hasMoreData}
+            showEmpty
+            getListItem={({ getItemProps, item }) => (
+              item ? (
+                <ListItem button {...getItemProps()}>
+                  <ListItemText primary={item.text} />
+                </ListItem>
+              ) : loading ? (
+                <ListItem button disabled>
+                  <ListItemText primary={<span style={{ fontStyle: 'italic' }}>Loading...</span>} />
+                </ListItem>
+              ) : hasMoreData ? (
+                <ListItem button style={{ backgroundColor: '#ccc' }} onClick={() => {
                   const url = new URL(request.url);
                   const params = new URLSearchParams(url.search);
                   const currentStartIndex = Number(params.get('startIndex'));
@@ -131,26 +148,24 @@ storiesOf('Fetch', module)
                   params.set('stopIndex', currentStopIndex + 20);
                   url.search = params.toString();
                   fetch(url.toString())
-                }
+                }}>
+                  <ListItemText primary={<span style={{ color: '#fff' }}>Load more items</span>} />
+                </ListItem>
+              ) : (
+                <ListItem button disabled>
+                  <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
+                </ListItem>
+              )
+            )}
+            onStateChange={changes => {
+              if (changes.hasOwnProperty('inputValue')) {
+                fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
+              } else if (changes.hasOwnProperty('isOpen') && data == null) {
+                fetch(`https://example.com/?startIndex=0&stopIndex=20`)
               }
-            }
-          }}
-          getEmptyListItemProps={() => ({
-            primaryText: 'No items found',
-            style: {
-              fontStyle: 'italic',
-              color: 'rgba(0,0,0,.5)'
-            },
-            disabled: true
-          })}
-          onStateChange={changes => {
-            if (changes.hasOwnProperty('inputValue')) {
-              fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
-            } else if (changes.hasOwnProperty('isOpen') && data == null) {
-              fetch(`https://example.com/?startIndex=0&stopIndex=20`)
-            }
-          }}
-        />
-      )}
+            }}
+          />
+        )
+      }}
     </MockFetch>
   ))

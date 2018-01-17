@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import { Manager, Target, Popper } from 'react-popper';
+import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
 
 import Input from './Input';
 import Menu from './Menu';
@@ -8,27 +10,51 @@ import Menu from './Menu';
 class MuiDownshift extends Component {
   static defaultProps = {
     itemToString: item => (item ? item.text : ''),
-    getListItemProps: ({ item, index }) => ({
-      primaryText: item ? item.text : '' // TODO: would be nice if this was `props.itemToString(item)`;
-    }),
+    getListItem({ getItemProps, item, index }) {
+      return (
+        item ? (
+          <ListItem button {...getItemProps()}>
+            { item.icon && <ListItemIcon>{item.icon}</ListItemIcon> }
+            { item.avatar && <ListItemAvatar>{item.avatar}</ListItemAvatar> }
+
+            <ListItemText
+              primary={item.primary || item.text}
+              secondary={item.secondary}
+            />
+          </ListItem>
+        ) : index === 0 ? (
+          <ListItem button disabled>
+            <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
+          </ListItem>
+        ) : (
+          // TODO: should we handle this or require user to implement `getListItem` at this point (`includeFooter` or an array of null/undefined)?
+          null
+        )
+      )
+    },
     menuItemCount: 5
   };
 
   render() {
     const {
       items,
+      itemToString,
+      selectedItem,
+      getRootProps,
+
+      // Input
       getInputProps,
-      getListItemProps,
-      getEmptyListItemProps,
+      loading,
+
+      // Menu
+      getListItem,
+      showEmpty,
+      includeFooter,
       getInfiniteLoaderProps,
       getVirtualListProps,
-      getFooterListItemProps,
-      getRootProps,
-      itemToString,
-      loading,
       menuHeight,
       menuItemCount,
-      selectedItem,
+
       ...props
     } = this.props;
 
@@ -52,14 +78,14 @@ class MuiDownshift extends Component {
 
                 <Menu 
                   items={items}
-                  getListItemProps={getListItemProps}
-                  getEmptyListItemProps={getEmptyListItemProps}
+                  getListItem={getListItem}
+                  showEmpty={showEmpty}
+                  includeFooter={includeFooter}
                   getInfiniteLoaderProps={getInfiniteLoaderProps}
                   getVirtualListProps={getVirtualListProps}
-                  getFooterListItemProps={getFooterListItemProps}
                   menuItemCount={menuItemCount}
                   menuHeight={menuHeight}
-                  downshiftProps={downshiftProps} // pass down all props to be relayed (ex. `getInfiniteLoaderProps(downshiftProps)`)
+                  downshiftProps={downshiftProps}
                 />
               </div>
             );
@@ -69,5 +95,25 @@ class MuiDownshift extends Component {
     );
   }
 }
+
+MuiDownshift.propTypes = {
+  items: PropTypes.array,
+  itemToString: PropTypes.func,
+  selectedItem: PropTypes.object,
+  getRootProps: PropTypes.func,
+
+  // Input
+  getInputProps: PropTypes.func,
+  loading: PropTypes.bool,
+
+  // Menu
+  getListItem: PropTypes.func,
+  showEmpty: PropTypes.bool,
+  includeFooter: PropTypes.bool,
+  getInfiniteLoaderProps: PropTypes.func,
+  getVirtualListProps: PropTypes.func,
+  menuHeight: PropTypes.number,
+  menuItemCount: PropTypes.number,
+};
 
 export default MuiDownshift;
