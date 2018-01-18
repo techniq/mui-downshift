@@ -61,7 +61,7 @@ class MuiDownshift extends Component {
     return (
       <Manager>
         <Downshift
-          itemCount={items ? items.length : 0} // Needed for windowing
+          itemCount={(items ? items.length : 0) + (includeFooter ? 1 : 0)} // Needed for windowing
           itemToString={itemToString}
           {...props}
         >

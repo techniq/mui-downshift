@@ -44,7 +44,6 @@ function getRowCount(items, includeFooter) {
 class MuiVirtualList extends Component {
   cache = new CellMeasurerCache({
     defaultHeight: 48,
-    fixedWidth: true
   });
 
   componentWillReceiveProps(nextProps) {
@@ -53,7 +52,7 @@ class MuiVirtualList extends Component {
       this.props.items !== nextProps.items
     ) {
       this.cache.clearAll();
-      this.list.recomputeRowHeights(0);
+      this.list.recomputeRowHeights();
     }
   }
 

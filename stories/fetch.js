@@ -119,7 +119,7 @@ storiesOf('Fetch', module)
   ))
 
   .add('paginated loading', () => (
-    <MockFetch items={items} url="https://example.com/?startIndex=0&stopIndex=20" 
+    <MockFetch items={items} url="https://example.com/?startIndex=0&stopIndex=10" 
       onDataChange={(newData, currentData = { total: 0, items: [] }) => {
         return { total: newData.total, items: [...currentData.items, ...newData.items] }
       }}
@@ -137,7 +137,7 @@ storiesOf('Fetch', module)
             getListItem={({ getItemProps, item, index, downshiftProps }) => (
               item ? (
                 <ListItem button {...getItemProps()}>
-                  <ListItemText primary={item.text} />
+                  <ListItemText primary={item.text} secondary="Test" />
                 </ListItem>
               ) : loading ? (
                 <ListItem button disabled>
@@ -145,14 +145,14 @@ storiesOf('Fetch', module)
                 </ListItem>
               ) : hasMoreData ? (
                 <ListItem button style={{ backgroundColor: '#ccc' }} onClick={() => {
-                  downshiftProps.setHighlightedIndex(index)
+                  downshiftProps.setHighlightedIndex(index);
 
                   const url = new URL(request.url);
                   const params = new URLSearchParams(url.search);
                   const currentStartIndex = Number(params.get('startIndex'));
                   const currentStopIndex = Number(params.get('stopIndex'))
-                  params.set('startIndex', currentStartIndex + 20);
-                  params.set('stopIndex', currentStopIndex + 20);
+                  params.set('startIndex', currentStartIndex + 10);
+                  params.set('stopIndex', currentStopIndex + 10);
                   url.search = params.toString();
                   fetch(url.toString())
                 }}>
@@ -167,9 +167,9 @@ storiesOf('Fetch', module)
             onStateChange={changes => {
               if (changes.hasOwnProperty('inputValue')) {
                 clearData();
-                fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
+                fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=10`, null, { ignorePreviousData: true })
               } else if (changes.hasOwnProperty('isOpen') && data == null) {
-                fetch(`https://example.com/?startIndex=0&stopIndex=20`)
+                fetch(`https://example.com/?startIndex=0&stopIndex=10`)
               }
             }}
           />
