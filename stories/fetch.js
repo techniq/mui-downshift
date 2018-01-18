@@ -71,10 +71,12 @@ storiesOf('Fetch', module)
       {({ loading, data, error, fetch, request }) => (
         <MuiDownshift
           items={data && data.items}
-          getInfiniteLoaderProps={() => ({
+          getInfiniteLoaderProps={({ downshiftProps }) => ({
             rowCount: data ? data.total : 0,
             isRowLoaded: ({ index }) => data ? !!data.items[index] : false,
             loadMoreRows: loading ? () => {} : ({ startIndex, stopIndex }) => {
+              downshiftProps.setHighlightedIndex(null);
+
               const url = new URL(request.url);
               const params = new URLSearchParams(url.search);
               params.set('startIndex', startIndex);
@@ -129,7 +131,7 @@ storiesOf('Fetch', module)
             loading={loading}
             includeFooter={loading || hasMoreData}
             showEmpty
-            getListItem={({ getItemProps, item }) => (
+            getListItem={({ getItemProps, item, index, downshiftProps }) => (
               item ? (
                 <ListItem button {...getItemProps()}>
                   <ListItemText primary={item.text} />
@@ -140,6 +142,8 @@ storiesOf('Fetch', module)
                 </ListItem>
               ) : hasMoreData ? (
                 <ListItem button style={{ backgroundColor: '#ccc' }} onClick={() => {
+                  downshiftProps.setHighlightedIndex(index)
+
                   const url = new URL(request.url);
                   const params = new URLSearchParams(url.search);
                   const currentStartIndex = Number(params.get('startIndex'));
