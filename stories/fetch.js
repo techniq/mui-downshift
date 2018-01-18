@@ -12,12 +12,13 @@ const items = starwarsNames.map((text, value) => ({ text, value }));
 storiesOf('Fetch', module)
   .add('basic', () => (
     <MockFetch items={items} url="https://example.com/">
-      {({ loading, data, error, fetch }) => (
+      {({ loading, data, error, fetch, clearData }) => (
         <MuiDownshift
           items={data && data.items}
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
+              clearData();
               fetch(`https://example.com/?q=${changes.inputValue}`)
             }
           }}
@@ -28,7 +29,7 @@ storiesOf('Fetch', module)
 
   .add('no initial fetch', () => (
     <MockFetch items={items} url="https://example.com/" manual>
-      {({ loading, data, error, fetch }) => (
+      {({ loading, data, error, fetch, clearData }) => (
         <MuiDownshift
           items={data && data.items}
           getListItem={({ getItemProps, item }) => (
@@ -51,6 +52,7 @@ storiesOf('Fetch', module)
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
+              clearData();
               fetch(`https://example.com/?q=${changes.inputValue}`)
             } else if (changes.hasOwnProperty('isOpen') && data == null) {
               fetch(`https://example.com/`)
@@ -68,7 +70,7 @@ storiesOf('Fetch', module)
       }}
       manual
     >
-      {({ loading, data, error, fetch, request }) => (
+      {({ loading, data, error, fetch, request, clearData }) => (
         <MuiDownshift
           items={data && data.items}
           getInfiniteLoaderProps={({ downshiftProps }) => ({
@@ -105,6 +107,7 @@ storiesOf('Fetch', module)
           loading={loading}
           onStateChange={changes => {
             if (changes.hasOwnProperty('inputValue')) {
+              clearData();
               fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
             } else if (changes.hasOwnProperty('isOpen') && data == null) {
               fetch(`https://example.com/?startIndex=0&stopIndex=20`)
@@ -122,7 +125,7 @@ storiesOf('Fetch', module)
       }}
       manual
     >
-      {({ loading, data, error, fetch, request }) => {
+      {({ loading, data, error, fetch, request, clearData }) => {
         const hasMoreData = data && data.items.length < data.total;
 
         return (
@@ -163,6 +166,7 @@ storiesOf('Fetch', module)
             )}
             onStateChange={changes => {
               if (changes.hasOwnProperty('inputValue')) {
+                clearData();
                 fetch(`https://example.com/?q=${changes.inputValue}&startIndex=0&stopIndex=20`, null, { ignorePreviousData: true })
               } else if (changes.hasOwnProperty('isOpen') && data == null) {
                 fetch(`https://example.com/?startIndex=0&stopIndex=20`)
