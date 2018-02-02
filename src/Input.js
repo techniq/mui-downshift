@@ -11,11 +11,12 @@ import ArrowDropUp from 'material-ui-icons/ArrowDropUp';
 import Cancel from 'material-ui-icons/Cancel';
 
 function Input({ getInputProps, loading, downshiftProps }) {
-  const { label, disabled, ...inputProps} = downshiftProps.getInputProps({ ...(getInputProps && getInputProps(downshiftProps)) })
+  const { label, disabled, ...inputProps} = getInputProps ? getInputProps(downshiftProps) : {}
 
   return (
     <FormControl disabled={disabled} fullWidth>
       <InputLabel>{label}</InputLabel>
+
       <MuiInput
         endAdornment={
           <InputAdornment position="end">
@@ -32,8 +33,10 @@ function Input({ getInputProps, loading, downshiftProps }) {
             )}
           </InputAdornment>
         }
-        {...inputProps}
+
+        {...downshiftProps.getInputProps(inputProps)}
       />
+
       { loading && (
         <LinearProgress style={{
           position: 'absolute',
