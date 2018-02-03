@@ -1,5 +1,5 @@
 ## mui-downshift
-Thin layer over paypal's [downshift](https://github.com/paypal/downshift) to use [Material UI 1.0](http://www.material-ui-next.com) visual components
+Thin layer over paypal's [downshift](https://github.com/paypal/downshift) to use [Material-UI 1.0](http://www.material-ui-next.com) visual components
 
 For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io/mui-downshift/) or view the [source](https://github.com/techniq/mui-downshift/tree/master/stories)
 
@@ -13,7 +13,7 @@ For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io
 - Control opening menu on input focus (or only on explict toggle) 
 - Control height of menu based on number of items or pixels
 - Dynamic row heights using react-virtualized's [CellMeasurer](https://github.com/bvaughn/react-virtualized/blob/master/docs/CellMeasurer.md)
-- Uses a portal to solve the z-index / [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) problem and Material UI's popover z-index [value](https://github.com/callemall/material-ui/blob/master/src/styles/zIndex.js)
+- Uses a portal to solve the z-index / [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) problem and Material-UI's popover z-index [value](https://github.com/callemall/material-ui/blob/master/src/styles/zIndex.js)
 - All other capabilities inherited from `downshift`
 
 ### Props
