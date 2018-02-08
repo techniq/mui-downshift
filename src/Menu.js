@@ -7,7 +7,7 @@ import {
   CellMeasurerCache
 } from 'react-virtualized';
 import { Popper } from 'react-popper';
-import Portal from 'react-travel';
+import Portal from 'material-ui/Portal';
 import classnames from 'classnames';
 
 import Paper from 'material-ui/Paper';
@@ -145,7 +145,7 @@ function Menu({ getInfiniteLoaderProps, ...props }) {
     <AutoSizer>
       {({ width }) => (
         <Portal>
-          <Popper placement="bottom-start" style={{ zIndex: zIndex.popover }} onMouseUp={e => e.stopPropagation()}>
+          <Popper placement="bottom-start" style={{ zIndex: zIndex.modal }} onMouseUp={e => e.stopPropagation()}>
             <Paper style={{ width }}>
               { getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })} >

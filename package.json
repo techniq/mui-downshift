@@ -16,8 +16,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "downshift": "^1.22.5",
-    "react-popper": "^0.7.3",
-    "react-travel": "^1.3.5",
+    "react-popper": "0.8.2",
     "react-virtualized": "^9.11.1"
   },
   "devDependencies": {

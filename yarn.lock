@@ -3929,6 +3929,10 @@ popper.js@^1.12.5:
   version "1.12.5"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.5.tgz#229e4dea01629e1f1a1e26991ffade5024220fa6"
 
+popper.js@^1.12.9:
+  version "1.12.9"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.9.tgz#0dfbc2dff96c451bb332edcfcfaaf566d331d5b3"
+
 postcss-calc@^5.2.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/postcss-calc/-/postcss-calc-5.3.1.tgz#77bae7ca928ad85716e2fda42f261bf7c1d65b5e"
@@ -4468,12 +4472,12 @@ react-modal@^2.3.2:
     exenv "^1.2.0"
     prop-types "^15.5.10"
 
-react-popper@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.7.3.tgz#fa2809a80fbe7ec516e9bac01d81bc47a8b5cd3b"
+react-popper@0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.8.2.tgz#092095ff13933211d3856d9f325511ec3a42f12c"
   dependencies:
-    popper.js "^1.12.5"
-    prop-types "^15.5.10"
+    popper.js "^1.12.9"
+    prop-types "^15.6.0"
 
 react-popper@^0.7.4:
   version "0.7.5"
@@ -4537,12 +4541,6 @@ react-transition-group@^2.2.1:
     loose-envify "^1.3.1"
     prop-types "^15.5.8"
     warning "^3.0.0"
-
-react-travel@^1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/react-travel/-/react-travel-1.3.5.tgz#4ff587550fd4d1a2e4371e5af48895d21d3c2898"
-  dependencies:
-    prop-types "^15.5.10"
 
 react-treebeard@^2.0.3:
   version "2.0.3"

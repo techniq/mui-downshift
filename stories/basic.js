@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Avatar from 'material-ui/Avatar';
-import PersonIcon from 'material-ui-icons/Person';
 import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
+import Drawer from 'material-ui/Drawer';
+import PersonIcon from 'material-ui-icons/Person';
+import { withStyles } from 'material-ui/styles';
 
 import MuiDownshift from '../src';
 import StarWarsSelect from './components/StarWarsSelect';
-// import StarWarsMultiSelect from './components/StarWarsMultiSelect';
+
+const CustomDrawer = withStyles({ paper: { width: 240, padding: 8 }})(Drawer);
 
 storiesOf('Basic', module)
   .add('defaults (empty)', () => <MuiDownshift />)
@@ -227,43 +230,6 @@ storiesOf('Menu', module)
       onChange={action('onChange')}
     />
   ))
-
-// storiesOf('Multi-select', module)
-//   .add('basic', () => (
-//     <StarWarsMultiSelect
-//       getInputProps={() => ({
-//         label: 'Star Wars character',
-//         placeholder: 'Choose wisely'
-//       })}
-//       onChange={action('onChange')}
-//     />
-//   ))
-
-storiesOf('VirtualList', module)
-  .add('static rowHeight (no CellMeasurer)', () => (
-    <StarWarsSelect
-      getVirtualListProps={() => ({ rowHeight: 48 })}
-      onChange={action('onChange')}
-    />
-  ))
-  .add('dynamic rowHeight (no CellMeasurer)', () => (
-    <StarWarsSelect
-      getListItem={({ getItemProps, item, index }) => (
-        <ListItem button {...getItemProps()}>
-          <ListItemText
-            primary={item.text}
-            secondary={ index % 2 ? "character" : undefined }
-          />
-        </ListItem>
-      )}
-      getVirtualListProps={() => ({
-        rowHeight: ({ index }) => index % 2 ? 72 : 48 
-      })}
-      onChange={action('onChange')}
-    />
-  ))
-
-storiesOf('Root', module)
   .add('change z-index of root', () => (
     <div>
       <StarWarsSelect
@@ -291,4 +257,35 @@ storiesOf('Root', module)
         onChange={action('onChange')}
       />
     </div>
+  ))
+  .add('z-index on drawer', () => (
+    <CustomDrawer open={true}>
+      <StarWarsSelect 
+        onChange={action('onChange')}
+      />
+    </CustomDrawer>
+  ))
+
+storiesOf('VirtualList', module)
+  .add('static rowHeight (no CellMeasurer)', () => (
+    <StarWarsSelect
+      getVirtualListProps={() => ({ rowHeight: 48 })}
+      onChange={action('onChange')}
+    />
+  ))
+  .add('dynamic rowHeight (no CellMeasurer)', () => (
+    <StarWarsSelect
+      getListItem={({ getItemProps, item, index }) => (
+        <ListItem button {...getItemProps()}>
+          <ListItemText
+            primary={item.text}
+            secondary={ index % 2 ? "character" : undefined }
+          />
+        </ListItem>
+      )}
+      getVirtualListProps={() => ({
+        rowHeight: ({ index }) => index % 2 ? 72 : 48 
+      })}
+      onChange={action('onChange')}
+    />
   ))
