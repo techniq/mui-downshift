@@ -43,6 +43,7 @@ function getRowCount(items, includeFooter) {
 
 class MuiVirtualList extends Component {
   cache = new CellMeasurerCache({
+    // fixedWidth: true, // Adding causes problem with pagination and menu height shrinking, but removing leaves a warning: "CellMeasurerCache should only measure a cell's width or height. You have configured CellMeasurerCache to measure both. This will result in poor performance."
     defaultHeight: 48,
   });
 
@@ -51,7 +52,7 @@ class MuiVirtualList extends Component {
       this.props.width !== nextProps.width ||
       this.props.items !== nextProps.items
     ) {
-      this.cache.clearAll();
+      this.cache.clearAll(); // Clearing all causes paginated list to jump when loading, but not clearing causes issues with items at the same index but different heights (first item as "Loading", then being replaced with results)
       this.list.recomputeRowHeights();
     }
   }

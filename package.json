@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "downshift": "^1.22.5",
+    "downshift": "^1.28.0",
     "react-popper": "0.8.2",
-    "react-virtualized": "^9.11.1"
+    "react-virtualized": "^9.18.5"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.6",
