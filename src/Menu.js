@@ -43,16 +43,28 @@ function getRowCount(items, includeFooter) {
 
 class MuiVirtualList extends Component {
   cache = new CellMeasurerCache({
-    // fixedWidth: true, // Adding causes problem with pagination and menu height shrinking, but removing leaves a warning: "CellMeasurerCache should only measure a cell's width or height. You have configured CellMeasurerCache to measure both. This will result in poor performance."
+    fixedWidth: true,
     defaultHeight: 48,
+    keyMapper: this.props.getListItemKey
   });
 
   componentWillReceiveProps(nextProps) {
-    if (
-      this.props.width !== nextProps.width ||
-      this.props.items !== nextProps.items
-    ) {
-      this.cache.clearAll(); // Clearing all causes paginated list to jump when loading, but not clearing causes issues with items at the same index but different heights (first item as "Loading", then being replaced with results)
+    if (this.props.getListItemKey !== nextProps.getListItemKey) {
+      this.cache._keyMapper = nextProps.getListItemKey;
+    }
+
+    if (this.props.width !== nextProps.width) {
+      // Need to recalculate all heights since new widths 
+      this.cache.clearAll();
+      this.list.recomputeRowHeights();
+    }
+
+    if (this.props.items !== nextProps.items) {
+      if (!this.props.getListItemKey) {
+        // Only need to recalculate heights if no getListItemKey is defined as CellMeasureCache.defaultKeyMapper only uses indexes for keys (and new items at the same index might have different heights)
+        this.cache.clearAll();
+      }
+
       this.list.recomputeRowHeights();
     }
   }
@@ -67,6 +79,7 @@ class MuiVirtualList extends Component {
       showEmpty,
       includeFooter,
       getVirtualListProps,
+      getListItemKey,
       onRowsRendered,
       registerChild,
       downshiftProps,
@@ -76,8 +89,6 @@ class MuiVirtualList extends Component {
     const virtualListProps = getVirtualListProps && getVirtualListProps({ downshiftProps });
     const rowHeight = (virtualListProps && virtualListProps.rowHeight) ? virtualListProps.rowHeight : this.cache.rowHeight;
     const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight); 
-
-    // console.log('items.length', items && items.length);
 
     return (
       <VirtualList
@@ -90,18 +101,23 @@ class MuiVirtualList extends Component {
           const item = items ? items[index] : null;
           const isHighlighted = downshiftProps.highlightedIndex === index;
           const className = classnames({ [classes.keyboardFocused]: isHighlighted });
-          // Convenience helper to simplify standard usage
-          const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props })
+          // Convenience helper to simplify typical usage
+          const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props });
           const listItem = getListItem({ getItemProps, item, index, downshiftProps, style });
+
+          if (getListItemKey) {
+            key = getListItemKey(index)
+          }
 
           if (useCellMeasurer) {
             return (
               <CellMeasurer
                 cache={this.cache}
                 columnIndex={0}
-                key={key}
-                parent={parent}
                 rowIndex={index}
+                parent={parent}
+                key={key}
+                width={width}
               >
                 <div style={style}>
                   {listItem}
@@ -123,7 +139,7 @@ class MuiVirtualList extends Component {
           const item = null;
           const isHighlighted = downshiftProps.highlightedIndex === index;
           const className = classnames({ [classes.keyboardFocused]: isHighlighted });
-          // Convenience helper to simplify standard usage
+          // Convenience helper to simplify typical usage
           const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props })
           return getListItem({ getItemProps, item, index, downshiftProps });
         }}  

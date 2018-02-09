@@ -134,6 +134,17 @@ storiesOf('Fetch', module)
             loading={loading}
             includeFooter={loading || hasMoreData}
             showEmpty
+            getListItemKey={(rowIndex, columnIndex) => {
+              if (data && data.items && data.items[rowIndex]) {
+                return data.items[rowIndex].text
+              } else if (loading) {
+                return 'loading'
+              } else if (hasMoreData) {
+                return 'hasMoreData'
+              } else {
+                return 'noItemsFound'
+              }
+            }}
             getListItem={({ getItemProps, item, index, downshiftProps }) => (
               item ? (
                 <ListItem button {...getItemProps()}>
@@ -145,7 +156,7 @@ storiesOf('Fetch', module)
                 </ListItem>
               ) : hasMoreData ? (
                 <ListItem button style={{ backgroundColor: '#ccc' }} onClick={() => {
-                  downshiftProps.setHighlightedIndex(index);
+                  downshiftProps.setHighlightedIndex(null);
 
                   const url = new URL(request.url);
                   const params = new URLSearchParams(url.search);

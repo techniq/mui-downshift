@@ -48,6 +48,7 @@ class MuiDownshift extends Component {
 
       // Menu
       getListItem,
+      getListItemKey,
       showEmpty,
       includeFooter,
       getInfiniteLoaderProps,
@@ -79,6 +80,7 @@ class MuiDownshift extends Component {
                 <Menu 
                   items={items}
                   getListItem={getListItem}
+                  getListItemKey={getListItemKey}
                   showEmpty={showEmpty}
                   includeFooter={includeFooter}
                   getInfiniteLoaderProps={getInfiniteLoaderProps}
@@ -108,6 +110,7 @@ MuiDownshift.propTypes = {
 
   // Menu
   getListItem: PropTypes.func,
+  getListItemKey: PropTypes.func,
   showEmpty: PropTypes.bool,
   includeFooter: PropTypes.bool,
   getInfiniteLoaderProps: PropTypes.func,
