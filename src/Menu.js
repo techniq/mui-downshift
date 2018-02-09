@@ -16,7 +16,7 @@ import zIndex from 'material-ui/styles/zIndex';
 
 const styles = theme => ({
   keyboardFocused: {
-    backgroundColor: theme.palette.text.divider,
+    backgroundColor: theme.palette.divider,
   },
 })
 
