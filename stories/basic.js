@@ -117,7 +117,7 @@ storiesOf('List item', module)
         <ListItem button {...getItemProps()}>
           <ListItemText
             primary={item.text}
-            secondary={ index % 2 ? "character" : undefined }
+            secondary={ item.text.indexOf('e') !== -1 ? "character" : undefined }
           />
         </ListItem>
       )}
