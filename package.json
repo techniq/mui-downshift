@@ -9,7 +9,7 @@
   ],
   "main": "dist/index.js",
   "peerDependencies": {
-    "material-ui": "^1.0.0-beta.27",
+    "material-ui": "^1.0.0-beta.32",
     "material-ui-icons": "^1.0.0-beta.17",
     "react": ">=15"
   },
