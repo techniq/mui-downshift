@@ -8,7 +8,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import IconButton from 'material-ui/IconButton';
 import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 import ArrowDropUp from 'material-ui-icons/ArrowDropUp';
-import Cancel from 'material-ui-icons/Cancel';
+import Clear from 'material-ui-icons/Clear';
 
 function Input({ getInputProps, loading, downshiftProps }) {
   const { label, labelProps, disabled, ...inputProps} = getInputProps ? getInputProps(downshiftProps) : {}
@@ -22,7 +22,7 @@ function Input({ getInputProps, loading, downshiftProps }) {
           <InputAdornment position="end">
             { !disabled && !!downshiftProps.selectedItem && (
               <IconButton onClick={downshiftProps.clearSelection}>
-                <Cancel />
+                <Clear />
               </IconButton>
             )}
     
