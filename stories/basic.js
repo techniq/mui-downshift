@@ -19,12 +19,12 @@ storiesOf('Basic', module)
   .add('loading', () => <StarWarsSelect loading />);
 
 storiesOf('Input', module)
-  .add('show menu on focus', () => (
+  .add('do not show menu on focus', () => (
     <StarWarsSelect
       getInputProps={({ openMenu }) => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
-        onFocus: openMenu,
+        onFocus: null
       })}
       onChange={action('onChange')}
     />
