@@ -39,7 +39,6 @@ class MuiDownshift extends Component {
     const {
       items,
       itemToString,
-      selectedItem,
       getRootProps,
 
       // Input
@@ -77,7 +76,7 @@ class MuiDownshift extends Component {
                   />
                 </Target>
 
-                <Menu 
+                <Menu
                   items={items}
                   getListItem={getListItem}
                   getListItemKey={getListItemKey}
