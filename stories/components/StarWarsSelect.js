@@ -11,11 +11,9 @@ export default class StarWarsSelect extends Component {
   }
 
   handleStateChange = changes => {
-    if (changes.hasOwnProperty('inputValue')) {
-      const filteredItems = items.filter(
-        item => item.text.toLowerCase().includes(changes.inputValue.toLowerCase())
-      );
-      this.setState({ filteredItems })
+    if (typeof changes.inputValue === 'string') {
+      const filteredItems = items.filter(item => item.text.toLowerCase().includes(changes.inputValue.toLowerCase()));
+      this.setState({ filteredItems });
     }
   }
 

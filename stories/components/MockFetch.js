@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import Fetch from 'react-fetch-component';
 import fetchMock from 'fetch-mock';
 
+function mockResponse(response, delay) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(response), delay);
+  });
+}
+
 /* Mock for consistent fetch responses */
 class MockFetch extends Component {
   componentWillMount() {
@@ -10,18 +16,15 @@ class MockFetch extends Component {
     fetchMock.get('*', url => {
       let filteredItems = items;
 
-      var urlObj = new URL(url);
-      var searchParams = new URLSearchParams(urlObj.search);
+      const { searchParams } = new URL(url);
       if (searchParams.has('q')) {
-        const query = searchParams.get('q')
+        const query = searchParams.get('q');
         if (query) {
-          filteredItems = items.filter(
-            item => item.text.toLowerCase().includes(query.toLowerCase())
-          );
+          filteredItems = items.filter(item => item.text.toLowerCase().includes(query.toLowerCase()));
         }
       }
 
-      let response = null
+      let response = null;
       if (searchParams.has('startIndex') || searchParams.has('stopIndex')) {
         const startIndex = Number(searchParams.get('startIndex'));
         const stopIndex = (Number(searchParams.get('stopIndex')) || 10);
@@ -30,7 +33,7 @@ class MockFetch extends Component {
         response = { total: filteredItems.length, items: filteredItems };
       }
       console.log('fetch', url, response);
-      return mockResponse(response, 500)
+      return mockResponse(response, 500);
     });
   }
 
@@ -41,12 +44,6 @@ class MockFetch extends Component {
   render() {
     return <Fetch {...this.props} />;
   }
-}
-
-function mockResponse(response, delay) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(response), delay);
-  });
 }
 
 export default MockFetch;

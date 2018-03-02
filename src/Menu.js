@@ -18,7 +18,11 @@ const styles = theme => ({
   keyboardFocused: {
     backgroundColor: theme.palette.divider,
   },
-})
+});
+
+function getRowCount(items, includeFooter) {
+  return (items ? items.length : 0) + (includeFooter ? 1 : 0);
+}
 
 function getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter) {
   const rowCount = getRowCount(items, includeFooter);
@@ -26,19 +30,14 @@ function getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter
     const visibleCount = Math.min(rowCount, menuItemCount); // Maximum items before scrolling
     let height = 0;
     for (let i = 0; i < visibleCount; i++) {
-      height += (typeof rowHeight === 'function') ? rowHeight({ index: i }) : rowHeight
+      height += (typeof rowHeight === 'function') ? rowHeight({ index: i }) : rowHeight;
     }
     return height;
   } else if (showEmpty) {
     // Return the height of a single item
-    return (typeof rowHeight === 'function') ? rowHeight({ index: 0 }) : rowHeight
-  } else {
-    return 0;
+    return (typeof rowHeight === 'function') ? rowHeight({ index: 0 }) : rowHeight;
   }
-}
-
-function getRowCount(items, includeFooter) {
-  return (items ? items.length : 0) + (includeFooter ? 1 : 0)
+  return 0;
 }
 
 class MuiVirtualList extends Component {
@@ -54,7 +53,7 @@ class MuiVirtualList extends Component {
     }
 
     if (this.props.width !== nextProps.width) {
-      // Need to recalculate all heights since new widths 
+      // Need to recalculate all heights since new widths
       this.cache.clearAll();
       this.list.recomputeRowHeights();
     }
@@ -69,7 +68,7 @@ class MuiVirtualList extends Component {
     }
   }
 
-  render () {
+  render() {
     const {
       items,
       width,
@@ -88,26 +87,30 @@ class MuiVirtualList extends Component {
 
     const virtualListProps = getVirtualListProps && getVirtualListProps({ downshiftProps });
     const rowHeight = (virtualListProps && virtualListProps.rowHeight) ? virtualListProps.rowHeight : this.cache.rowHeight;
-    const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight); 
+    const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight);
 
     return (
       <VirtualList
         width={width}
-        { ...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex }}
+        {...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex }}
         height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter)}
         rowCount={getRowCount(items, includeFooter)}
         rowHeight={rowHeight}
-        rowRenderer={({ index, style, parent, key }) => {
+        rowRenderer={({
+          index, style, parent, key
+        }) => {
           const item = items ? items[index] : null;
           const isHighlighted = downshiftProps.highlightedIndex === index;
           const className = classnames({ [classes.keyboardFocused]: isHighlighted });
           // Convenience helper to simplify typical usage
-          const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props });
-          const listItem = getListItem({ getItemProps, item, index, downshiftProps, style });
+          const getItemProps = props => downshiftProps.getItemProps({
+            item, index, className, ...props
+          });
+          const listItem = getListItem({
+            getItemProps, item, index, downshiftProps, style
+          });
 
-          if (getListItemKey) {
-            key = getListItemKey(index)
-          }
+          const _key = getListItemKey ? getListItemKey(index) : key;
 
           if (useCellMeasurer) {
             return (
@@ -116,7 +119,7 @@ class MuiVirtualList extends Component {
                 columnIndex={0}
                 rowIndex={index}
                 parent={parent}
-                key={key}
+                key={_key}
                 width={width}
               >
                 <div style={style}>
@@ -124,14 +127,12 @@ class MuiVirtualList extends Component {
                 </div>
               </CellMeasurer>
             );
-          } else {
+          }
             return (
               <div style={style} key={key}>
                 {listItem}
               </div>
-            )
-          }
-
+            );
         }}
         noRowsRenderer={() => {
           // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height.  This might be  fixed now that the cache is cleared when `items` are changed
@@ -140,20 +141,24 @@ class MuiVirtualList extends Component {
           const isHighlighted = downshiftProps.highlightedIndex === index;
           const className = classnames({ [classes.keyboardFocused]: isHighlighted });
           // Convenience helper to simplify typical usage
-          const getItemProps = props => downshiftProps.getItemProps({ item, index, className, ...props })
-          return getListItem({ getItemProps, item, index, downshiftProps });
-        }}  
+          const getItemProps = props => downshiftProps.getItemProps({
+            item, index, className, ...props
+          });
+          return getListItem({
+            getItemProps, item, index, downshiftProps
+          });
+        }}
         onRowsRendered={onRowsRendered}
         {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
         ref={el => {
-          this.list = el
+          this.list = el;
           if (registerChild) {
-            registerChild(el)
+            registerChild(el);
           }
         }}
         {...virtualListProps}
       />
-    )
+    );
   }
 }
 

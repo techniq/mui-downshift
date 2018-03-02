@@ -20,8 +20,8 @@ class Input extends Component {
   }
 
   handleToggleMenu = e => {
-    const { downshiftProps: { toggleMenu, isOpen }} = this.props;
-    
+    const { downshiftProps: { toggleMenu, isOpen } } = this.props;
+
     /*
     // TODO: Focus input on toggle, but be sure to support the following use cases
     // - Works when also opening menu on input focus, ex.
@@ -43,7 +43,9 @@ class Input extends Component {
 
   render() {
     const { getInputProps, loading, downshiftProps } = this.props;
-    const { label, labelProps, disabled, ...inputProps } = getInputProps
+    const {
+      label, labelProps, disabled, ...inputProps
+    } = getInputProps
       ? getInputProps(downshiftProps)
       : {};
 
@@ -52,7 +54,7 @@ class Input extends Component {
         <InputLabel {...labelProps}>{label}</InputLabel>
 
         <MuiInput
-          inputRef={input => (this.input = input)}
+          inputRef={input => { this.input = input; }}
           endAdornment={
             <InputAdornment position="end">
               {!disabled &&
