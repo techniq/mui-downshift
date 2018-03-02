@@ -1,5 +1,5 @@
 ##  Bugs
-  - IE: Loading more items (infinite/pagiations) resets scroll
+  - IE: Loading more items (infinite/paginations) resets scroll
     - Need to confirm fixed in examples (downshiftProps.setHighlightedIndex)
 
 ## Features

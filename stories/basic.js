@@ -6,11 +6,10 @@ import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-u
 import Drawer from 'material-ui/Drawer';
 import PersonIcon from 'material-ui-icons/Person';
 import { withStyles } from 'material-ui/styles';
-
 import MuiDownshift from '../src';
 import StarWarsSelect from './components/StarWarsSelect';
 
-const CustomDrawer = withStyles({ paper: { width: 240, padding: 8 }})(Drawer);
+const CustomDrawer = withStyles({ paper: { width: 240, padding: 8 } })(Drawer);
 
 storiesOf('Basic', module)
   .add('defaults (empty)', () => <MuiDownshift />)
@@ -18,17 +17,16 @@ storiesOf('Basic', module)
   .add('disabled', () => <StarWarsSelect getInputProps={() => ({ disabled: true })} />)
   .add('loading', () => <StarWarsSelect loading />);
 
-storiesOf('Input', module)
-  .add('do not show menu on focus', () => (
-    <StarWarsSelect
-      getInputProps={({ openMenu }) => ({
-        label: 'Star Wars character',
-        placeholder: 'Choose wisely',
-        onFocus: null
-      })}
-      onChange={action('onChange')}
-    />
-  ))
+storiesOf('Input', module).add('do not show menu on focus', () => (
+  <StarWarsSelect
+    getInputProps={({ openMenu }) => ({
+      label: 'Star Wars character',
+      placeholder: 'Choose wisely',
+      onFocus: null,
+    })}
+    onChange={action('onChange')}
+  />
+));
 
 storiesOf('List item', module)
   .add('default (text only)', () => (
@@ -58,7 +56,7 @@ storiesOf('List item', module)
     <StarWarsSelect
       getInputProps={() => ({
         label: 'Star Wars character',
-        placeholder: 'Choose wisely'
+        placeholder: 'Choose wisely',
       })}
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
@@ -75,7 +73,7 @@ storiesOf('List item', module)
     <StarWarsSelect
       getInputProps={() => ({
         label: 'Star Wars character',
-        placeholder: 'Choose wisely'
+        placeholder: 'Choose wisely',
       })}
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
@@ -94,14 +92,11 @@ storiesOf('List item', module)
     <StarWarsSelect
       getInputProps={() => ({
         label: 'Star Wars character',
-        placeholder: 'Choose wisely'
+        placeholder: 'Choose wisely',
       })}
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText
-            primary={item.text}
-            secondary="character"
-          />
+          <ListItemText primary={item.text} secondary="character" />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -111,14 +106,11 @@ storiesOf('List item', module)
     <StarWarsSelect
       getInputProps={() => ({
         label: 'Star Wars character',
-        placeholder: 'Choose wisely'
+        placeholder: 'Choose wisely',
       })}
-      getListItem={({ getItemProps, item, index }) => (
+      getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText
-            primary={item.text}
-            secondary={ item.text.indexOf('e') !== -1 ? "character" : undefined }
-          />
+          <ListItemText primary={item.text} secondary={item.text.indexOf('e') !== -1 ? 'character' : undefined} />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -128,19 +120,16 @@ storiesOf('List item', module)
     <StarWarsSelect
       getInputProps={() => ({
         label: 'Star Wars character',
-        placeholder: 'Choose wisely'
+        placeholder: 'Choose wisely',
       })}
-      getListItem={({ getItemProps, item, index }) => (
+      getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
           <ListItemAvatar>
             <Avatar>
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText
-            primary={item.text}
-            secondary="character"
-          />
+          <ListItemText primary={item.text} secondary="character" />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -149,13 +138,13 @@ storiesOf('List item', module)
   .add('empty list (filtered)', () => (
     <StarWarsSelect
       items={[]}
-      showEmpty={true}
+      showEmpty
       getInputProps={() => ({
         label: 'Star Wars character',
-        placeholder: 'Choose wisely'
+        placeholder: 'Choose wisely',
       })}
-      getListItem={({ getItemProps, item }) => (
-        (item) ? (
+      getListItem={({ getItemProps, item }) =>
+        item ? (
           <ListItem button {...getItemProps()}>
             <ListItemText primary={item.text} />
           </ListItem>
@@ -164,13 +153,13 @@ storiesOf('List item', module)
             <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
           </ListItem>
         )
-      )}
+      }
       onChange={action('onChange')}
     />
   ))
   .add('long text', () => (
     <StarWarsSelect
-      getListItem={({ getItemProps, item, index }) => (
+      getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
           <ListItemText primary={`${item.text} ${item.text} ${item.text} ${item.text}`} />
         </ListItem>
@@ -182,13 +171,9 @@ storiesOf('List item', module)
     const loading = true;
     return (
       <MuiDownshift
-        items={[
-          { text: 'one' },
-          { text: 'two' },
-          { text: 'three' },
-        ]}
-        getListItem={({ getItemProps, item }) => (
-          (item) ? (
+        items={[{ text: 'one' }, { text: 'two' }, { text: 'three' }]}
+        getListItem={({ getItemProps, item }) =>
+          item ? (
             <ListItem button {...getItemProps()}>
               <ListItemText primary={item.text} />
             </ListItem>
@@ -197,46 +182,22 @@ storiesOf('List item', module)
               <ListItemText primary={<span style={{ fontStyle: 'italic' }}>Loading...</span>} />
             </ListItem>
           )
-        )}
+        }
         includeFooter
         loading={loading}
-        isOpen={true}
+        isOpen
       />
-    )
-  })
+    );
+  });
 
 storiesOf('Menu', module)
-  .add('isOpen = true', () => (
-    <StarWarsSelect
-      isOpen={true}
-      onChange={action('onChange')}
-    />
-  ))
-  .add('height by item count (3)', () => (
-    <StarWarsSelect
-      menuItemCount={3}
-      onChange={action('onChange')}
-    />
-  ))
-  .add('height by item count (10)', () => (
-    <StarWarsSelect
-      menuItemCount={10}
-      onChange={action('onChange')}
-    />
-  ))
-  .add('height by pixels (315)', () => (
-    <StarWarsSelect
-      menuHeight={315}
-      onChange={action('onChange')}
-    />
-  ))
+  .add('isOpen = true', () => <StarWarsSelect isOpen onChange={action('onChange')} />)
+  .add('height by item count (3)', () => <StarWarsSelect menuItemCount={3} onChange={action('onChange')} />)
+  .add('height by item count (10)', () => <StarWarsSelect menuItemCount={10} onChange={action('onChange')} />)
+  .add('height by pixels (315)', () => <StarWarsSelect menuHeight={315} onChange={action('onChange')} />)
   .add('change z-index of root', () => (
     <div>
-      <StarWarsSelect
-        menuItemCount={3}
-        onChange={action('onChange')}
-        getRootProps={() => ({ style: { zIndex: 1 }})}
-      />
+      <StarWarsSelect menuItemCount={3} onChange={action('onChange')} getRootProps={() => ({ style: { zIndex: 1 } })} />
       <div style={{ willChange: 'transform', background: '#ddd' }}>`will-change: "transform"` set</div>
     </div>
   ))
@@ -245,47 +206,39 @@ storiesOf('Menu', module)
       <StarWarsSelect
         getInputProps={() => ({
           label: 'Star Wars character',
-          placeholder: 'Choose wisely'
+          placeholder: 'Choose wisely',
         })}
         onChange={action('onChange')}
       />
       <StarWarsSelect
         getInputProps={() => ({
           label: 'Star Wars character',
-          placeholder: 'Choose wisely'
+          placeholder: 'Choose wisely',
         })}
         onChange={action('onChange')}
       />
     </div>
   ))
   .add('z-index on drawer', () => (
-    <CustomDrawer open={true}>
-      <StarWarsSelect 
-        onChange={action('onChange')}
-      />
+    <CustomDrawer open>
+      <StarWarsSelect onChange={action('onChange')} />
     </CustomDrawer>
-  ))
+  ));
 
 storiesOf('VirtualList', module)
   .add('static rowHeight (no CellMeasurer)', () => (
-    <StarWarsSelect
-      getVirtualListProps={() => ({ rowHeight: 48 })}
-      onChange={action('onChange')}
-    />
+    <StarWarsSelect getVirtualListProps={() => ({ rowHeight: 48 })} onChange={action('onChange')} />
   ))
   .add('dynamic rowHeight (no CellMeasurer)', () => (
     <StarWarsSelect
       getListItem={({ getItemProps, item, index }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText
-            primary={item.text}
-            secondary={ index % 2 ? "character" : undefined }
-          />
+          <ListItemText primary={item.text} secondary={index % 2 ? 'character' : undefined} />
         </ListItem>
       )}
       getVirtualListProps={() => ({
-        rowHeight: ({ index }) => index % 2 ? 72 : 48 
+        rowHeight: ({ index }) => (index % 2 ? 72 : 48),
       })}
       onChange={action('onChange')}
     />
-  ))
+  ));
