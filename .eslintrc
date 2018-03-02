@@ -1,7 +1,9 @@
 {
   "extends": [
     "plugin:import/recommended",
-    "eslint:recommended"
+    "eslint:recommended",
+    "prettier",
+    "prettier/react"
   ],
   "plugins": ["babel", "react", "prettier"],
   "parser": "babel-eslint",
@@ -33,6 +35,8 @@
     "no-console": "warn",
 
     "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "error",
+    "react/react-in-jsx-scope": "error",
     "react/sort-comp": "off",
     "react/require-default-props": "warn",
     "react/forbid-prop-types": "warn",
@@ -40,7 +44,6 @@
     "react/no-unescaped-entities": "warn",
 
     "import/no-extraneous-dependencies": "off",
-
     "prettier/prettier": "error"
   }
 }
