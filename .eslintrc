@@ -1,12 +1,14 @@
 {
   "extends": [
     "plugin:import/recommended",
-    "airbnb"
+    "eslint:recommended"
   ],
   "plugins": ["babel", "react", "prettier"],
   "parser": "babel-eslint",
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true,
+    "es6": true
   },
   "parserOptions": {
     "ecmaVersion": 2017,
@@ -23,17 +25,20 @@
     "no-confusing-arrow": "off",
     "no-nested-ternary": "off",
     "object-curly-newline": "off",
-    "max-len": ["warn", 180, 4],
+    "max-len": ["warn", 160, 4],
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "as-needed"],
     "no-unused-vars": "warn",
     "global-require": "warn",
+    "no-console": "warn",
+
+    "react/jsx-uses-vars": "error",
     "react/sort-comp": "off",
-    "react/jsx-filename-extension": "off",
     "react/require-default-props": "warn",
     "react/forbid-prop-types": "warn",
     "react/prop-types": "warn",
     "react/no-unescaped-entities": "warn",
+
     "import/no-extraneous-dependencies": "off",
 
     "prettier/prettier": "error"
