@@ -43,7 +43,7 @@ class Input extends Component {
 
   render() {
     const { getInputProps, loading, downshiftProps } = this.props;
-    const { label, labelProps, disabled, ...inputProps } = getInputProps
+    const { label, labelProps, disabled, noAdornment, ...inputProps } = getInputProps
       ? getInputProps(downshiftProps)
       : {};
 
@@ -53,7 +53,7 @@ class Input extends Component {
 
         <MuiInput
           inputRef={input => (this.input = input)}
-          endAdornment={
+          endAdornment={!noAdornment && (
             <InputAdornment position="end">
               {!disabled &&
                 !!downshiftProps.selectedItem && (
@@ -68,7 +68,7 @@ class Input extends Component {
                 </IconButton>
               )}
             </InputAdornment>
-          }
+          )}
           onFocus={downshiftProps.openMenu}
           {...downshiftProps.getInputProps(inputProps)}
         />
