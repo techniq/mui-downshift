@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import { Manager, Target, Popper } from 'react-popper';
 import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
-
 import Input from './Input';
 import Menu from './Menu';
 
@@ -37,11 +36,7 @@ const MuiDownshift = ({
       {downshiftProps => (
         <div {...getRootProps && getRootProps()}>
           <Target>
-            <Input
-              getInputProps={getInputProps}
-              loading={loading}
-              downshiftProps={downshiftProps}
-            />
+            <Input getInputProps={getInputProps} loading={loading} downshiftProps={downshiftProps} />
           </Target>
 
           <Menu
@@ -57,7 +52,7 @@ const MuiDownshift = ({
             downshiftProps={downshiftProps}
           />
         </div>
-        )}
+      )}
     </Downshift>
   </Manager>
 );
@@ -65,28 +60,20 @@ const MuiDownshift = ({
 MuiDownshift.defaultProps = {
   itemToString: item => (item ? item.text : ''),
   getListItem({ getItemProps, item, index }) {
-    return (
-      item ? (
-        <ListItem button {...getItemProps()}>
-          { item.icon && <ListItemIcon>{item.icon}</ListItemIcon> }
-          { item.avatar && <ListItemAvatar>{item.avatar}</ListItemAvatar> }
+    return item ? (
+      <ListItem button {...getItemProps()}>
+        {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
+        {item.avatar && <ListItemAvatar>{item.avatar}</ListItemAvatar>}
 
-          <ListItemText
-            primary={item.primary || item.text}
-            secondary={item.secondary}
-          />
-        </ListItem>
-      ) : index === 0 ? (
-        <ListItem button disabled>
-          <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
-        </ListItem>
-      ) : (
-        // TODO: should we handle this or require user to implement `getListItem` at this point (`includeFooter` or an array of null/undefined)?
-        null
-      )
-    );
+        <ListItemText primary={item.primary || item.text} secondary={item.secondary} />
+      </ListItem>
+    ) : index === 0 ? (
+      <ListItem button disabled>
+        <ListItemText primary={<span style={{ fontStyle: 'italic' }}>No items found</span>} />
+      </ListItem>
+    ) : null; // TODO: should we handle this or require user to implement `getListItem` at this point (`includeFooter` or an array of null/undefined)?
   },
-  menuItemCount: 5
+  menuItemCount: 5,
 };
 
 MuiDownshift.propTypes = {

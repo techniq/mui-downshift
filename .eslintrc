@@ -3,7 +3,7 @@
     "plugin:import/recommended",
     "airbnb"
   ],
-  "plugins": ["babel", "react"],
+  "plugins": ["babel", "react", "prettier"],
   "parser": "babel-eslint",
   "env": {
     "browser": true
@@ -22,6 +22,7 @@
     "no-plusplus": "off",
     "no-confusing-arrow": "off",
     "no-nested-ternary": "off",
+    "object-curly-newline": "off",
     "max-len": ["warn", 180, 4],
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "as-needed"],
@@ -33,6 +34,8 @@
     "react/forbid-prop-types": "warn",
     "react/prop-types": "warn",
     "react/no-unescaped-entities": "warn",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+
+    "prettier/prettier": "error"
   }
 }

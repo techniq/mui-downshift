@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-
 import TextField from 'material-ui/TextField';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import MuiInput, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { LinearProgress } from 'material-ui/Progress';
-
 import IconButton from 'material-ui/IconButton';
 import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 import ArrowDropUp from 'material-ui-icons/ArrowDropUp';
@@ -17,7 +15,7 @@ class Input extends Component {
     // Hack to fix issue #9
     this.input.focus();
     // this.input.blur();
-  }
+  };
 
   handleToggleMenu = e => {
     const { downshiftProps: { toggleMenu, isOpen } } = this.props;
@@ -39,22 +37,20 @@ class Input extends Component {
     //   this.input.focus();
     // }
     toggleMenu();
-  }
+  };
 
   render() {
     const { getInputProps, loading, downshiftProps } = this.props;
-    const {
-      label, labelProps, disabled, ...inputProps
-    } = getInputProps
-      ? getInputProps(downshiftProps)
-      : {};
+    const { label, labelProps, disabled, ...inputProps } = getInputProps ? getInputProps(downshiftProps) : {};
 
     return (
       <FormControl disabled={disabled} fullWidth>
         <InputLabel {...labelProps}>{label}</InputLabel>
 
         <MuiInput
-          inputRef={input => { this.input = input; }}
+          inputRef={input => {
+            this.input = input;
+          }}
           endAdornment={
             <InputAdornment position="end">
               {!disabled &&
@@ -82,7 +78,7 @@ class Input extends Component {
               bottom: 0,
               left: 0,
               right: 0,
-              height: 2
+              height: 2,
             }}
           />
         )}

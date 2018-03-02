@@ -27,7 +27,7 @@ class MockFetch extends Component {
       let response = null;
       if (searchParams.has('startIndex') || searchParams.has('stopIndex')) {
         const startIndex = Number(searchParams.get('startIndex'));
-        const stopIndex = (Number(searchParams.get('stopIndex')) || 10);
+        const stopIndex = Number(searchParams.get('stopIndex')) || 10;
         response = { total: filteredItems.length, items: filteredItems.slice(startIndex, stopIndex) };
       } else {
         response = { total: filteredItems.length, items: filteredItems };

@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import {
-  List as VirtualList,
-  InfiniteLoader,
-  AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache
-} from 'react-virtualized';
+import { List as VirtualList, InfiniteLoader, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import { Popper } from 'react-popper';
-import Portal from 'material-ui/Portal';
 import classnames from 'classnames';
-
+import Portal from 'material-ui/Portal';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 import zIndex from 'material-ui/styles/zIndex';
@@ -30,12 +23,12 @@ function getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter
     const visibleCount = Math.min(rowCount, menuItemCount); // Maximum items before scrolling
     let height = 0;
     for (let i = 0; i < visibleCount; i++) {
-      height += (typeof rowHeight === 'function') ? rowHeight({ index: i }) : rowHeight;
+      height += typeof rowHeight === 'function' ? rowHeight({ index: i }) : rowHeight;
     }
     return height;
   } else if (showEmpty) {
     // Return the height of a single item
-    return (typeof rowHeight === 'function') ? rowHeight({ index: 0 }) : rowHeight;
+    return typeof rowHeight === 'function' ? rowHeight({ index: 0 }) : rowHeight;
   }
   return 0;
 }
@@ -44,7 +37,7 @@ class MuiVirtualList extends Component {
   cache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 48,
-    keyMapper: this.props.getListItemKey
+    keyMapper: this.props.getListItemKey,
   });
 
   componentWillReceiveProps(nextProps) {
@@ -82,11 +75,12 @@ class MuiVirtualList extends Component {
       onRowsRendered,
       registerChild,
       downshiftProps,
-      classes
+      classes,
     } = this.props;
 
     const virtualListProps = getVirtualListProps && getVirtualListProps({ downshiftProps });
-    const rowHeight = (virtualListProps && virtualListProps.rowHeight) ? virtualListProps.rowHeight : this.cache.rowHeight;
+    const rowHeight =
+      virtualListProps && virtualListProps.rowHeight ? virtualListProps.rowHeight : this.cache.rowHeight;
     const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight);
 
     return (
@@ -96,18 +90,24 @@ class MuiVirtualList extends Component {
         height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter)}
         rowCount={getRowCount(items, includeFooter)}
         rowHeight={rowHeight}
-        rowRenderer={({
-          index, style, parent, key
-        }) => {
+        rowRenderer={({ index, style, parent, key }) => {
           const item = items ? items[index] : null;
           const isHighlighted = downshiftProps.highlightedIndex === index;
           const className = classnames({ [classes.keyboardFocused]: isHighlighted });
           // Convenience helper to simplify typical usage
-          const getItemProps = props => downshiftProps.getItemProps({
-            item, index, className, ...props
-          });
+          const getItemProps = props =>
+            downshiftProps.getItemProps({
+              item,
+              index,
+              className,
+              ...props,
+            });
           const listItem = getListItem({
-            getItemProps, item, index, downshiftProps, style
+            getItemProps,
+            item,
+            index,
+            downshiftProps,
+            style,
           });
 
           const _key = getListItemKey ? getListItemKey(index) : key;
@@ -122,17 +122,15 @@ class MuiVirtualList extends Component {
                 key={_key}
                 width={width}
               >
-                <div style={style}>
-                  {listItem}
-                </div>
+                <div style={style}>{listItem}</div>
               </CellMeasurer>
             );
           }
-            return (
-              <div style={style} key={key}>
-                {listItem}
-              </div>
-            );
+          return (
+            <div style={style} key={key}>
+              {listItem}
+            </div>
+          );
         }}
         noRowsRenderer={() => {
           // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height.  This might be  fixed now that the cache is cleared when `items` are changed
@@ -141,11 +139,18 @@ class MuiVirtualList extends Component {
           const isHighlighted = downshiftProps.highlightedIndex === index;
           const className = classnames({ [classes.keyboardFocused]: isHighlighted });
           // Convenience helper to simplify typical usage
-          const getItemProps = props => downshiftProps.getItemProps({
-            item, index, className, ...props
-          });
+          const getItemProps = props =>
+            downshiftProps.getItemProps({
+              item,
+              index,
+              className,
+              ...props,
+            });
           return getListItem({
-            getItemProps, item, index, downshiftProps
+            getItemProps,
+            item,
+            index,
+            downshiftProps,
           });
         }}
         onRowsRendered={onRowsRendered}
@@ -169,10 +174,15 @@ function Menu({ getInfiniteLoaderProps, ...props }) {
         <Portal>
           <Popper placement="bottom-start" style={{ zIndex: zIndex.modal }} onMouseUp={e => e.stopPropagation()}>
             <Paper style={{ width }}>
-              { getInfiniteLoaderProps ? (
-                <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })} >
+              {getInfiniteLoaderProps ? (
+                <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
                   {({ onRowsRendered, registerChild }) => (
-                    <MuiVirtualList {...props} width={width} onRowsRendered={onRowsRendered} registerChild={registerChild} />
+                    <MuiVirtualList
+                      {...props}
+                      width={width}
+                      onRowsRendered={onRowsRendered}
+                      registerChild={registerChild}
+                    />
                   )}
                 </InfiniteLoader>
               ) : (
