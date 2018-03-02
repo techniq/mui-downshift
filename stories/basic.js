@@ -16,6 +16,7 @@ storiesOf('Basic', module)
   .add('defaults (empty)', () => <MuiDownshift />)
   .add('items only', () => <StarWarsSelect />)
   .add('disabled', () => <StarWarsSelect getInputProps={() => ({ disabled: true })} />)
+  .add('no adornment', () => <StarWarsSelect getInputProps={() => ({ noAdornment: true })} />)
   .add('loading', () => <StarWarsSelect loading />);
 
 storiesOf('Input', module)
