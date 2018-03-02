@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 function loadStories() {
   require('../stories/basic');
   require('../stories/fetch');
+  require('../stories/multi');
 }
 
 configure(loadStories, module);
