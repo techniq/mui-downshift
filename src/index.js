@@ -97,4 +97,6 @@ MuiDownshift.propTypes = {
   menuItemCount: PropTypes.number,
 };
 
+export const stateChangeTypes = Downshift.stateChangeTypes;
+export const resetIdCounter = Downshift.resetIdCounter;
 export default MuiDownshift;
