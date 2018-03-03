@@ -1,7 +1,8 @@
 {
   "extends": [
-    "plugin:import/recommended",
     "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:react/recommended",
     "prettier",
     "prettier/react"
   ],
@@ -21,29 +22,15 @@
     }
   },
   "rules": {
-    "comma-dangle": "off",
-    "no-underscore-dangle": "off",
-    "no-plusplus": "off",
-    "no-confusing-arrow": "off",
-    "no-nested-ternary": "off",
-    "object-curly-newline": "off",
-    "max-len": ["warn", 160, 4],
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "as-needed"],
     "no-unused-vars": "warn",
-    "global-require": "warn",
     "no-console": "warn",
 
-    "react/jsx-uses-vars": "error",
-    "react/jsx-uses-react": "error",
-    "react/react-in-jsx-scope": "error",
-    "react/sort-comp": "off",
     "react/require-default-props": "warn",
-    "react/forbid-prop-types": "warn",
     "react/prop-types": "warn",
     "react/no-unescaped-entities": "warn",
 
-    "import/no-extraneous-dependencies": "off",
     "prettier/prettier": "error"
   }
 }
