@@ -18,25 +18,14 @@ class Input extends Component {
   };
 
   handleToggleMenu = e => {
-    const { downshiftProps: { toggleMenu, isOpen } } = this.props;
+    const { downshiftProps: { isOpen, openMenu, closeMenu } } = this.props;
 
-    /*
-    // TODO: Focus input on toggle, but be sure to support the following use cases
-    // - Works when also opening menu on input focus, ex.
-          <StarWarsSelect
-            getInputProps={({ openMenu }) => ({ onFocus: e => { openMenu() }
-            })}
-          />
-        - Works without opening menu on input focus
-        - Supports closing the menu when toggling close (with/without input focus opening)
-    */
-
-    // e.stopPropagation();
-    // if (!isOpen) {
-    // //   // Going to be opened
-    //   this.input.focus();
-    // }
-    toggleMenu();
+    if (!isOpen) {
+      this.input.focus();
+      openMenu();
+    } else {
+      closeMenu();
+    }
   };
 
   render() {
