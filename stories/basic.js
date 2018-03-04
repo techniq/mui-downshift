@@ -22,7 +22,9 @@ storiesOf('Input', module).add('do not show menu on focus', () => (
     getInputProps={({ openMenu }) => ({
       label: 'Star Wars character',
       placeholder: 'Choose wisely',
-      onFocus: null,
+      inputProps: {
+        onFocus: null,
+      }
     })}
     onChange={action('onChange')}
   />
