@@ -34,30 +34,29 @@ class Input extends Component {
 
     return (
       <FormControl disabled={disabled} fullWidth>
-        <InputLabel {...labelProps}>{label}</InputLabel>
+        {label && <InputLabel {...labelProps}>{label}</InputLabel>}
 
         <MuiInput
           inputRef={input => {
             this.input = input;
           }}
           endAdornment={
-            <InputAdornment position="end">
-              {!disabled &&
-                !!downshiftProps.selectedItem && (
+            !disabled && (
+              <InputAdornment position="end">
+                {!!downshiftProps.selectedItem && (
                   <IconButton onClick={this.handleClearSelection}>
                     <Clear />
                   </IconButton>
                 )}
 
-              {!disabled && (
                 <IconButton onClick={this.handleToggleMenu}>
                   {downshiftProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
                 </IconButton>
-              )}
-            </InputAdornment>
+              </InputAdornment>
+            )
           }
           inputProps={{
-            onFocus: downshiftProps.openMenu
+            onFocus: downshiftProps.openMenu,
           }}
           {...downshiftProps.getInputProps(inputProps)}
         />
