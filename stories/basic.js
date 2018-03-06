@@ -15,6 +15,7 @@ storiesOf('Basic', module)
   .add('defaults (empty)', () => <MuiDownshift />)
   .add('items only', () => <StarWarsSelect />)
   .add('disabled', () => <StarWarsSelect getInputProps={() => ({ disabled: true })} />)
+  .add('without adornments', () => <StarWarsSelect getInputProps={() => ({ endAdornment: null })} />)
   .add('loading', () => <StarWarsSelect loading />);
 
 storiesOf('Input', module).add('do not show menu on focus', () => (
@@ -24,7 +25,7 @@ storiesOf('Input', module).add('do not show menu on focus', () => (
       placeholder: 'Choose wisely',
       inputProps: {
         onFocus: null,
-      }
+      },
     })}
     onChange={action('onChange')}
   />
