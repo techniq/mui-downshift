@@ -58,14 +58,14 @@ const MuiDownshift = ({
 );
 
 MuiDownshift.defaultProps = {
-  itemToString: item => (item ? item.text : ''),
+  itemToString: item => (item ? item.label : ''),
   getListItem({ getItemProps, item, index }) {
     return item ? (
       <ListItem button {...getItemProps()}>
         {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
         {item.avatar && <ListItemAvatar>{item.avatar}</ListItemAvatar>}
 
-        <ListItemText primary={item.primary || item.text} secondary={item.secondary} />
+        <ListItemText primary={item.primary || item.label} secondary={item.secondary} />
       </ListItem>
     ) : index === 0 ? (
       <ListItem button disabled>

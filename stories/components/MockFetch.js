@@ -20,7 +20,7 @@ class MockFetch extends Component {
       if (searchParams.has('q')) {
         const query = searchParams.get('q');
         if (query) {
-          filteredItems = items.filter(item => item.text.toLowerCase().includes(query.toLowerCase()));
+          filteredItems = items.filter(item => item.label.toLowerCase().includes(query.toLowerCase()));
         }
       }
 
