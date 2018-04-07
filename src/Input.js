@@ -68,6 +68,7 @@ class Input extends Component {
               position: 'relative',
               bottom: 2,
               height: 2,
+              marginBottom: -2,
             }}
           />
         )}
