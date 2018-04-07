@@ -16,7 +16,24 @@ storiesOf('Basic', module)
   .add('items only', () => <StarWarsSelect />)
   .add('disabled', () => <StarWarsSelect getInputProps={() => ({ disabled: true })} />)
   .add('without adornments', () => <StarWarsSelect getInputProps={() => ({ endAdornment: null })} />)
-  .add('loading', () => <StarWarsSelect loading />);
+  .add('loading', () => <StarWarsSelect loading />)
+  .add('helperText', () => (
+    <StarWarsSelect
+      getInputProps={() => ({
+        label: 'Star Wars character',
+        error: true,
+        helperText: 'Error',
+      })}
+    />
+  ))
+  .add('required', () => (
+    <StarWarsSelect
+      getInputProps={() => ({
+        label: 'Star Wars character',
+        required: true,
+      })}
+    />
+  ));
 
 storiesOf('Input', module).add('do not show menu on focus', () => (
   <StarWarsSelect
