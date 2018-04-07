@@ -30,12 +30,13 @@ class Input extends Component {
 
   render() {
     const { getInputProps, loading, downshiftProps } = this.props;
-    const { label, labelProps, disabled, ...inputProps } = getInputProps ? getInputProps(downshiftProps) : {};
+    const { label, labelProps, disabled, required, error, helperText, ...inputProps } = getInputProps
+      ? getInputProps(downshiftProps)
+      : {};
 
     return (
-      <FormControl disabled={disabled} fullWidth>
+      <FormControl disabled={disabled} required={required} error={error} fullWidth>
         {label && <InputLabel {...labelProps}>{label}</InputLabel>}
-
         <MuiInput
           inputRef={input => {
             this.input = input;
@@ -64,14 +65,13 @@ class Input extends Component {
         {loading && (
           <LinearProgress
             style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
+              position: 'relative',
+              bottom: 2,
               height: 2,
             }}
           />
         )}
+        {helperText && <FormHelperText>{helperText}</FormHelperText>}
       </FormControl>
     );
   }
