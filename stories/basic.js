@@ -66,7 +66,7 @@ storiesOf('List item', module)
       })}
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText primary={<span style={{ color: 'red' }}>{item.text}</span>} />
+          <ListItemText primary={<span style={{ color: 'red' }}>{item.label}</span>} />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -83,7 +83,7 @@ storiesOf('List item', module)
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary={item.text} />
+          <ListItemText primary={item.label} />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -102,7 +102,7 @@ storiesOf('List item', module)
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={item.text} />
+          <ListItemText primary={item.label} />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -116,7 +116,7 @@ storiesOf('List item', module)
       })}
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText primary={item.text} secondary="character" />
+          <ListItemText primary={item.label} secondary="character" />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -130,7 +130,7 @@ storiesOf('List item', module)
       })}
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText primary={item.text} secondary={item.text.indexOf('e') !== -1 ? 'character' : undefined} />
+          <ListItemText primary={item.label} secondary={item.label.indexOf('e') !== -1 ? 'character' : undefined} />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -149,7 +149,7 @@ storiesOf('List item', module)
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={item.text} secondary="character" />
+          <ListItemText primary={item.label} secondary="character" />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -166,7 +166,7 @@ storiesOf('List item', module)
       getListItem={({ getItemProps, item }) =>
         item ? (
           <ListItem button {...getItemProps()}>
-            <ListItemText primary={item.text} />
+            <ListItemText primary={item.label} />
           </ListItem>
         ) : (
           <ListItem button disabled>
@@ -181,7 +181,7 @@ storiesOf('List item', module)
     <StarWarsSelect
       getListItem={({ getItemProps, item }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText primary={`${item.text} ${item.text} ${item.text} ${item.text}`} />
+          <ListItemText primary={`${item.label} ${item.label} ${item.label} ${item.label}`} />
         </ListItem>
       )}
       onChange={action('onChange')}
@@ -195,7 +195,7 @@ storiesOf('List item', module)
         getListItem={({ getItemProps, item }) =>
           item ? (
             <ListItem button {...getItemProps()}>
-              <ListItemText primary={item.text} />
+              <ListItemText primary={item.label} />
             </ListItem>
           ) : (
             <ListItem button disabled>
@@ -253,7 +253,7 @@ storiesOf('VirtualList', module)
     <StarWarsSelect
       getListItem={({ getItemProps, item, index }) => (
         <ListItem button {...getItemProps()}>
-          <ListItemText primary={item.text} secondary={index % 2 ? 'character' : undefined} />
+          <ListItemText primary={item.label} secondary={index % 2 ? 'character' : undefined} />
         </ListItem>
       )}
       getVirtualListProps={() => ({

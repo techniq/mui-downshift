@@ -11,7 +11,7 @@ export default class StarWarsSelect extends Component {
 
   handleStateChange = changes => {
     if (typeof changes.inputValue === 'string') {
-      const filteredItems = items.filter(item => item.text.toLowerCase().includes(changes.inputValue.toLowerCase()));
+      const filteredItems = items.filter(item => item.label.toLowerCase().includes(changes.inputValue.toLowerCase()));
       this.setState({ filteredItems });
     }
   };
@@ -22,7 +22,7 @@ export default class StarWarsSelect extends Component {
       <MuiDownshift
         items={filteredItems}
         onStateChange={this.handleStateChange}
-        // keyMapper={rowIndex => filteredItems[rowIndex] && filteredItems[rowIndex].text}
+        // keyMapper={rowIndex => filteredItems[rowIndex] && filteredItems[rowIndex].label}
         {...this.props}
       />
     );

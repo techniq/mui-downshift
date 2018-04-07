@@ -34,7 +34,7 @@ storiesOf('Fetch', module)
           getListItem={({ getItemProps, item }) =>
             item ? (
               <ListItem button {...getItemProps()}>
-                <ListItemText primary={item.text} />
+                <ListItemText primary={item.label} />
               </ListItem>
             ) : loading ? (
               <ListItem button disabled>
@@ -94,7 +94,7 @@ storiesOf('Fetch', module)
           getListItem={({ getItemProps, item }) =>
             item ? (
               <ListItem button {...getItemProps()}>
-                <ListItemText primary={item.text} />
+                <ListItemText primary={item.label} />
               </ListItem>
             ) : loading ? (
               <ListItem button disabled>
@@ -145,7 +145,7 @@ storiesOf('Fetch', module)
             showEmpty
             getListItemKey={(rowIndex, columnIndex) => {
               if (data && data.items && data.items[rowIndex]) {
-                return data.items[rowIndex].text;
+                return data.items[rowIndex].label;
               } else if (loading) {
                 return 'loading';
               } else if (hasMoreData) {
@@ -156,7 +156,7 @@ storiesOf('Fetch', module)
             getListItem={({ getItemProps, item, index, downshiftProps }) =>
               item ? (
                 <ListItem button {...getItemProps()}>
-                  <ListItemText primary={item.text} secondary="Test" />
+                  <ListItemText primary={item.label} secondary="Test" />
                 </ListItem>
               ) : loading ? (
                 <ListItem button disabled>
