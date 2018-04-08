@@ -21,6 +21,23 @@ storiesOf('Basic', module)
     <StarWarsSelect
       getInputProps={() => ({
         label: 'Star Wars character',
+        helperText: 'Pick your favorite',
+      })}
+    />
+  ))
+  .add('helperText with loading', () => (
+    <StarWarsSelect
+      loading={true}
+      getInputProps={() => ({
+        label: 'Star Wars character',
+        helperText: 'Pick your favorite',
+      })}
+    />
+  ))
+  .add('helperText with error', () => (
+    <StarWarsSelect
+      getInputProps={() => ({
+        label: 'Star Wars character',
         error: true,
         helperText: 'Error',
       })}
