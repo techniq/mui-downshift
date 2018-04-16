@@ -4,9 +4,9 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 import MuiInput, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { LinearProgress } from 'material-ui/Progress';
 import IconButton from 'material-ui/IconButton';
-import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
-import ArrowDropUp from 'material-ui-icons/ArrowDropUp';
-import Clear from 'material-ui-icons/Clear';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import Clear from '@material-ui/icons/Clear';
 
 class Input extends Component {
   handleClearSelection = e => {

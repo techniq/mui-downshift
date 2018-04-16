@@ -4,8 +4,9 @@ import { action } from '@storybook/addon-actions';
 import Avatar from 'material-ui/Avatar';
 import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
-import PersonIcon from 'material-ui-icons/Person';
+import PersonIcon from '@material-ui/icons/Person';
 import { withStyles } from 'material-ui/styles';
+
 import MuiDownshift from '../src';
 import StarWarsSelect from './components/StarWarsSelect';
 
