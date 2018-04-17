@@ -33,15 +33,15 @@ Property | Type | Required | Description
 `loading` | Boolean | |  Show loading indicator
 all props available on `downshift` | |  | `itemToString`, `onChange`, `onStateChange`, ...
 
-## Running Storybook
+### Running Storybook
 
-This project has some [storybook])(https://github.com/storybooks/storybook) stories.
+This project has some [storybook](https://github.com/storybooks/storybook) stories.
 
 To run storybook, you have to install the story dependencies first:
 
 ```bash
 $ cd stories
-$ yarn
+$ yarn install
 $ cd ..
 ```
 
