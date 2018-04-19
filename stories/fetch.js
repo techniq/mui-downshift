@@ -6,7 +6,7 @@ import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-u
 import MuiDownshift from '../src';
 import MockFetch from './components/MockFetch';
 
-const items = starwarsNames.map((text, value) => ({ text, value }));
+const items = starwarsNames.map((label, value) => ({ label, value }));
 
 storiesOf('Fetch', module)
   .add('basic', () => (
