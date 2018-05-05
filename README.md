@@ -1,5 +1,5 @@
 ## mui-downshift
-Thin layer over paypal's [downshift](https://github.com/paypal/downshift) to use [Material-UI 1.0](http://www.material-ui-next.com) visual components
+Thin layer over paypal's [downshift](https://github.com/paypal/downshift) to use [Material-UI 1.0](http://material-ui-next.com) visual components
 
 For examples of `<MuiDownshift>` in action, see [demo](https://techniq.github.io/mui-downshift/) or view the [source](https://github.com/techniq/mui-downshift/tree/master/stories)
 
