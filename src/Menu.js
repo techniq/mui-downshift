@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { List as VirtualList, InfiniteLoader, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import { Popper } from 'react-popper';
 import classnames from 'classnames';
-import Portal from 'material-ui/Portal';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import zIndex from 'material-ui/styles/zIndex';
+import Portal from '@material-ui/core/Portal';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const styles = theme => ({
   keyboardFocused: {
@@ -40,7 +40,7 @@ class MuiVirtualList extends Component {
     keyMapper: this.props.getListItemKey,
   });
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.getListItemKey !== nextProps.getListItemKey) {
       this.cache._keyMapper = nextProps.getListItemKey;
     }

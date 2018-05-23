@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import MuiInput, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { LinearProgress } from 'material-ui/Progress';
-import IconButton from 'material-ui/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import MuiInput from '@material-ui/core/Input';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import IconButton from '@material-ui/core/IconButton';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Clear from '@material-ui/icons/Clear';
