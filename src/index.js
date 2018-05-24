@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
-import { Manager, Target, Popper } from 'react-popper';
-import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
+import { Manager, Target } from 'react-popper';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Input from './Input';
 import Menu from './Menu';
 
