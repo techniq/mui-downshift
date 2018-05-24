@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { all as starwarsNames } from 'starwars-names';
-import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import MuiDownshift from '../src';
 import MockFetch from './components/MockFetch';
 

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Avatar from 'material-ui/Avatar';
-import { ListItem, ListItemText, ListItemIcon, ListItemAvatar } from 'material-ui/List';
-import Drawer from 'material-ui/Drawer';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Drawer from '@material-ui/core/Drawer';
 import PersonIcon from '@material-ui/icons/Person';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import MuiDownshift from '../src';
 import StarWarsSelect from './components/StarWarsSelect';
@@ -209,7 +212,7 @@ storiesOf('List item', module)
     const loading = true;
     return (
       <MuiDownshift
-        items={[{ text: 'one' }, { text: 'two' }, { text: 'three' }]}
+        items={[{ label: 'one' }, { label: 'two' }, { label: 'three' }]}
         getListItem={({ getItemProps, item }) =>
           item ? (
             <ListItem button {...getItemProps()}>
