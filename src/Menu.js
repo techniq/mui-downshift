@@ -172,7 +172,15 @@ function Menu({ getInfiniteLoaderProps, ...props }) {
     <AutoSizer>
       {({ width }) => (
         <Portal>
-          <Popper placement="bottom-start" style={{ zIndex: zIndex.modal }} onMouseUp={e => e.stopPropagation()}>
+          <Popper
+            placement="bottom-start"
+            style={{ zIndex: zIndex.modal }}
+            onMouseUp={e => e.stopPropagation()}
+            modifiers={{
+              preventOverflow: { enabled: false },
+              hide: { enabled: false },
+            }}
+          >
             <Paper style={{ width }}>
               {getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>

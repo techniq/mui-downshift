@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+
 import Avatar from '@material-ui/core/Avatar';
+import Drawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Drawer from '@material-ui/core/Drawer';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonIcon from '@material-ui/icons/Person';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -260,7 +264,36 @@ storiesOf('Menu', module)
       />
     </div>
   ))
-  .add('z-index on drawer', () => (
+  .add('menu direction', () => (
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 16px)' }}>
+      <StarWarsSelect
+        getInputProps={() => ({
+          label: 'Star Wars character',
+          placeholder: 'Choose wisely',
+        })}
+        onChange={action('onChange')}
+      />
+
+      <div style={{ flex: 1 }} />
+
+      <StarWarsSelect
+        getInputProps={() => ({
+          label: 'Star Wars character',
+          placeholder: 'Choose wisely',
+        })}
+        onChange={action('onChange')}
+      />
+    </div>
+  ))
+  .add('on Dialog', () => (
+    <Dialog open>
+      <DialogTitle>Character select</DialogTitle>
+      <DialogContent>
+        <StarWarsSelect onChange={action('onChange')} />
+      </DialogContent>
+    </Dialog>
+  ))
+  .add('on Drawer', () => (
     <CustomDrawer open>
       <StarWarsSelect onChange={action('onChange')} />
     </CustomDrawer>
