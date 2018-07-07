@@ -175,7 +175,7 @@ function Menu({ getInfiniteLoaderProps, ...props }) {
           <Popper
             placement="bottom-start"
             style={{ zIndex: zIndex.modal }}
-            onMouseUp={e => e.stopPropagation()}
+            {...props.downshiftProps.getMenuProps({ refKey: 'innerRef' })}
             modifiers={{
               preventOverflow: { enabled: false },
               hide: { enabled: false },
