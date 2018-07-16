@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "downshift": "^2.0.10",
-    "react-virtualized": "^9.20.0"
+    "downshift": "^2.0.14",
+    "react-virtualized": "^9.20.1"
   },
   "devDependencies": {
     "@material-ui/core": "^1.4.0",
@@ -25,12 +25,12 @@
     "@storybook/addon-actions": "^3.4.8",
     "@storybook/react": "^3.4.8",
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.5",
+    "babel-eslint": "^8.2.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.6.0",
-    "eslint": "^5.0.1",
+    "eslint": "^5.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-import": "^2.13.0",
