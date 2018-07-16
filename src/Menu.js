@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { List as VirtualList, InfiniteLoader, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
-import { Popper } from 'react-popper';
 import classnames from 'classnames';
-import Portal from '@material-ui/core/Portal';
 import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 import zIndex from '@material-ui/core/styles/zIndex';
 
@@ -167,38 +166,38 @@ class MuiVirtualList extends Component {
   }
 }
 
-function Menu({ getInfiniteLoaderProps, ...props }) {
+function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
   return props.downshiftProps.isOpen ? (
     <AutoSizer>
       {({ width }) => (
-        <Portal>
-          <Popper
-            placement="bottom-start"
-            style={{ zIndex: zIndex.modal }}
-            {...props.downshiftProps.getMenuProps({ refKey: 'innerRef' })}
-            modifiers={{
-              preventOverflow: { enabled: false },
-              hide: { enabled: false },
-            }}
-          >
-            <Paper style={{ width }}>
-              {getInfiniteLoaderProps ? (
-                <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
-                  {({ onRowsRendered, registerChild }) => (
-                    <MuiVirtualList
-                      {...props}
-                      width={width}
-                      onRowsRendered={onRowsRendered}
-                      registerChild={registerChild}
-                    />
-                  )}
-                </InfiniteLoader>
-              ) : (
-                <MuiVirtualList {...props} width={width} />
-              )}
-            </Paper>
-          </Popper>
-        </Portal>
+        <Popper
+          open={true}
+          anchorEl={inputRef}
+          placement="bottom-start"
+          style={{ zIndex: zIndex.modal }}
+          {...props.downshiftProps.getMenuProps({ refKey: 'innerRef' })}
+          modifiers={{
+            preventOverflow: { enabled: false },
+            hide: { enabled: false },
+          }}
+        >
+          <Paper style={{ width }}>
+            {getInfiniteLoaderProps ? (
+              <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
+                {({ onRowsRendered, registerChild }) => (
+                  <MuiVirtualList
+                    {...props}
+                    width={width}
+                    onRowsRendered={onRowsRendered}
+                    registerChild={registerChild}
+                  />
+                )}
+              </InfiniteLoader>
+            ) : (
+              <MuiVirtualList {...props} width={width} />
+            )}
+          </Paper>
+        </Popper>
       )}
     </AutoSizer>
   ) : null;

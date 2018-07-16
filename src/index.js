@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
-import { Manager, Target } from 'react-popper';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -9,56 +8,63 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Input from './Input';
 import Menu from './Menu';
 
-const MuiDownshift = ({
-  items,
-  itemToString,
-  getRootProps,
+class MuiDownshift extends Component {
+  render() {
+    const {
+      items,
+      itemToString,
+      getRootProps,
 
-  // Input
-  getInputProps,
-  loading,
+      // Input
+      getInputProps,
+      loading,
 
-  // Menu
-  getListItem,
-  getListItemKey,
-  showEmpty,
-  includeFooter,
-  getInfiniteLoaderProps,
-  getVirtualListProps,
-  menuHeight,
-  menuItemCount,
+      // Menu
+      getListItem,
+      getListItemKey,
+      showEmpty,
+      includeFooter,
+      getInfiniteLoaderProps,
+      getVirtualListProps,
+      menuHeight,
+      menuItemCount,
 
-  ...props
-}) => (
-  <Manager>
-    <Downshift
-      itemCount={(items ? items.length : 0) + (includeFooter ? 1 : 0)} // Needed for windowing
-      itemToString={itemToString}
-      {...props}
-    >
-      {downshiftProps => (
-        <div {...getRootProps && getRootProps()}>
-          <Target>
-            <Input getInputProps={getInputProps} loading={loading} downshiftProps={downshiftProps} />
-          </Target>
+      ...props
+    } = this.props;
+    return (
+      <Downshift
+        itemCount={(items ? items.length : 0) + (includeFooter ? 1 : 0)} // Needed for windowing
+        itemToString={itemToString}
+        {...props}
+      >
+        {downshiftProps => (
+          <div {...getRootProps && getRootProps()}>
+            <Input
+              getInputProps={getInputProps}
+              loading={loading}
+              downshiftProps={downshiftProps}
+              inputRef={node => (this.inputRef = node)}
+            />
 
-          <Menu
-            items={items}
-            getListItem={getListItem}
-            getListItemKey={getListItemKey}
-            showEmpty={showEmpty}
-            includeFooter={includeFooter}
-            getInfiniteLoaderProps={getInfiniteLoaderProps}
-            getVirtualListProps={getVirtualListProps}
-            menuItemCount={menuItemCount}
-            menuHeight={menuHeight}
-            downshiftProps={downshiftProps}
-          />
-        </div>
-      )}
-    </Downshift>
-  </Manager>
-);
+            <Menu
+              items={items}
+              getListItem={getListItem}
+              getListItemKey={getListItemKey}
+              showEmpty={showEmpty}
+              includeFooter={includeFooter}
+              getInfiniteLoaderProps={getInfiniteLoaderProps}
+              getVirtualListProps={getVirtualListProps}
+              menuItemCount={menuItemCount}
+              menuHeight={menuHeight}
+              downshiftProps={downshiftProps}
+              inputRef={this.inputRef}
+            />
+          </div>
+        )}
+      </Downshift>
+    );
+  }
+}
 
 MuiDownshift.defaultProps = {
   itemToString: item => (item ? item.label : ''),

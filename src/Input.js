@@ -20,7 +20,9 @@ class Input extends Component {
   };
 
   handleToggleMenu = e => {
-    const { downshiftProps: { isOpen, openMenu, closeMenu } } = this.props;
+    const {
+      downshiftProps: { isOpen, openMenu, closeMenu },
+    } = this.props;
 
     if (!isOpen) {
       this.input.focus();
@@ -31,7 +33,7 @@ class Input extends Component {
   };
 
   render() {
-    const { getInputProps, loading, downshiftProps } = this.props;
+    const { inputRef, getInputProps, loading, downshiftProps } = this.props;
     const { label, labelProps, disabled, required, error, helperText, ...inputProps } = getInputProps
       ? getInputProps(downshiftProps)
       : {};
@@ -42,6 +44,7 @@ class Input extends Component {
         <MuiInput
           inputRef={input => {
             this.input = input;
+            inputRef && inputRef(input);
           }}
           endAdornment={
             !disabled && (
