@@ -12,11 +12,12 @@ import Clear from '@material-ui/icons/Clear';
 
 class Input extends Component {
   handleClearSelection = e => {
-    this.props.downshiftProps.clearSelection();
+    const { downshiftProps, focusOnClear } = this.props;
+    downshiftProps.clearSelection();
 
-    // Hack to fix issue #9
-    this.input.focus();
-    // this.input.blur();
+    if (focusOnClear) {
+      this.input.focus();
+    }
   };
 
   handleToggleMenu = e => {

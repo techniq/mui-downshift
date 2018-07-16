@@ -31,6 +31,7 @@ Property | Type | Required | Description
 `menuItemCount` | Number | | Number of items to show on menu before scrolling.  Default `5`
 `menuHeight` | Number | | Number of pixels to set menu before scrolling.  Overrides `menuItemCount` if set.  Default `null`
 `loading` | Boolean | |  Show loading indicator
+`focusOnClear` | Boolean | |  Focus input after clearing.  See issue #9
 all props available on `downshift` | |  | `itemToString`, `onChange`, `onStateChange`, ...
 
 ### Running Storybook

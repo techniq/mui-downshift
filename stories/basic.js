@@ -60,18 +60,29 @@ storiesOf('Basic', module)
     />
   ));
 
-storiesOf('Input', module).add('do not show menu on focus', () => (
-  <StarWarsSelect
-    getInputProps={({ openMenu }) => ({
-      label: 'Star Wars character',
-      placeholder: 'Choose wisely',
-      inputProps: {
-        onFocus: null,
-      },
-    })}
-    onChange={action('onChange')}
-  />
-));
+storiesOf('Input', module)
+  .add('do not show menu on focus', () => (
+    <StarWarsSelect
+      getInputProps={({ openMenu }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+        inputProps: {
+          onFocus: null,
+        },
+      })}
+      onChange={action('onChange')}
+    />
+  ))
+  .add('focusOnClear', () => (
+    <StarWarsSelect
+      getInputProps={({ openMenu }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+      })}
+      focusOnClear
+      onChange={action('onChange')}
+    />
+  ));
 
 storiesOf('List item', module)
   .add('default (text only)', () => (

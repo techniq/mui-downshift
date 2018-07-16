@@ -17,6 +17,7 @@ class MuiDownshift extends Component {
 
       // Input
       getInputProps,
+      focusOnClear,
       loading,
 
       // Menu
@@ -41,6 +42,7 @@ class MuiDownshift extends Component {
           <div {...getRootProps && getRootProps()}>
             <Input
               getInputProps={getInputProps}
+              focusOnClear={focusOnClear}
               loading={loading}
               downshiftProps={downshiftProps}
               inputRef={node => (this.inputRef = node)}
@@ -93,6 +95,7 @@ MuiDownshift.propTypes = {
 
   // Input
   getInputProps: PropTypes.func,
+  focusOnClear: PropTypes.bool,
   loading: PropTypes.bool,
 
   // Menu
