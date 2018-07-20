@@ -42,7 +42,7 @@ class Input extends Component {
     return (
       <FormControl disabled={disabled} required={required} error={error} fullWidth>
         {label && (
-          <InputLabel shrink={downshiftProps.isOpen || downshiftProps.inputValue || undefined} {...labelProps}>
+          <InputLabel shrink={downshiftProps.isOpen || downshiftProps.inputValue ? true : undefined} {...labelProps}>
             {label}
           </InputLabel>
         )}
