@@ -175,28 +175,29 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
           anchorEl={inputRef}
           placement="bottom-start"
           style={{ zIndex: zIndex.modal }}
-          {...props.downshiftProps.getMenuProps({ refKey: 'innerRef' })}
           modifiers={{
             preventOverflow: { enabled: false },
             hide: { enabled: false },
           }}
         >
-          <Paper style={{ width }}>
-            {getInfiniteLoaderProps ? (
-              <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
-                {({ onRowsRendered, registerChild }) => (
-                  <MuiVirtualList
-                    {...props}
-                    width={width}
-                    onRowsRendered={onRowsRendered}
-                    registerChild={registerChild}
-                  />
-                )}
-              </InfiniteLoader>
-            ) : (
-              <MuiVirtualList {...props} width={width} />
-            )}
-          </Paper>
+          <div {...props.downshiftProps.getMenuProps()}>
+            <Paper style={{ width }}>
+              {getInfiniteLoaderProps ? (
+                <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
+                  {({ onRowsRendered, registerChild }) => (
+                    <MuiVirtualList
+                      {...props}
+                      width={width}
+                      onRowsRendered={onRowsRendered}
+                      registerChild={registerChild}
+                    />
+                  )}
+                </InfiniteLoader>
+              ) : (
+                <MuiVirtualList {...props} width={width} />
+              )}
+            </Paper>
+          </div>
         </Popper>
       )}
     </AutoSizer>
