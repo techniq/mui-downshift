@@ -66,9 +66,7 @@ storiesOf('Input', module)
       getInputProps={({ openMenu }) => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
-        inputProps: {
-          onFocus: null,
-        },
+        onFocus: null,
       })}
       onChange={action('onChange')}
     />

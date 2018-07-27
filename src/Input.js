@@ -66,9 +66,7 @@ class Input extends Component {
               </InputAdornment>
             )
           }
-          inputProps={{
-            onFocus: downshiftProps.openMenu,
-          }}
+          onFocus={downshiftProps.openMenu}
           {...downshiftProps.getInputProps(inputProps)}
         />
 
