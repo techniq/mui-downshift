@@ -155,6 +155,7 @@ class MuiVirtualList extends Component {
         }}
         onRowsRendered={args => {
           if (useCellMeasurer) {
+            // Force update to recalculate menuHeight with updated cache values.  See issue #45
             this.forceUpdate();
           }
           onRowsRendered && onRowsRendered(args);
