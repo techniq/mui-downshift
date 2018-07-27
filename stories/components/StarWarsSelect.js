@@ -22,6 +22,7 @@ export default class StarWarsSelect extends Component {
       <MuiDownshift
         items={filteredItems}
         onStateChange={this.handleStateChange}
+        // getListItemKey={rowIndex => filteredItems[rowIndex].value}
         // keyMapper={rowIndex => filteredItems[rowIndex] && filteredItems[rowIndex].label}
         {...this.props}
       />

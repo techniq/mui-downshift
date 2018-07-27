@@ -81,12 +81,13 @@ class MuiVirtualList extends Component {
     const rowHeight =
       virtualListProps && virtualListProps.rowHeight ? virtualListProps.rowHeight : this.cache.rowHeight;
     const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight);
+    const height = menuHeight || getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter);
 
     return (
       <VirtualList
         width={width}
         {...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex }}
-        height={menuHeight || getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter)}
+        height={height}
         rowCount={getRowCount(items, includeFooter)}
         rowHeight={rowHeight}
         rowRenderer={({ index, style, parent, key }) => {
@@ -152,7 +153,12 @@ class MuiVirtualList extends Component {
             downshiftProps,
           });
         }}
-        onRowsRendered={onRowsRendered}
+        onRowsRendered={args => {
+          if (useCellMeasurer) {
+            this.forceUpdate();
+          }
+          onRowsRendered && onRowsRendered(args);
+        }}
         {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
         ref={el => {
           this.list = el;
