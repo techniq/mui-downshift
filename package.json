@@ -16,11 +16,11 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "downshift": "^2.0.19",
+    "downshift": "^2.0.20",
     "react-virtualized": "^9.20.1"
   },
   "devDependencies": {
-    "@material-ui/core": "^1.4.0",
+    "@material-ui/core": "^1.4.2",
     "@material-ui/icons": "^1.1.0",
     "@storybook/addon-actions": "^3.4.8",
     "@storybook/react": "^3.4.8",

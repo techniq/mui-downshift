@@ -187,7 +187,7 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
             hide: { enabled: false },
           }}
         >
-          <div {...props.downshiftProps.getMenuProps()}>
+          <div {...props.downshiftProps.getMenuProps({}, { suppressRefError: true })}>
             <Paper style={{ width }}>
               {getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
