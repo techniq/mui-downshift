@@ -80,6 +80,16 @@ storiesOf('Input', module)
       focusOnClear
       onChange={action('onChange')}
     />
+  ))
+  .add('blurOnSelect (using inputRef)', () => (
+    <StarWarsSelect
+      getInputProps={({ openMenu }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+      })}
+      blurOnSelect
+      onChange={action('onChange')}
+    />
   ));
 
 storiesOf('List item', module)
