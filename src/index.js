@@ -45,7 +45,12 @@ class MuiDownshift extends Component {
               focusOnClear={focusOnClear}
               loading={loading}
               downshiftProps={downshiftProps}
-              inputRef={node => (this.inputRef = node)}
+              inputRef={node => {
+                this.inputRef = node;
+                if (this.props.inputRef && typeof this.props.inputRef === 'function') {
+                  this.props.inputRef(node);
+                }
+              }}
             />
 
             <Menu
@@ -85,6 +90,7 @@ MuiDownshift.defaultProps = {
     ) : null; // TODO: should we handle this or require user to implement `getListItem` at this point (`includeFooter` or an array of null/undefined)?
   },
   menuItemCount: 5,
+  inputRef: undefined,
 };
 
 MuiDownshift.propTypes = {
@@ -97,6 +103,7 @@ MuiDownshift.propTypes = {
   getInputProps: PropTypes.func,
   focusOnClear: PropTypes.bool,
   loading: PropTypes.bool,
+  inputRef: PropTypes.func,
 
   // Menu
   getListItem: PropTypes.func,
