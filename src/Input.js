@@ -42,7 +42,7 @@ class Input extends Component {
     return (
       <FormControl disabled={disabled} required={required} error={error} fullWidth>
         {label && (
-          <InputLabel shrink={downshiftProps.isOpen || downshiftProps.inputValue ? true : undefined} {...labelProps}>
+          <InputLabel shrink={downshiftProps.isOpen || downshiftProps.inputValue ? true : undefined} {...downshiftProps.getLabelProps()}>
             {label}
           </InputLabel>
         )}
@@ -55,12 +55,12 @@ class Input extends Component {
             !disabled && (
               <InputAdornment position="end">
                 {!!downshiftProps.selectedItem && (
-                  <IconButton onClick={this.handleClearSelection}>
+                  <IconButton onClick={this.handleClearSelection} aria-label="Clear selection">
                     <Clear />
                   </IconButton>
                 )}
 
-                <IconButton onClick={this.handleToggleMenu}>
+                <IconButton onClick={this.handleToggleMenu} aria-label="Toggle menu open">
                   {downshiftProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
                 </IconButton>
               </InputAdornment>
