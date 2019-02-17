@@ -40,9 +40,18 @@ class Input extends Component {
       : {};
 
     return (
-      <FormControl disabled={disabled} required={required} error={error} fullWidth>
+      <FormControl
+        disabled={disabled}
+        required={required}
+        error={error}
+        // fullWidth
+        // innerRef={node => console.log('FormControl', node)}
+      >
         {label && (
-          <InputLabel shrink={downshiftProps.isOpen || downshiftProps.inputValue ? true : undefined} {...downshiftProps.getLabelProps()}>
+          <InputLabel
+            shrink={downshiftProps.isOpen || downshiftProps.inputValue ? true : undefined}
+            {...downshiftProps.getLabelProps()}
+          >
             {label}
           </InputLabel>
         )}

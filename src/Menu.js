@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { List as VirtualList, InfiniteLoader, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import classnames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 import zIndex from '@material-ui/core/styles/zIndex';
+import { ParentSize } from '@vx/responsive';
 
 const styles = theme => ({
   keyboardFocused: {
@@ -12,203 +12,169 @@ const styles = theme => ({
   },
 });
 
-function getRowCount(items, includeFooter) {
-  return (items ? items.length : 0) + (includeFooter ? 1 : 0);
-}
+// class Size extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.sizeRef = React.createRef();
+//   }
 
-function getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter) {
-  const rowCount = getRowCount(items, includeFooter);
-  if (rowCount) {
-    const visibleCount = Math.min(rowCount, menuItemCount); // Maximum items before scrolling
-    let height = 0;
-    for (let i = 0; i < visibleCount; i++) {
-      height += typeof rowHeight === 'function' ? rowHeight({ index: i }) : rowHeight;
-    }
-    return height;
-  } else if (showEmpty) {
-    // Return the height of a single item
-    return typeof rowHeight === 'function' ? rowHeight({ index: 0 }) : rowHeight;
+//   render() {
+//     return <div ref={this.sizeRef}>{this.props.children(this.sizeRef.current)}</div>;
+//   }
+// }
+
+class Menu extends Component {
+  state = {
+    width: null,
+  };
+
+  constructor(props) {
+    super(props);
+    // this.menuRef = React.createRef();
   }
-  return 0;
-}
 
-class MuiVirtualList extends Component {
-  cache = new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 48,
-    keyMapper: this.props.getListItemKey,
-  });
+  componentDidMount() {
+    // // const width = this.menuRef.clientWidth;
+    // // console.log('setting width', width);
+    // this.setState({ width });
+    // Force an initial re-render so the inputRef is set and can be used to set the width
+    // this.forceUpdate();
+  }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.getListItemKey !== nextProps.getListItemKey) {
-      this.cache._keyMapper = nextProps.getListItemKey;
-    }
+  renderItems({ items, getListItem, downshiftProps, classes }) {
+    return (
+      items &&
+      items.map((item, index) => {
+        const isHighlighted = downshiftProps.highlightedIndex === index;
+        const className = classnames({ [classes.keyboardFocused]: isHighlighted });
+        // Convenience helper to simplify typical usage
+        const getItemProps = props =>
+          downshiftProps.getItemProps({
+            item,
+            index,
+            className,
+            ...props,
+          });
+        const listItem = getListItem({
+          getItemProps,
+          item,
+          index,
+          downshiftProps,
+          key: index,
+        });
 
-    if (this.props.width !== nextProps.width) {
-      // Need to recalculate all heights since new widths
-      this.cache.clearAll();
-      this.list.recomputeRowHeights();
-    }
-
-    if (this.props.items !== nextProps.items) {
-      if (!this.props.getListItemKey) {
-        // Only need to recalculate heights if no getListItemKey is defined as CellMeasureCache.defaultKeyMapper only uses indexes for keys (and new items at the same index might have different heights)
-        this.cache.clearAll();
-      }
-
-      this.list.recomputeRowHeights();
-    }
+        return listItem;
+      })
+    );
   }
 
   render() {
-    const {
-      items,
-      width,
-      menuItemCount,
-      menuHeight,
-      getListItem,
-      showEmpty,
-      includeFooter,
-      getVirtualListProps,
-      getListItemKey,
-      onRowsRendered,
-      registerChild,
-      downshiftProps,
-      classes,
-    } = this.props;
+    const { items, downshiftProps, getListItem, inputRef, rootRef, classes, ...props } = this.props;
 
-    const virtualListProps = getVirtualListProps && getVirtualListProps({ downshiftProps });
-    const rowHeight =
-      virtualListProps && virtualListProps.rowHeight ? virtualListProps.rowHeight : this.cache.rowHeight;
-    const useCellMeasurer = !(virtualListProps && virtualListProps.rowHeight);
-    const height = menuHeight || getMenuHeight(rowHeight, items, menuItemCount, showEmpty, includeFooter);
+    // console.log('inputRef', inputRef);
+
+    // return (
+    //   <Popper
+    //     log={console.log('inputRef', inputRef)}
+    //     open={downshiftProps.isOpen}
+    //     anchorEl={inputRef}
+    //     placement="bottom-start"
+    //     style={{ zIndex: zIndex.modal }}
+    //     // modifiers={{
+    //     //   preventOverflow: { enabled: false },
+    //     //   hide: { enabled: false },
+    //     // }}
+    //     // disablePortal
+    //   >
+    //     <div style={{ width: inputRef && inputRef.clientWidth / 2, background: 'red' }}>hello</div>
+    //     {/* <div style={{ width: node && node.clientWidth, background: 'red' }}>hello</div> */}
+    //   </Popper>
+    // );
+
+    // return (
+    //   <Size>
+    //     {node => {
+    //       console.log('node', node);
+    //       return (
+    //         <Popper
+    //           log={console.log('menuNode', this.menuNode)}
+    //           open={true}
+    //           anchorEl={inputRef}
+    //           placement="bottom-start"
+    //           style={{ zIndex: zIndex.modal }}
+    //           // modifiers={{
+    //           //   preventOverflow: { enabled: false },
+    //           //   hide: { enabled: false },
+    //           // }}
+    //           // disablePortal
+    //         >
+    //           <div style={{ width: node && node.clientWidth / 2, background: 'red' }}>hello</div>
+    //           {/* <div style={{ width: node && node.clientWidth, background: 'red' }}>hello</div> */}
+    //         </Popper>
+    //       );
+    //     }}
+    //   </Size>
+    // );
+
+    // return (
+    //   <div ref={this.menuRef}>
+    //     <div style={{ background: 'red' }}>menu {console.log('menuNode', this.menuRef.current)}</div>
+    //   </div>
+    // );
+
+    // return (
+    //   <div ref={node => (this.menuNode = node)}>
+    //     <div style={{ background: 'red' }}>menu {console.log('menuNode', this.menuNode)}</div>
+    //   </div>
+    // );
+
+    // return (
+    //   <div {...downshiftProps.getMenuProps({ ref: node => (this.menuNode = node) })}>
+    //     <h1>menu {console.log('menuNode', this.menuNode)}</h1>
+    //   </div>
+    // );
+
+    console.log('rootRef', rootRef.current && rootRef.current.clientWidth);
 
     return (
-      <VirtualList
-        width={width}
-        {...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex }}
-        height={height}
-        rowCount={getRowCount(items, includeFooter)}
-        rowHeight={rowHeight}
-        rowRenderer={({ index, style, parent, key }) => {
-          const item = items ? items[index] : null;
-          const isHighlighted = downshiftProps.highlightedIndex === index;
-          const className = classnames({ [classes.keyboardFocused]: isHighlighted });
-          // Convenience helper to simplify typical usage
-          const getItemProps = props =>
-            downshiftProps.getItemProps({
-              item,
-              index,
-              className,
-              ...props,
-            });
-          const listItem = getListItem({
-            getItemProps,
-            item,
-            index,
-            downshiftProps,
-            style,
-          });
-
-          const _key = getListItemKey ? getListItemKey(index) : key;
-
-          if (useCellMeasurer) {
-            return (
-              <CellMeasurer
-                cache={this.cache}
-                columnIndex={0}
-                rowIndex={index}
-                parent={parent}
-                key={_key}
-                width={width}
-              >
-                <div style={style}>{listItem}</div>
-              </CellMeasurer>
-            );
-          }
-          return (
-            <div style={style} key={key}>
-              {listItem}
-            </div>
-          );
-        }}
-        noRowsRenderer={() => {
-          // TODO: Support non-default (48) row height.  Either figure out how to use CellMeasurer (initial attempt failed) or allow passing an explicit height.  This might be  fixed now that the cache is cleared when `items` are changed
-          const index = 0;
-          const item = null;
-          const isHighlighted = downshiftProps.highlightedIndex === index;
-          const className = classnames({ [classes.keyboardFocused]: isHighlighted });
-          // Convenience helper to simplify typical usage
-          const getItemProps = props =>
-            downshiftProps.getItemProps({
-              item,
-              index,
-              className,
-              ...props,
-            });
-          return getListItem({
-            getItemProps,
-            item,
-            index,
-            downshiftProps,
-          });
-        }}
-        onRowsRendered={args => {
-          if (useCellMeasurer) {
-            // Force update to recalculate menuHeight with updated cache values.  See issue #45
-            this.forceUpdate();
-          }
-          onRowsRendered && onRowsRendered(args);
-        }}
-        {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
-        ref={el => {
-          this.list = el;
-          if (registerChild) {
-            registerChild(el);
-          }
-        }}
-        {...virtualListProps}
-      />
-    );
-  }
-}
-
-function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
-  return props.downshiftProps.isOpen ? (
-    <AutoSizer>
-      {({ width }) => (
+      // <ParentSize>
+      //   {({ width }) => (
+      <div ref={node => (this.menuWrapperRef = node)}>
         <Popper
-          open={true}
+          // log={console.log('menuNode', this.menuNode)}
+          open={downshiftProps.isOpen}
           anchorEl={inputRef}
-          placement="bottom-start"
-          style={{ zIndex: zIndex.modal }}
-          modifiers={{
-            preventOverflow: { enabled: false },
-            hide: { enabled: false },
-          }}
+          // placement="bottom-start"
+          // style={{ zIndex: zIndex.modal }}
+          // modifiers={{
+          //   preventOverflow: { enabled: false },
+          //   hide: { enabled: false },
+          // }}
+          // disablePortal // breaks zIndex/overlap of other me us
         >
-          <div {...props.downshiftProps.getMenuProps({}, { suppressRefError: true })}>
-            <Paper style={{ width }}>
-              {getInfiniteLoaderProps ? (
-                <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
-                  {({ onRowsRendered, registerChild }) => (
-                    <MuiVirtualList
-                      {...props}
-                      width={width}
-                      onRowsRendered={onRowsRendered}
-                      registerChild={registerChild}
-                    />
-                  )}
-                </InfiniteLoader>
-              ) : (
-                <MuiVirtualList {...props} width={width} />
-              )}
+          <div {...(downshiftProps.isOpen ? downshiftProps.getMenuProps({}, { suppressRefError: true }) : {})}>
+            <Paper
+              square
+              // style={{ width: inputRef ? inputRef.clientWidth : null }}
+              style={{
+                width: rootRef ? rootRef.current.clientWidth : null,
+                maxHeight: 300,
+                overflow: 'auto',
+              }}
+              // style={{ width: this.menuRef ? this.menuRef.clientWidth : null, maxHeight: 200, overflow: 'auto' }}
+              // style={{ width, maxHeight: 200, overflow: 'auto' }}
+              // style={{ width: '100%', maxHeight: 200, overflow: 'auto' }}
+              // style={{ maxHeight: 200, overflow: 'auto', zIndex: zIndex.modal }}
+              // style={{ width: this.state.width, maxHeight: 200, overflow: 'auto' }}
+            >
+              {this.renderItems({ items, getListItem, downshiftProps, classes })}
             </Paper>
           </div>
         </Popper>
-      )}
-    </AutoSizer>
-  ) : null;
+      </div>
+    );
+    // </ParentSize>
+  }
 }
 
 export default withStyles(styles)(Menu);

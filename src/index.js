@@ -9,6 +9,7 @@ import Input from './Input';
 import Menu from './Menu';
 
 class MuiDownshift extends Component {
+  rootRef = React.createRef();
   render() {
     const {
       items,
@@ -25,10 +26,10 @@ class MuiDownshift extends Component {
       getListItemKey,
       showEmpty,
       includeFooter,
-      getInfiniteLoaderProps,
-      getVirtualListProps,
-      menuHeight,
-      menuItemCount,
+      // getInfiniteLoaderProps,
+      // getVirtualListProps,
+      // menuHeight,
+      // menuItemCount,
 
       ...props
     } = this.props;
@@ -39,7 +40,7 @@ class MuiDownshift extends Component {
         {...props}
       >
         {downshiftProps => (
-          <div {...getRootProps && getRootProps()}>
+          <div style={{ background: 'red', display: 'inline-block' }} ref={this.rootRef}>
             <Input
               getInputProps={getInputProps}
               focusOnClear={focusOnClear}
@@ -59,12 +60,13 @@ class MuiDownshift extends Component {
               getListItemKey={getListItemKey}
               showEmpty={showEmpty}
               includeFooter={includeFooter}
-              getInfiniteLoaderProps={getInfiniteLoaderProps}
-              getVirtualListProps={getVirtualListProps}
-              menuItemCount={menuItemCount}
-              menuHeight={menuHeight}
+              // getInfiniteLoaderProps={getInfiniteLoaderProps}
+              // getVirtualListProps={getVirtualListProps}
+              // menuItemCount={menuItemCount}
+              // menuHeight={menuHeight}
               downshiftProps={downshiftProps}
               inputRef={this.inputRef}
+              rootRef={this.rootRef}
             />
           </div>
         )}
@@ -110,10 +112,10 @@ MuiDownshift.propTypes = {
   getListItemKey: PropTypes.func,
   showEmpty: PropTypes.bool,
   includeFooter: PropTypes.bool,
-  getInfiniteLoaderProps: PropTypes.func,
-  getVirtualListProps: PropTypes.func,
-  menuHeight: PropTypes.number,
-  menuItemCount: PropTypes.number,
+  // getInfiniteLoaderProps: PropTypes.func,
+  // getVirtualListProps: PropTypes.func,
+  // menuHeight: PropTypes.number,
+  // menuItemCount: PropTypes.number,
 };
 
 export const stateChangeTypes = Downshift.stateChangeTypes;

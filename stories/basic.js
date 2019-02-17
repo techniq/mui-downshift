@@ -61,6 +61,16 @@ storiesOf('Basic', module)
   ));
 
 storiesOf('Input', module)
+  .add('width', () => (
+    <StarWarsSelect
+      getInputProps={({ openMenu }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+      })}
+      blurOnSelect
+      onChange={action('onChange')}
+    />
+  ))
   .add('do not show menu on focus', () => (
     <StarWarsSelect
       getInputProps={({ openMenu }) => ({

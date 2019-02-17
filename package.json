@@ -15,9 +15,9 @@
     "react-dom": "^16.4.0"
   },
   "dependencies": {
+    "@vx/responsive": "^0.0.179",
     "classnames": "^2.2.6",
-    "downshift": "^2.2.0",
-    "react-virtualized": "^9.20.1"
+    "downshift": "^2.2.0"
   },
   "devDependencies": {
     "@material-ui/core": "^3.0.1",

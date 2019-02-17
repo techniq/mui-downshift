@@ -9,3 +9,23 @@
     - Can/should this be reading `downshift.inputValue` in `getListItem` and use `react-highlight-words`/etc?
   - Customize loading (spinner or bar)
   - Overriding Input icons
+
+
+
+## Rewrite
+- https://github.com/paypal/downshift/issues/551
+- Use React.createContext - https://codesandbox.io/s/github/kentcdodds/downshift-examples/tree/master/?module=%2Fsrc%2Fother-examples%2Fhoc
+- Remove fullWidth by default?
+
+
+- Popper
+  - Problems it fixes
+    - Showing menu up when at bottom of page
+  - Problems it causes
+    - 
+- Portal
+  - Problems it fixes
+    - Stacking context
+  - Problems it causes
+    - Measuring of width where out of layout
+  
