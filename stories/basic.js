@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Avatar from '@material-ui/core/Avatar';
+import Clear from '@material-ui/icons/Clear';
 import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -24,6 +29,26 @@ storiesOf('Basic', module)
   .add('items only', () => <StarWarsSelect />)
   .add('disabled', () => <StarWarsSelect getInputProps={() => ({ disabled: true })} />)
   .add('without adornments', () => <StarWarsSelect getInputProps={() => ({ endAdornment: null })} />)
+  .add('with custom adornments', () => (
+    <StarWarsSelect
+      getInputProps={({ isOpen, selectedItem, handleToggleMenu, handleClearSelection }) => ({
+        endAdornment: (
+          <InputAdornment position="end">
+            {isOpen ? (
+              <ArrowDropUp color="default" onClick={handleToggleMenu} />
+            ) : (
+              <ArrowDropDown color="default" onClick={handleToggleMenu} />
+            )}
+            {!!selectedItem && (
+              <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
+                <Clear />
+              </IconButton>
+            )}
+          </InputAdornment>
+        ),
+      })}
+    />
+  ))
   .add('loading', () => <StarWarsSelect loading />)
   .add('helperText', () => (
     <StarWarsSelect
