@@ -17,6 +17,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "downshift": "^2.2.0",
+    "prop-types": "^15.7.2",
     "react-virtualized": "^9.20.1"
   },
   "devDependencies": {
@@ -38,7 +39,6 @@
     "eslint-plugin-react": "^7.11.1",
     "gh-pages": "^1.2.0",
     "prettier": "^1.14.2",
-    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },
