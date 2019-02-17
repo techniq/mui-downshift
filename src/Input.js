@@ -36,7 +36,7 @@ class Input extends Component {
   render() {
     const { inputRef, getInputProps, loading, downshiftProps } = this.props;
     const { label, labelProps, disabled, required, error, helperText, ...inputProps } = getInputProps
-      ? getInputProps(downshiftProps)
+      ? getInputProps({...downshiftProps, handleClearSelection: this.handleClearSelection, handleToggleMenu: this.handleToggleMenu})
       : {};
 
     return (
