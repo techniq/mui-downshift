@@ -31,14 +31,12 @@ storiesOf('Basic', module)
   .add('without adornments', () => <StarWarsSelect getInputProps={() => ({ endAdornment: null })} />)
   .add('with custom adornments', () => (
     <StarWarsSelect
-      getInputProps={({ isOpen, selectedItem, handleToggleMenu, handleClearSelection }) => ({
+      getInputProps={({ isOpen, selectedItem, handleClearSelection }) => ({
         endAdornment: (
           <InputAdornment position="end">
-            {isOpen ? (
-              <ArrowDropUp color="default" onClick={handleToggleMenu} />
-            ) : (
-              <ArrowDropDown color="default" onClick={handleToggleMenu} />
-            )}
+            <div style={{ pointerEvents: 'none' }}>
+              {isOpen ? <ArrowDropUp color="default" /> : <ArrowDropDown color="default" />}
+            </div>
             {!!selectedItem && (
               <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
                 <Clear />
@@ -47,6 +45,8 @@ storiesOf('Basic', module)
           </InputAdornment>
         ),
       })}
+      focusOnClear
+      onChange={action('onChange')}
     />
   ))
   .add('loading', () => <StarWarsSelect loading />)
@@ -82,6 +82,83 @@ storiesOf('Basic', module)
         label: 'Star Wars character',
         required: true,
       })}
+    />
+  ));
+
+storiesOf('Variants', module)
+  .add('standard', () => (
+    <StarWarsSelect
+      getInputProps={() => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+      })}
+    />
+  ))
+  .add('filled', () => (
+    <StarWarsSelect
+      variant="filled"
+      getInputProps={({ openMenu }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+      })}
+      focusOnClear
+      onChange={action('onChange')}
+    />
+  ))
+  .add('outlined', () => (
+    <StarWarsSelect
+      variant="outlined"
+      getInputProps={({ openMenu }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+      })}
+      focusOnClear
+      onChange={action('onChange')}
+    />
+  ))
+  .add('outlined with custom adornments', () => (
+    <StarWarsSelect
+      variant="outlined"      
+      getInputProps={({ isOpen, selectedItem, handleToggleMenu, handleClearSelection }) => ({
+        placeholder: 'Choose wisely',
+        endAdornment: (
+          <InputAdornment position="end">
+            <div style={{ pointerEvents: 'none' }}>
+              {isOpen ? <ArrowDropUp color="default" /> : <ArrowDropDown color="default" />}
+            </div>
+            {!!selectedItem && (
+              <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
+                <Clear />
+              </IconButton>
+            )}
+          </InputAdornment>
+        ),        
+      })}
+      focusOnClear
+      onChange={action('onChange')}
+    />
+  ))
+  .add('outlined with custom adornments and label', () => (
+    <StarWarsSelect
+      variant="outlined"
+      getInputProps={({ isOpen, selectedItem, handleToggleMenu, handleClearSelection }) => ({
+        label: 'Star Wars character',
+        placeholder: 'Choose wisely',
+        endAdornment: (
+          <InputAdornment position="end">
+            <div style={{ pointerEvents: 'none' }}>
+              {isOpen ? <ArrowDropUp color="default" /> : <ArrowDropDown color="default" />}
+            </div>
+            {!!selectedItem && (
+              <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
+                <Clear />
+              </IconButton>
+            )}
+          </InputAdornment>
+        ),
+      })}
+      focusOnClear
+      onChange={action('onChange')}
     />
   ));
 

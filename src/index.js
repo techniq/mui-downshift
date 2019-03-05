@@ -19,6 +19,7 @@ class MuiDownshift extends Component {
       getInputProps,
       focusOnClear,
       loading,
+      variant,
 
       // Menu
       getListItem,
@@ -51,6 +52,7 @@ class MuiDownshift extends Component {
                   this.props.inputRef(node);
                 }
               }}
+              variant={variant}
             />
 
             <Menu
@@ -91,6 +93,7 @@ MuiDownshift.defaultProps = {
   },
   menuItemCount: 5,
   inputRef: undefined,
+  variant: 'standard',
 };
 
 MuiDownshift.propTypes = {
@@ -104,6 +107,7 @@ MuiDownshift.propTypes = {
   focusOnClear: PropTypes.bool,
   loading: PropTypes.bool,
   inputRef: PropTypes.func,
+  variant: PropTypes.oneOf('standard','filled','outlined'),
 
   // Menu
   getListItem: PropTypes.func,
