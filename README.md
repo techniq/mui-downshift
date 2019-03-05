@@ -33,6 +33,7 @@ Property | Type | Required | Description
 `loading` | Boolean | |  Show loading indicator
 `focusOnClear` | Boolean | |  Focus input after clearing.  See issue #9
 all props available on `downshift` | |  | `itemToString`, `onChange`, `onStateChange`, ...
+`variant` | 'standard', 'filled', 'outlined' | |  MUI input variant.  Default 'standard'
 
 ### Running Storybook
 
