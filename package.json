@@ -21,7 +21,7 @@
     "react-virtualized": "^9.20.1"
   },
   "devDependencies": {
-    "@material-ui/core": "^3.0.1",
+    "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.1",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/react": "^3.4.10",
