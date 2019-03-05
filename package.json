@@ -8,6 +8,11 @@
     "dist"
   ],
   "main": "dist/index.js",
+  "keywords": [
+    "react",
+    "downshift",
+    "material-ui"
+  ],
   "peerDependencies": {
     "@material-ui/core": "^3.0.0",
     "@material-ui/icons": "^3.0.0",
