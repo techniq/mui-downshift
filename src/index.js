@@ -107,7 +107,7 @@ MuiDownshift.propTypes = {
   focusOnClear: PropTypes.bool,
   loading: PropTypes.bool,
   inputRef: PropTypes.func,
-  variant: PropTypes.oneOf('standard','filled','outlined'),
+  variant: PropTypes.oneOf(['standard','filled','outlined']),
 
   // Menu
   getListItem: PropTypes.func,
