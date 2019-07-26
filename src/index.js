@@ -40,7 +40,7 @@ class MuiDownshift extends Component {
         {...props}
       >
         {downshiftProps => (
-          <div {...getRootProps && getRootProps()}>
+          <div {...(getRootProps && getRootProps())}>
             <Input
               getInputProps={getInputProps}
               focusOnClear={focusOnClear}
@@ -76,13 +76,27 @@ class MuiDownshift extends Component {
 }
 
 MuiDownshift.defaultProps = {
+  items: [],
   itemToString: item => (item ? item.label : ''),
+  selectedItem: null,
+  getRootProps: () => ({}),
+
+  getInputProps: () => ({}),
+  focusOnClear: false,
+  loading: false,
+  inputRef: undefined,
+  variant: 'standard',
+
+  // eslint-disable-next-line react/prop-types
   getListItem({ getItemProps, item, index }) {
     return item ? (
       <ListItem button {...getItemProps()}>
+        {/* eslint-disable-next-line react/prop-types */}
         {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
+        {/* eslint-disable-next-line react/prop-types */}
         {item.avatar && <ListItemAvatar>{item.avatar}</ListItemAvatar>}
 
+        {/* eslint-disable-next-line react/prop-types */}
         <ListItemText primary={item.primary || item.label} secondary={item.secondary} />
       </ListItem>
     ) : index === 0 ? (
@@ -91,13 +105,25 @@ MuiDownshift.defaultProps = {
       </ListItem>
     ) : null; // TODO: should we handle this or require user to implement `getListItem` at this point (`includeFooter` or an array of null/undefined)?
   },
+  getListItemKey: () => null,
+  showEmpty: false,
+  includeFooter: false,
+  getInfiniteLoaderProps: () => {},
+  getVirtualListProps: () => {},
+  menuHeight: null,
   menuItemCount: 5,
-  inputRef: undefined,
-  variant: 'standard',
 };
 
 MuiDownshift.propTypes = {
-  items: PropTypes.array,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      icon: PropTypes.string,
+      avatar: PropTypes.string,
+      primary: PropTypes.bool,
+      secondary: PropTypes.bool,
+      label: PropTypes.string,
+    }),
+  ),
   itemToString: PropTypes.func,
   selectedItem: PropTypes.object,
   getRootProps: PropTypes.func,
@@ -107,7 +133,7 @@ MuiDownshift.propTypes = {
   focusOnClear: PropTypes.bool,
   loading: PropTypes.bool,
   inputRef: PropTypes.func,
-  variant: PropTypes.oneOf(['standard','filled','outlined']),
+  variant: PropTypes.oneOf(['standard', 'filled', 'outlined']),
 
   // Menu
   getListItem: PropTypes.func,

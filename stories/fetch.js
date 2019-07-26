@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import { all as starwarsNames } from 'starwars-names';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import MuiDownshift from '../src';
 import MockFetch from './components/MockFetch';
 
@@ -14,7 +11,7 @@ const items = starwarsNames.map((label, value) => ({ label, value }));
 storiesOf('Fetch', module)
   .add('basic', () => (
     <MockFetch items={items} url="https://example.com/">
-      {({ loading, data, error, fetch, clearData }) => (
+      {({ loading, data, fetch, clearData }) => (
         <MuiDownshift
           items={data && data.items}
           loading={loading}
@@ -31,7 +28,7 @@ storiesOf('Fetch', module)
 
   .add('no initial fetch', () => (
     <MockFetch items={items} url="https://example.com/" manual>
-      {({ loading, data, error, fetch, clearData }) => (
+      {({ loading, data, fetch, clearData }) => (
         <MuiDownshift
           items={data && data.items}
           getListItem={({ getItemProps, item }) =>
@@ -75,7 +72,7 @@ storiesOf('Fetch', module)
       })}
       manual
     >
-      {({ loading, data, error, fetch, request, clearData }) => (
+      {({ loading, data, fetch, request, clearData }) => (
         <MuiDownshift
           items={data && data.items}
           getInfiniteLoaderProps={({ downshiftProps }) => ({
@@ -137,7 +134,7 @@ storiesOf('Fetch', module)
       })}
       manual
     >
-      {({ loading, data, error, fetch, request, clearData }) => {
+      {({ loading, data, fetch, request, clearData }) => {
         const hasMoreData = data && data.items.length < data.total;
 
         return (
@@ -146,7 +143,7 @@ storiesOf('Fetch', module)
             loading={loading}
             includeFooter={loading || hasMoreData}
             showEmpty
-            getListItemKey={(rowIndex, columnIndex) => {
+            getListItemKey={rowIndex => {
               if (data && data.items && data.items[rowIndex]) {
                 return data.items[rowIndex].label;
               } else if (loading) {
@@ -156,7 +153,7 @@ storiesOf('Fetch', module)
               }
               return 'noItemsFound';
             }}
-            getListItem={({ getItemProps, item, index, downshiftProps }) =>
+            getListItem={({ getItemProps, item, downshiftProps }) =>
               item ? (
                 <ListItem button {...getItemProps()}>
                   <ListItemText primary={item.label} secondary="Test" />

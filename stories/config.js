@@ -1,5 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { configure } from '@storybook/react';
 
 // addDecorator(storyFn => <MuiThemeProvider>{storyFn()}</MuiThemeProvider>);
 

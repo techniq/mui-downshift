@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Fetch from 'react-fetch-component';
 import fetchMock from 'fetch-mock';
 
 function mockResponse(response, delay) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(() => resolve(response), delay);
   });
 }
 
 /* Mock for consistent fetch responses */
 class MockFetch extends Component {
-  componentWillMount() {
-    const { items } = this.props;
+  UNSAFE_componentWillMount() {
+    const { items = [] } = this.props;
 
     fetchMock.get('*', url => {
       let filteredItems = items;
@@ -32,7 +33,6 @@ class MockFetch extends Component {
       } else {
         response = { total: filteredItems.length, items: filteredItems };
       }
-      console.log('fetch', url, response);
       return mockResponse(response, 500);
     });
   }
@@ -45,5 +45,13 @@ class MockFetch extends Component {
     return <Fetch {...this.props} />;
   }
 }
+
+MockFetch.propTypes = {
+  items: PropTypes.array,
+};
+
+MockFetch.defaultProps = {
+  items: [],
+};
 
 export default MockFetch;

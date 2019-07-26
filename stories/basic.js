@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
@@ -97,7 +97,7 @@ storiesOf('Variants', module)
   .add('filled', () => (
     <StarWarsSelect
       variant="filled"
-      getInputProps={({ openMenu }) => ({
+      getInputProps={() => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
       })}
@@ -108,7 +108,7 @@ storiesOf('Variants', module)
   .add('outlined', () => (
     <StarWarsSelect
       variant="outlined"
-      getInputProps={({ openMenu }) => ({
+      getInputProps={() => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
       })}
@@ -118,8 +118,8 @@ storiesOf('Variants', module)
   ))
   .add('outlined with custom adornments', () => (
     <StarWarsSelect
-      variant="outlined"      
-      getInputProps={({ isOpen, selectedItem, handleToggleMenu, handleClearSelection }) => ({
+      variant="outlined"
+      getInputProps={({ isOpen, selectedItem, handleClearSelection }) => ({
         placeholder: 'Choose wisely',
         endAdornment: (
           <InputAdornment position="end">
@@ -132,7 +132,7 @@ storiesOf('Variants', module)
               </IconButton>
             )}
           </InputAdornment>
-        ),        
+        ),
       })}
       focusOnClear
       onChange={action('onChange')}
@@ -141,7 +141,7 @@ storiesOf('Variants', module)
   .add('outlined with custom adornments and label', () => (
     <StarWarsSelect
       variant="outlined"
-      getInputProps={({ isOpen, selectedItem, handleToggleMenu, handleClearSelection }) => ({
+      getInputProps={({ isOpen, selectedItem, handleClearSelection }) => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
         endAdornment: (
@@ -165,7 +165,7 @@ storiesOf('Variants', module)
 storiesOf('Input', module)
   .add('do not show menu on focus', () => (
     <StarWarsSelect
-      getInputProps={({ openMenu }) => ({
+      getInputProps={() => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
         onFocus: null,
@@ -175,7 +175,7 @@ storiesOf('Input', module)
   ))
   .add('focusOnClear', () => (
     <StarWarsSelect
-      getInputProps={({ openMenu }) => ({
+      getInputProps={() => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
       })}
@@ -185,7 +185,7 @@ storiesOf('Input', module)
   ))
   .add('blurOnSelect (using inputRef)', () => (
     <StarWarsSelect
-      getInputProps={({ openMenu }) => ({
+      getInputProps={() => ({
         label: 'Star Wars character',
         placeholder: 'Choose wisely',
       })}
@@ -364,7 +364,7 @@ storiesOf('Menu', module)
   .add('change z-index of root', () => (
     <div>
       <StarWarsSelect menuItemCount={3} onChange={action('onChange')} getRootProps={() => ({ style: { zIndex: 1 } })} />
-      <div style={{ willChange: 'transform', background: '#ddd' }}>`will-change: "transform"` set</div>
+      <div style={{ willChange: 'transform', background: '#ddd' }}>`will-change: &quot;transform&quot;` set</div>
     </div>
   ))
   .add('overlapping menus', () => (

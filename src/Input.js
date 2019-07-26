@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -32,7 +33,7 @@ class Input extends Component {
     }
   }
 
-  handleClearSelection = e => {
+  handleClearSelection = () => {
     const { downshiftProps, focusOnClear } = this.props;
     downshiftProps.clearSelection();
 
@@ -41,7 +42,7 @@ class Input extends Component {
     }
   };
 
-  handleToggleMenu = e => {
+  handleToggleMenu = () => {
     const {
       downshiftProps: { isOpen, openMenu, closeMenu },
     } = this.props;
@@ -56,7 +57,7 @@ class Input extends Component {
 
   render() {
     const { inputRef, getInputProps, loading, downshiftProps, variant } = this.props;
-    const { label, labelProps, disabled, required, error, helperText, ...inputProps } = getInputProps
+    const { label, disabled, required, error, helperText, ...inputProps } = getInputProps
       ? getInputProps({
           ...downshiftProps,
           inputRef: this.input,
@@ -120,5 +121,23 @@ class Input extends Component {
     );
   }
 }
+
+Input.propTypes = {
+  variant: PropTypes.oneOf(['standard', 'filled', 'outlined']),
+  downshiftProps: PropTypes.object,
+  focusOnClear: PropTypes.bool,
+  inputRef: PropTypes.node,
+  getInputProps: PropTypes.func,
+  loading: PropTypes.bool,
+};
+
+Input.defaultProps = {
+  variant: PropTypes.oneOf(['standard', 'filled', 'outlined']),
+  downshiftProps: {},
+  focusOnClear: false,
+  inputRef: null,
+  getInputProps: () => ({}),
+  loading: false,
+};
 
 export default Input;
