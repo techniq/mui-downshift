@@ -28,6 +28,7 @@ class MuiDownshift extends Component {
       includeFooter,
       getInfiniteLoaderProps,
       getVirtualListProps,
+      getPopperProps,
       menuHeight,
       menuItemCount,
 
@@ -63,6 +64,7 @@ class MuiDownshift extends Component {
               includeFooter={includeFooter}
               getInfiniteLoaderProps={getInfiniteLoaderProps}
               getVirtualListProps={getVirtualListProps}
+              getPopperProps={getPopperProps}
               menuItemCount={menuItemCount}
               menuHeight={menuHeight}
               downshiftProps={downshiftProps}
@@ -116,6 +118,7 @@ MuiDownshift.propTypes = {
   includeFooter: PropTypes.bool,
   getInfiniteLoaderProps: PropTypes.func,
   getVirtualListProps: PropTypes.func,
+  getPopperProps: PropTypes.func,
   menuHeight: PropTypes.number,
   menuItemCount: PropTypes.number,
 };
