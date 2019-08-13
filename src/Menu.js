@@ -160,7 +160,7 @@ class MuiVirtualList extends Component {
           }
           onRowsRendered && onRowsRendered(args);
         }}
-        {...(useCellMeasurer && { deferredMeasurementCache: this.cache })}
+        {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
         ref={el => {
           this.list = el;
           if (registerChild) {
