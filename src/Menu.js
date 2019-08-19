@@ -174,40 +174,40 @@ class MuiVirtualList extends Component {
   }
 }
 
-MuiVirtualList.propTypes = {
-  items: PropTypes.array,
-  width: PropTypes.number,
-  menuItemCount: PropTypes.number,
-  menuHeight: PropTypes.number,
-  getListItem: PropTypes.func,
-  showEmpty: PropTypes.bool,
-  includeFooter: PropTypes.bool,
-  getVirtualListProps: PropTypes.func,
-  getListItemKey: PropTypes.func,
-  onRowsRendered: PropTypes.func,
-  registerChild: PropTypes.func,
-  downshiftProps: PropTypes.object,
-  classes: PropTypes.object,
-};
+// MuiVirtualList.propTypes = {
+//   items: PropTypes.array,
+//   width: PropTypes.number,
+//   menuItemCount: PropTypes.number,
+//   menuHeight: PropTypes.number,
+//   getListItem: PropTypes.func,
+//   showEmpty: PropTypes.bool,
+//   includeFooter: PropTypes.bool,
+//   getVirtualListProps: PropTypes.func,
+//   getListItemKey: PropTypes.func,
+//   onRowsRendered: PropTypes.func,
+//   registerChild: PropTypes.func,
+//   downshiftProps: PropTypes.object,
+//   classes: PropTypes.object,
+// };
 
-MuiVirtualList.defaultProps = {
-  items: [],
-  width: null,
-  menuItemCount: null,
-  menuHeight: null,
-  getListItem: undefined,
-  showEmpty: false,
-  includeFooter: false,
-  getVirtualListProps: undefined,
-  getListItemKey: undefined,
-  onRowsRendered: undefined,
-  registerChild: undefined,
-  downshiftProps: {},
-  classes: {},
-};
+// MuiVirtualList.defaultProps = {
+//   items: [],
+//   width: null,
+//   menuItemCount: null,
+//   menuHeight: null,
+//   getListItem: undefined,
+//   showEmpty: false,
+//   includeFooter: false,
+//   getVirtualListProps: undefined,
+//   getListItemKey: undefined,
+//   onRowsRendered: undefined,
+//   registerChild: undefined,
+//   downshiftProps: {},
+//   classes: {},
+// };
 
 function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
-  return props.downshiftProps.isOpen ? (
+  return props.downshiftProps.isOpen && inputRef ? (
     <AutoSizer>
       {({ width }) => (
         <Popper
@@ -221,7 +221,7 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
           }}
         >
           <div {...props.downshiftProps.getMenuProps({}, { suppressRefError: true })}>
-            <Paper style={{ width }}>
+            <Paper elevation={2} style={{ width }}>
               {getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
                   {({ onRowsRendered, registerChild }) => (
@@ -244,16 +244,16 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
   ) : null;
 }
 
-Menu.propTypes = {
-  getInfiniteLoaderProps: PropTypes.func,
-  inputRef: PropTypes.node,
-  downshiftProps: PropTypes.object,
-};
+// Menu.propTypes = {
+//   getInfiniteLoaderProps: PropTypes.func,
+//   inputRef: PropTypes.object,
+//   downshiftProps: PropTypes.object,
+// };
 
-Menu.defaultProps = {
-  getInfiniteLoaderProps: undefined,
-  inputRef: undefined,
-  downshiftProps: {},
-};
+// Menu.defaultProps = {
+//   getInfiniteLoaderProps: undefined,
+//   inputRef: undefined,
+//   downshiftProps: {},
+// };
 
 export default withStyles(styles)(Menu);

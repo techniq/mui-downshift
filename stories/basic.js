@@ -35,10 +35,10 @@ storiesOf('Basic', module)
         endAdornment: (
           <InputAdornment position="end">
             <div style={{ pointerEvents: 'none' }}>
-              {isOpen ? <ArrowDropUp color="default" /> : <ArrowDropDown color="default" />}
+              {isOpen ? <ArrowDropUp color="primary" /> : <ArrowDropDown color="primary" />}
             </div>
             {!!selectedItem && (
-              <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
+              <IconButton color="primary" onClick={handleClearSelection} aria-label="Clear selection">
                 <Clear />
               </IconButton>
             )}
@@ -124,10 +124,10 @@ storiesOf('Variants', module)
         endAdornment: (
           <InputAdornment position="end">
             <div style={{ pointerEvents: 'none' }}>
-              {isOpen ? <ArrowDropUp color="default" /> : <ArrowDropDown color="default" />}
+              {isOpen ? <ArrowDropUp color="primary" /> : <ArrowDropDown color="primary" />}
             </div>
             {!!selectedItem && (
-              <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
+              <IconButton color="primary" onClick={handleClearSelection} aria-label="Clear selection">
                 <Clear />
               </IconButton>
             )}
@@ -147,10 +147,10 @@ storiesOf('Variants', module)
         endAdornment: (
           <InputAdornment position="end">
             <div style={{ pointerEvents: 'none' }}>
-              {isOpen ? <ArrowDropUp color="default" /> : <ArrowDropDown color="default" />}
+              {isOpen ? <ArrowDropUp color="primary" /> : <ArrowDropDown color="primary" />}
             </div>
             {!!selectedItem && (
-              <IconButton color="default" onClick={handleClearSelection} aria-label="Clear selection">
+              <IconButton color="primary" onClick={handleClearSelection} aria-label="Clear selection">
                 <Clear />
               </IconButton>
             )}
@@ -334,6 +334,7 @@ storiesOf('List item', module)
     />
   ))
   .add('loading footer', () => {
+    // TODO(bendiuguid): This Explodes.
     const loading = true;
     return (
       <MuiDownshift
@@ -357,7 +358,10 @@ storiesOf('List item', module)
   });
 
 storiesOf('Menu', module)
-  .add('isOpen = true', () => <StarWarsSelect isOpen onChange={action('onChange')} />)
+  .add('isOpen = true', () => (
+    // TODO(bendiuguid): This Explodes.
+    <StarWarsSelect isOpen onChange={action('onChange')} />
+  ))
   .add('height by item count (3)', () => <StarWarsSelect menuItemCount={3} onChange={action('onChange')} />)
   .add('height by item count (10)', () => <StarWarsSelect menuItemCount={10} onChange={action('onChange')} />)
   .add('height by pixels (315)', () => <StarWarsSelect menuHeight={315} onChange={action('onChange')} />)
