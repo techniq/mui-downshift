@@ -102,12 +102,8 @@ MuiDownshift.defaultProps = {
       </ListItem>
     ) : null; // TODO: should we handle this or require user to implement `getListItem` at this point (`includeFooter` or an array of null/undefined)?
   },
-  // getListItemKey: () => null,
   showEmpty: false,
   includeFooter: false,
-  // getInfiniteLoaderProps: () => {},
-  // getVirtualListProps: () => {},
-  // menuHeight: null,
   menuItemCount: 5,
 };
 

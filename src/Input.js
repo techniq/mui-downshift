@@ -124,7 +124,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  variant: PropTypes.oneOf(['standard', 'filled', 'outlined']),
+  variant: 'standard',
   downshiftProps: {},
   focusOnClear: false,
   inputRef: null,

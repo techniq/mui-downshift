@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { List as VirtualList, InfiniteLoader, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import classnames from 'classnames';
 import Paper from '@material-ui/core/Paper';
@@ -174,38 +173,6 @@ class MuiVirtualList extends Component {
   }
 }
 
-// MuiVirtualList.propTypes = {
-//   items: PropTypes.array,
-//   width: PropTypes.number,
-//   menuItemCount: PropTypes.number,
-//   menuHeight: PropTypes.number,
-//   getListItem: PropTypes.func,
-//   showEmpty: PropTypes.bool,
-//   includeFooter: PropTypes.bool,
-//   getVirtualListProps: PropTypes.func,
-//   getListItemKey: PropTypes.func,
-//   onRowsRendered: PropTypes.func,
-//   registerChild: PropTypes.func,
-//   downshiftProps: PropTypes.object,
-//   classes: PropTypes.object,
-// };
-
-// MuiVirtualList.defaultProps = {
-//   items: [],
-//   width: null,
-//   menuItemCount: null,
-//   menuHeight: null,
-//   getListItem: undefined,
-//   showEmpty: false,
-//   includeFooter: false,
-//   getVirtualListProps: undefined,
-//   getListItemKey: undefined,
-//   onRowsRendered: undefined,
-//   registerChild: undefined,
-//   downshiftProps: {},
-//   classes: {},
-// };
-
 function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
   return props.downshiftProps.isOpen && inputRef ? (
     <AutoSizer>
@@ -243,17 +210,5 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
     </AutoSizer>
   ) : null;
 }
-
-// Menu.propTypes = {
-//   getInfiniteLoaderProps: PropTypes.func,
-//   inputRef: PropTypes.object,
-//   downshiftProps: PropTypes.object,
-// };
-
-// Menu.defaultProps = {
-//   getInfiniteLoaderProps: undefined,
-//   inputRef: undefined,
-//   downshiftProps: {},
-// };
 
 export default withStyles(styles)(Menu);
