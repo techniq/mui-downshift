@@ -55,7 +55,7 @@ class Input extends Component {
   };
 
   render() {
-    const { inputRef, getInputProps, loading, downshiftProps, variant } = this.props;
+    const { inputRef, getInputProps, loading, downshiftProps, variant, margin } = this.props;
     const { label, labelProps, disabled, required, error, helperText, ...inputProps } = getInputProps
       ? getInputProps({
           ...downshiftProps,
@@ -76,7 +76,7 @@ class Input extends Component {
     const InputComponent = variantComponent[variant];
 
     return (
-      <FormControl disabled={disabled} required={required} error={error} fullWidth>
+      <FormControl disabled={disabled} required={required} error={error} margin={margin} fullWidth>
         {label && (
           <InputLabel ref={this.labelRef} variant={variant} shrink={shrink} {...downshiftProps.getLabelProps()}>
             {label}
