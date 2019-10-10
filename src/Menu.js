@@ -86,7 +86,7 @@ class MuiVirtualList extends Component {
     return (
       <VirtualList
         width={width}
-        {...downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex }}
+        {...(downshiftProps.highlightedIndex != null && { scrollToIndex: downshiftProps.highlightedIndex })}
         height={height}
         rowCount={getRowCount(items, includeFooter)}
         rowHeight={rowHeight}
@@ -160,7 +160,7 @@ class MuiVirtualList extends Component {
           }
           onRowsRendered && onRowsRendered(args);
         }}
-        {...useCellMeasurer && { deferredMeasurementCache: this.cache }}
+        {...(useCellMeasurer && { deferredMeasurementCache: this.cache })}
         ref={el => {
           this.list = el;
           if (registerChild) {
@@ -174,7 +174,7 @@ class MuiVirtualList extends Component {
 }
 
 function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
-  return props.downshiftProps.isOpen ? (
+  return props.downshiftProps.isOpen && inputRef ? (
     <AutoSizer>
       {({ width }) => (
         <Popper
@@ -188,7 +188,7 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
           }}
         >
           <div {...props.downshiftProps.getMenuProps({}, { suppressRefError: true })}>
-            <Paper style={{ width }}>
+            <Paper elevation={2} style={{ width }}>
               {getInfiniteLoaderProps ? (
                 <InfiniteLoader {...getInfiniteLoaderProps({ downshiftProps: props.downshiftProps })}>
                   {({ onRowsRendered, registerChild }) => (

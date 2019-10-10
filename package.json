@@ -14,10 +14,10 @@
     "material-ui"
   ],
   "peerDependencies": {
-    "@material-ui/core": "^3.0.0",
-    "@material-ui/icons": "^3.0.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -26,8 +26,8 @@
     "react-virtualized": "^9.20.1"
   },
   "devDependencies": {
-    "@material-ui/core": "^3.9.2",
-    "@material-ui/icons": "^3.0.1",
+    "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "babel-cli": "^6.26.0",
@@ -42,10 +42,13 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
+    "fetch-mock": "7.3.9",
     "gh-pages": "^1.2.0",
     "prettier": "^1.14.2",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-fetch-component": "7.0.1",
+    "starwars-names": "1.6.0"
   },
   "scripts": {
     "build": "NODE_ENV=production babel src -d dist",
