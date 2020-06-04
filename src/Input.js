@@ -65,7 +65,13 @@ class Input extends Component {
         })
       : {};
 
-    const shrink = downshiftProps.isOpen || downshiftProps.inputValue || inputProps.startAdornment ? true : undefined;
+    const shrink =
+      downshiftProps.isOpen ||
+      downshiftProps.inputValue ||
+      inputProps.startAdornment ||
+      (labelProps && labelProps.shrink)
+        ? true
+        : undefined;
     const InputMore = {};
     if (variant === 'outlined') {
       if (typeof shrink !== 'undefined') {
@@ -78,7 +84,13 @@ class Input extends Component {
     return (
       <FormControl disabled={disabled} required={required} error={error} fullWidth>
         {label && (
-          <InputLabel ref={this.labelRef} variant={variant} shrink={shrink} {...downshiftProps.getLabelProps()}>
+          <InputLabel
+            ref={this.labelRef}
+            variant={variant}
+            shrink={shrink}
+            {...downshiftProps.getLabelProps()}
+            {...labelProps}
+          >
             {label}
           </InputLabel>
         )}
