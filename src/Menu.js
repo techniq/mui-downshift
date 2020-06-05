@@ -173,7 +173,8 @@ class MuiVirtualList extends Component {
   }
 }
 
-function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
+function Menu({ getInfiniteLoaderProps, inputRef, getPopperProps, ...props }) {
+  const popperProps = getPopperProps && getPopperProps();
   return props.downshiftProps.isOpen ? (
     <AutoSizer>
       {({ width }) => (
@@ -186,6 +187,7 @@ function Menu({ getInfiniteLoaderProps, inputRef, ...props }) {
             preventOverflow: { enabled: false },
             hide: { enabled: false },
           }}
+          {...popperProps}
         >
           <div {...props.downshiftProps.getMenuProps({}, { suppressRefError: true })}>
             <Paper style={{ width }}>
